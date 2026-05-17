@@ -6,7 +6,8 @@ import { useParallax } from '@/composables/useScrollAnimation'
 
 const typedText = ref('')
 
-const eyebrowPhrases = window.innerWidth >= 1024
+const isDesktop = window.innerWidth >= 1024
+const eyebrowPhrases = isDesktop
   ? ['Frontend Engineer · Precision · Craft · Reliable · Systematic · Detail-Driven']
   : [
       'Frontend Engineer · Precision',
@@ -71,31 +72,34 @@ useParallax(sectionRef, bgRef, { speed: 0.4 })
 
 // Hero entrance animation
 onMounted(() => {
-  const tl = gsap.timeline({ delay: 0.2 })
+  if (isDesktop) {
+    const tl = gsap.timeline({ delay: 0.2 })
 
-  // Stagger title words
-  tl.from('.hero-title__word', {
-    y: '100%',
-    opacity: 0,
-    duration: 1.2,
-    stagger: 0.12,
-    ease: 'power4.out',
-  })
-  .from(
-    subtitleRef.value,
-    { y: 30, opacity: 0, duration: 0.9, ease: 'power3.out' },
-    '-=0.6',
-  )
-  .from(
-    ctaRef.value,
-    { y: 20, opacity: 0, duration: 0.8, ease: 'power3.out' },
-    '-=0.5',
-  )
-  .from(
-    scrollHintRef.value,
-    { opacity: 0, duration: 1, ease: 'power2.out' },
-    '-=0.2',
-  )
+    // Stagger title words
+    tl.from('.hero-title__word', {
+      y: '100%',
+      opacity: 0,
+      duration: 1.2,
+      stagger: 0.12,
+      ease: 'power4.out',
+    })
+    .from(
+      subtitleRef.value,
+      { y: 30, opacity: 0, duration: 0.9, ease: 'power3.out' },
+      '-=0.6',
+    )
+    .from(
+      ctaRef.value,
+      { y: 20, opacity: 0, duration: 0.8, ease: 'power3.out' },
+      '-=0.5',
+    )
+    .from(
+      scrollHintRef.value,
+      { opacity: 0, duration: 1, ease: 'power2.out' },
+      '-=0.2',
+    )
+  }
+  // Mobile: CSS @keyframes handles hero entrance (compositor thread, immune to JS jank)
 
   alive = true
   runTypewriter()
@@ -464,5 +468,39 @@ function scrollToProjects() {
 @keyframes fade-up {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes title-slide-up {
+  from { opacity: 0; transform: translateY(100%); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Mobile: CSS-driven entrance (replaces GSAP timeline, runs on compositor thread) */
+@media (max-width: 1023px) {
+  .hero-title__word {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  .hero-title__line:nth-child(1) .hero-title__word {
+    animation: title-slide-up 1.2s 0.2s var(--ease-out-expo) forwards;
+  }
+  .hero-title__line:nth-child(2) .hero-title__word {
+    animation: title-slide-up 1.2s 0.32s var(--ease-out-expo) forwards;
+  }
+
+  .hero-subtitle,
+  .hero-cta-group,
+  .hero-scroll-hint {
+    opacity: 0;
+  }
+  .hero-subtitle {
+    animation: fade-up 0.9s 0.8s ease forwards;
+  }
+  .hero-cta-group {
+    animation: fade-up 0.8s 1.2s ease forwards;
+  }
+  .hero-scroll-hint {
+    animation: fade-up 1s 1.8s ease forwards;
+  }
 }
 </style>
