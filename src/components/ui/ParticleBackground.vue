@@ -4,6 +4,8 @@ import { ref, onMounted, onBeforeUnmount } from 'vue'
 const canvasRef = ref<HTMLCanvasElement | null>(null)
 let animId = 0
 let ctx: CanvasRenderingContext2D | null = null
+let isMobile = false
+let lastFrame = 0
 
 interface Particle {
   x: number; y: number
@@ -19,7 +21,9 @@ const CONNECT_DIST = 130
 const CONNECT_SQ   = CONNECT_DIST * CONNECT_DIST
 
 function count(w: number, h: number) {
-  return Math.min(Math.floor((w * h) / 13000), 100)
+  return isMobile
+    ? Math.min(Math.floor((w * h) / 20000), 40)
+    : Math.min(Math.floor((w * h) / 13000), 100)
 }
 
 function init(w: number, h: number) {
@@ -40,8 +44,16 @@ function onResize() {
   init(canvasRef.value.width, canvasRef.value.height)
 }
 
-function tick() {
+function tick(ts: number) {
   if (!ctx || !canvasRef.value) return
+
+  // On mobile, throttle to ~30fps to reduce CPU load
+  if (isMobile && ts - lastFrame < 33) {
+    animId = requestAnimationFrame(tick)
+    return
+  }
+  lastFrame = ts
+
   const w = canvasRef.value.width
   const h = canvasRef.value.height
   const isLight = document.documentElement.classList.contains('light-mode')
@@ -79,20 +91,22 @@ function tick() {
     ctx.fillStyle = `rgba(${rgb},${p.o})`
     ctx.fill()
 
-    // Connecting lines between nearby particles
-    for (let j = i + 1; j < particles.length; j++) {
-      const q  = particles[j]
-      const dx = p.x - q.x
-      const dy = p.y - q.y
-      const dSq = dx * dx + dy * dy
-      if (dSq < CONNECT_SQ) {
-        const lineO = (1 - Math.sqrt(dSq) / CONNECT_DIST) * 0.13
-        ctx.beginPath()
-        ctx.moveTo(p.x, p.y)
-        ctx.lineTo(q.x, q.y)
-        ctx.strokeStyle = `rgba(${rgb},${lineO})`
-        ctx.lineWidth = 0.5
-        ctx.stroke()
+    // Connecting lines: skip on mobile (O(n²) is too costly for mobile CPUs)
+    if (!isMobile) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const q  = particles[j]
+        const dx = p.x - q.x
+        const dy = p.y - q.y
+        const dSq = dx * dx + dy * dy
+        if (dSq < CONNECT_SQ) {
+          const lineO = (1 - Math.sqrt(dSq) / CONNECT_DIST) * 0.13
+          ctx.beginPath()
+          ctx.moveTo(p.x, p.y)
+          ctx.lineTo(q.x, q.y)
+          ctx.strokeStyle = `rgba(${rgb},${lineO})`
+          ctx.lineWidth = 0.5
+          ctx.stroke()
+        }
       }
     }
   }
@@ -102,12 +116,13 @@ function tick() {
 
 onMounted(() => {
   if (!canvasRef.value) return
+  isMobile = window.matchMedia('(pointer: coarse)').matches
   ctx = canvasRef.value.getContext('2d')
   onResize()
 
   // Respect prefers-reduced-motion
   if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    tick()
+    animId = requestAnimationFrame(tick)
   }
 
   window.addEventListener('resize', onResize, { passive: true })

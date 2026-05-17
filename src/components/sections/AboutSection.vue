@@ -4,6 +4,7 @@ import { Icon } from '@iconify/vue'
 import { usePortfolioStore } from '@/stores/portfolioStore'
 import { useReveal } from '@/composables/useScrollAnimation'
 import { setCursorVariant } from '@/composables/useCursor'
+import { isTouchDevice } from '@/utils/helpers'
 
 const store = usePortfolioStore()
 const sectionRef = ref<HTMLElement | null>(null)
@@ -98,7 +99,14 @@ function tickMarquee(ts: number) {
   lastTs = ts
 }
 
-onMounted(() => { rafId = requestAnimationFrame(tickMarquee) })
+onMounted(() => {
+  if (isTouchDevice()) {
+    // On touch devices, use CSS animation instead of RAF to avoid jank
+    iconsInnerRef.value?.classList.add('is-css-marquee')
+  } else {
+    rafId = requestAnimationFrame(tickMarquee)
+  }
+})
 onBeforeUnmount(() => { if (rafId !== null) cancelAnimationFrame(rafId) })
 
 function onIconEnter() {
@@ -351,6 +359,16 @@ function onStripPointerUp(e?: PointerEvent) {
 .tech-icons-inner {
   display: flex;
   width: max-content;
+  will-change: transform;
+}
+
+@keyframes marquee-scroll {
+  from { transform: translateX(0) }
+  to   { transform: translateX(-50%) }
+}
+
+.tech-icons-inner.is-css-marquee {
+  animation: marquee-scroll 30s linear infinite;
   will-change: transform;
 }
 
