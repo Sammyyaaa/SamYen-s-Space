@@ -1,0 +1,59 @@
+# CHANGELOG.md
+
+## [Unreleased]
+
+### Added
+- `AboutSection`：Tech Stack 標題下方新增技術 Icon 跑馬燈 strip
+  - 以 `requestAnimationFrame` 驅動無限水平捲動，取代 CSS `@keyframes`，解決拖曳後位置跳回的問題
+  - 支援 hover 暫停、pointer 拖曳（`pointerdown / pointermove / pointerup` + `setPointerCapture`）
+  - 游標 variant 整合：hover → `hover`、拖曳中 → `drag`
+  - 使用 `@iconify/vue` 套件，映射 26 個技術名稱至 `logos:*` icon
+  - `overflow-x: clip` 取代 `overflow: hidden`，解決 hover 上浮動畫被裁切的問題
+  - icon 框框改為黑白主題變數（`--tech-icon-bg/border` 等），暗色為白色半透明、亮色為黑色半透明，不再使用藍色 accent
+- `ContactSection`：新增 Email icon（`x0710078@gmail.com`）與 GitHub icon 並排
+  - Email icon 觸發相同的引力球環繞效果（`useMagnetic` + `onIconEnter` 共用邏輯）
+  - 兩個 icon 以 48px 尺寸、5rem 間距水平排列
+  - 描述文字更新為「歡迎透過 Email 或 GitHub 找我」
+- `ProjectDetailPage`：「前往查看」按鈕移至標題正下方
+  - 有連結：`<a>` 標籤，可點擊
+  - 無連結（如南山人壽）：`<button disabled>` + `opacity: 0.35`，視覺呈現 disabled
+- `ProjectCard`：標題加入 `text-overflow: ellipsis`，過長標題自動截斷
+- `portfolioStore`：更新七個專案為完整正式名稱
+  - 南山人壽 — 團險自費加保平台
+  - 南山產險 — 網路投保中心（前台）/ 網路會員管理平台（後台）
+  - 南山產險 — 銷售作業平台
+  - Foomosa 臺中美食餐廳資訊整合平台
+
+### Fixed
+- `AboutSection` 技術 icon 標籤在亮模式下不可見：改用 `text-surface-400 / text-surface-100` Tailwind 類，透過 `html.light-mode` CSS 變數自動適配兩種模式
+
+### Technical
+- 新增依賴 `@iconify/vue ^5.0.1`
+- `main.css` 新增 `--tech-icon-bg / --tech-icon-border / --tech-icon-bg-hover / --tech-icon-border-hover / --tech-icon-shadow-hover` 五組主題變數，分別定義於 `:root`（暗色）與 `html.light-mode`（亮色）
+
+## [0.1.0] - 2026-05-17
+
+### Added
+- 完整專案架構建立（Vite + Vue 3 TS + Tailwind CSS v4 + GSAP + Lenis）
+- `AppCursor`：雙層磁吸自定義游標，6 種 variant，mix-blend-mode: difference
+- `AppNav`：固定導航列，滾動玻璃擬態，行動版全螢幕選單
+- `HeroSection`：全螢幕 Hero，GSAP 文字入場，視差背景，浮動 CTA
+- `MarqueeSection`：純 CSS 無限跑馬燈，prefers-reduced-motion 支援
+- `ProjectsSection`：6 個作品，All/Featured 篩選，3 欄 RWD 網格
+- `ProjectCard`：封面縮放 hover，游標 project variant，鍵盤可訪問
+- `AboutSection`：個人簡介，統計數字，技術棧分類
+- `ContactSection`：Email 連結，社群連結，背景光暈
+- `DefaultLayout`：Lenis singleton + GSAP ScrollTrigger 同步
+- `useReveal`：ScrollTrigger 滾動揭示動畫 composable
+- `useParallax`：scrub 視差 composable
+- `useCursor` + `useMagnetic`：全域游標狀態 + 磁吸效果
+- `usePageTransition`：GSAP 頁面 fade+slide 過渡
+- `useLenis`：Lenis singleton composable
+- `portfolioStore`：Pinia store，6 個作品 + 統計 + 技術棧資料
+- 完整文件：CLAUDE.md + docs/（README / ARCHITECTURE / DEVELOPMENT / FEATURES / TESTING / CHANGELOG）
+- TypeScript 全型別覆蓋
+
+### Technical
+- Tailwind CSS v4（`@tailwindcss/vite` plugin），自訂 `@theme` token
+- 所有 scoped style 加入 `@reference "@/styles/main.css"` 解決 v4 相容問題
+- GSAP context 模式確保動畫記憶體安全清理
