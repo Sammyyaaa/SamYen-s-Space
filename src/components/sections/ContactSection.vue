@@ -3,7 +3,9 @@ import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { gsap } from 'gsap'
 import { useReveal } from '@/composables/useScrollAnimation'
 import { setCursorVariant, useMagnetic } from '@/composables/useCursor'
-import { lerp, isTouchDevice, prefersReducedMotion } from '@/utils/helpers'
+import { lerp, prefersReducedMotion } from '@/utils/helpers'
+
+const isDesktop = window.innerWidth >= 1024
 
 const sectionRef   = ref<HTMLElement | null>(null)
 const contentRef   = ref<HTMLElement | null>(null)
@@ -81,7 +83,6 @@ function tick() {
 
 // ── Section 事件 ──
 function onSectionEnter() {
-  if (isTouchDevice()) return
   isInSection = true
   setCursorVariant('drag')
   gsap.killTweensOf(blendState)
@@ -89,7 +90,6 @@ function onSectionEnter() {
 }
 
 function onSectionLeave() {
-  if (isTouchDevice()) return
   isInSection = false
   setCursorVariant('default')
   gsap.killTweensOf(blendState)
@@ -130,7 +130,7 @@ const onEmailEnter  = () => onIconEnter(emailBtnRef  as { value: HTMLElement | n
 const onEmailLeave  = onIconLeave
 
 onMounted(() => {
-  if (!sectionRef.value || isTouchDevice()) return
+  if (!sectionRef.value || !isDesktop) return
   orbRefs.value.forEach(el => {
     if (el) gsap.set(el, { xPercent: -50, yPercent: -50 })
   })
@@ -162,14 +162,16 @@ onBeforeUnmount(() => {
   >
     <div class="contact-bg" aria-hidden="true" />
 
-    <!-- 引力追蹤球（漂浮於 content 背景層） -->
-    <div
-      v-for="(cfg, i) in ORB_CONFIGS"
-      :key="i"
-      :ref="(el) => { if (el) orbRefs[i] = el as HTMLElement }"
-      :class="`contact-orb contact-orb--${i + 1}`"
-      aria-hidden="true"
-    />
+    <!-- 引力追蹤球（桌機限定） -->
+    <template v-if="isDesktop">
+      <div
+        v-for="(cfg, i) in ORB_CONFIGS"
+        :key="i"
+        :ref="(el) => { if (el) orbRefs[i] = el as HTMLElement }"
+        :class="`contact-orb contact-orb--${i + 1}`"
+        aria-hidden="true"
+      />
+    </template>
 
     <div ref="contentRef" class="contact-content">
       <span class="section-eyebrow">Contact</span>

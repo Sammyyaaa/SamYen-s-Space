@@ -5,30 +5,55 @@ import { setCursorVariant, useMagnetic } from '@/composables/useCursor'
 import { useParallax } from '@/composables/useScrollAnimation'
 
 const typedText = ref('')
-const eyebrowFull = 'Frontend Engineer · Precision · Craft · Reliable · Systematic · Detail-Driven'
+
+const eyebrowPhrases = window.innerWidth >= 1024
+  ? ['Frontend Engineer · Precision · Craft · Reliable · Systematic · Detail-Driven']
+  : [
+      'Frontend Engineer · Precision',
+      'Craft · Reliable',
+      'Systematic · Detail-Driven',
+    ]
+
 let alive = false
-let typingTimer: ReturnType<typeof setTimeout> | null = null
+let rafId: number | null = null
 
-function sleep(ms: number) {
-  return new Promise<void>(resolve => { typingTimer = setTimeout(resolve, ms) })
-}
+function runTypewriter() {
+  let phraseIndex = 0
+  let charIndex = 0
+  let isDeleting = false
+  // Delay start until after GSAP entrance animations finish (~1.5s)
+  let pauseUntil = performance.now() + 1800
 
-async function runTypewriter() {
-  await sleep(600)
-  while (alive) {
-    for (let i = 0; i <= eyebrowFull.length && alive; i++) {
-      typedText.value = eyebrowFull.slice(0, i)
-      await sleep(38)
+  function tick(now: number) {
+    if (!alive) return
+    rafId = requestAnimationFrame(tick)
+    if (now < pauseUntil) return
+
+    const current = eyebrowPhrases[phraseIndex]
+
+    if (!isDeleting) {
+      charIndex++
+      typedText.value = current.slice(0, charIndex)
+      if (charIndex >= current.length) {
+        isDeleting = true
+        pauseUntil = now + 3500
+      } else {
+        pauseUntil = now + 40
+      }
+    } else {
+      charIndex--
+      typedText.value = current.slice(0, charIndex)
+      if (charIndex <= 0) {
+        isDeleting = false
+        phraseIndex = (phraseIndex + 1) % eyebrowPhrases.length
+        pauseUntil = now + 500
+      } else {
+        pauseUntil = now + 20
+      }
     }
-    if (!alive) break
-    await sleep(3500)
-    for (let i = eyebrowFull.length; i >= 0 && alive; i--) {
-      typedText.value = eyebrowFull.slice(0, i)
-      await sleep(18)
-    }
-    if (!alive) break
-    await sleep(500)
   }
+
+  rafId = requestAnimationFrame(tick)
 }
 
 const sectionRef = ref<HTMLElement | null>(null)
@@ -78,7 +103,7 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
   alive = false
-  if (typingTimer) clearTimeout(typingTimer)
+  if (rafId !== null) cancelAnimationFrame(rafId)
 })
 
 function scrollToSection(selector: string) {

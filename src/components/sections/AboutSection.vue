@@ -377,9 +377,15 @@ function onStripPointerUp(e?: PointerEvent) {
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
-  padding: 0 1.5rem;
+  padding: 0 0.75rem;
   cursor: none;
   transition: transform 0.2s ease;
+}
+
+@media (min-width: 1024px) {
+  .tech-icon-item {
+    padding: 0 1.5rem;
+  }
 }
 
 .tech-icon-item:hover {
