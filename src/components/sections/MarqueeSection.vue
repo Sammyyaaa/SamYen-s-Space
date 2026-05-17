@@ -49,6 +49,7 @@ const track = [...words, ...words, ...words]
   padding: 1.25rem 0;
   @apply border-y border-surface-800;
   position: relative;
+  user-select: none;
 }
 
 .marquee::before,

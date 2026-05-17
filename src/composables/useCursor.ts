@@ -15,7 +15,9 @@ const isVisible = ref(false)
 export function useCursor() {
   const isTouch = isTouchDevice()
 
-  function onMouseMove(e: MouseEvent) {
+  function onPointerMove(e: PointerEvent) {
+    // pointermove 在 selection drag / HTML drag 期間仍持續觸發，mousemove 不會
+    if (e.pointerType !== 'mouse') return
     cursorX.value = e.clientX
     cursorY.value = e.clientY
     if (!isVisible.value) isVisible.value = true
@@ -31,14 +33,14 @@ export function useCursor() {
 
   onMounted(() => {
     if (isTouch) return
-    window.addEventListener('mousemove', onMouseMove, { passive: true })
+    window.addEventListener('pointermove', onPointerMove, { passive: true })
     document.addEventListener('mouseleave', onMouseLeave)
     document.addEventListener('mouseenter', onMouseEnter)
   })
 
   onBeforeUnmount(() => {
     if (isTouch) return
-    window.removeEventListener('mousemove', onMouseMove)
+    window.removeEventListener('pointermove', onPointerMove)
     document.removeEventListener('mouseleave', onMouseLeave)
     document.removeEventListener('mouseenter', onMouseEnter)
   })
