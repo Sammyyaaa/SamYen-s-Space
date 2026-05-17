@@ -201,7 +201,6 @@ html.light-mode {
       linear-gradient(var(--grid-line) 1px, transparent 1px),
       linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
     background-size: 60px 60px;
-    animation: grid-flow 30s linear infinite;
     cursor: none; /* Custom cursor replaces native */
   }
 
@@ -298,7 +297,6 @@ html.light-mode {
       linear-gradient(var(--grid-line) 1px, transparent 1px),
       linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
     background-size: 60px 60px;
-    animation: grid-flow 30s linear infinite;
     opacity: 0.8;
   }
 
@@ -310,11 +308,6 @@ html.light-mode {
       transition-duration: 0.01ms !important;
     }
   }
-}
-
-@keyframes grid-flow {
-  from { background-position: 0 0, 0 0; }
-  to   { background-position: 60px 60px, 60px 60px; }
 }
 
 /* ── Light Mode: contact section ── */

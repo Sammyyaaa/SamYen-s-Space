@@ -5,7 +5,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useLenis } from '@/composables/useLenis'
 import AppNav from '@/components/ui/AppNav.vue'
 import AppFooter from '@/components/ui/AppFooter.vue'
-import ParticleBackground from '@/components/ui/ParticleBackground.vue'
 import ScrollToTop from '@/components/ui/ScrollToTop.vue'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -25,8 +24,6 @@ onMounted(() => {
 
 <template>
   <div class="layout">
-    <!-- 粒子背景：fixed canvas，在 grid 之上、頁面內容之下 -->
-    <ParticleBackground />
     <AppNav />
     <main class="layout__main">
       <slot />
@@ -43,9 +40,7 @@ onMounted(() => {
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
-  /* 建立 stacking context，確保內容在 canvas (z-index:0) 之上 */
   position: relative;
-  z-index: 1;
 }
 
 .layout__main {

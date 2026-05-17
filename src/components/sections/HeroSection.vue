@@ -74,17 +74,6 @@ onMounted(() => {
 
   alive = true
   runTypewriter()
-
-  // Floating CTA loop
-  gsap.to(ctaRef.value, {
-    y: -8,
-    duration: 2,
-    repeat: -1,
-    yoyo: true,
-    ease: 'sine.inOut',
-    delay: 2,
-  })
-
 })
 
 onBeforeUnmount(() => {
@@ -305,13 +294,13 @@ function scrollToProjects() {
   line-height: 1;
   @apply text-surface-50;
   margin-bottom: 2rem;
-  overflow: hidden;
 }
 
 .hero-title__line {
   display: block;
   overflow: hidden;
   padding-bottom: 0.05em;
+  padding-right: 0.08em;
 }
 
 .hero-title__word {
@@ -319,6 +308,7 @@ function scrollToProjects() {
   -webkit-background-clip: text;
   color: transparent;
   background-image: var(--hero-title-gradient);
+  padding-right: 0.1em;
 }
 
 /* Subtitle */
