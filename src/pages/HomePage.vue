@@ -10,14 +10,9 @@ import ContactSection from '@/components/sections/ContactSection.vue'
 const belowFoldReady = ref(false)
 
 onMounted(() => {
-  const mount = () => { belowFoldReady.value = true }
-  // Mount below-fold sections only when browser is idle (hero gets first paint priority)
-  // Fallback to 500ms for browsers without requestIdleCallback (old iOS Safari)
-  if ('requestIdleCallback' in window) {
-    requestIdleCallback(mount, { timeout: 2000 })
-  } else {
-    setTimeout(mount, 500)
-  }
+  // Fixed 2s delay: ensures all hero CSS animations complete (last one ends at ~1.8s)
+  // before below-fold sections mount and stress the main thread
+  setTimeout(() => { belowFoldReady.value = true }, 2000)
 })
 </script>
 
