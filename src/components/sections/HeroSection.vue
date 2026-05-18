@@ -488,6 +488,14 @@ function scrollToProjects() {
     animation: title-slide-up 1.2s 0.2s var(--ease-out-expo) forwards;
   }
 
+  /* Scroll hint: override transform-based centering so fade-up animation doesn't shift it */
+  .hero-scroll-hint {
+    left: 0;
+    right: 0;
+    transform: none;
+    justify-content: center;
+  }
+
   .hero-subtitle,
   .hero-cta-group,
   .hero-scroll-hint {
