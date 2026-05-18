@@ -22,8 +22,8 @@ function runTypewriter() {
   let phraseIndex = 0
   let charIndex = 0
   let isDeleting = false
-  // Delay start until after GSAP entrance animations finish (~1.5s)
-  let pauseUntil = performance.now() + 1800
+  // Desktop: wait for GSAP animations (~1.8s); Mobile: CSS animations are faster
+  let pauseUntil = performance.now() + (isDesktop ? 1800 : 900)
 
   function tick(now: number) {
     if (!alive) return
@@ -482,10 +482,10 @@ function scrollToProjects() {
     transform: translateY(100%);
   }
   .hero-title__line:nth-child(1) .hero-title__word {
-    animation: title-slide-up 1.2s 0.2s var(--ease-out-expo) forwards;
+    animation: title-slide-up 1.2s 0.1s var(--ease-out-expo) forwards;
   }
   .hero-title__line:nth-child(2) .hero-title__word {
-    animation: title-slide-up 1.2s 0.32s var(--ease-out-expo) forwards;
+    animation: title-slide-up 1.2s 0.2s var(--ease-out-expo) forwards;
   }
 
   .hero-subtitle,
@@ -494,13 +494,13 @@ function scrollToProjects() {
     opacity: 0;
   }
   .hero-subtitle {
-    animation: fade-up 0.9s 0.8s ease forwards;
+    animation: fade-up 0.9s 0.35s ease forwards;
   }
   .hero-cta-group {
-    animation: fade-up 0.8s 1.2s ease forwards;
+    animation: fade-up 0.8s 0.55s ease forwards;
   }
   .hero-scroll-hint {
-    animation: fade-up 1s 1.8s ease forwards;
+    animation: fade-up 1s 0.8s ease forwards;
   }
 }
 </style>
