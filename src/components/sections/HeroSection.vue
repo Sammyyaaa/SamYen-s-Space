@@ -22,8 +22,8 @@ function runTypewriter() {
   let phraseIndex = 0
   let charIndex = 0
   let isDeleting = false
-  // Desktop: wait for GSAP animations (~1.8s); Mobile: CSS animations are faster
-  let pauseUntil = performance.now() + (isDesktop ? 1800 : 900)
+  // Desktop: wait for GSAP animations (~1.8s); Mobile: wait for CSS stagger to complete
+  let pauseUntil = performance.now() + (isDesktop ? 1800 : 1500)
 
   function tick(now: number) {
     if (!alive) return
@@ -502,13 +502,13 @@ function scrollToProjects() {
     opacity: 0;
   }
   .hero-subtitle {
-    animation: fade-up 0.9s 0.35s ease forwards;
+    animation: fade-up 0.9s 0.4s ease forwards;
   }
   .hero-cta-group {
-    animation: fade-up 0.8s 0.55s ease forwards;
+    animation: fade-up 0.8s 0.8s ease forwards;
   }
   .hero-scroll-hint {
-    animation: fade-up 1s 0.8s ease forwards;
+    animation: fade-up 1s 1.2s ease forwards;
   }
 }
 </style>

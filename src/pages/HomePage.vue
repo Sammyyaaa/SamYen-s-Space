@@ -10,9 +10,9 @@ import ContactSection from '@/components/sections/ContactSection.vue'
 const belowFoldReady = ref(false)
 
 onMounted(() => {
-  // Fixed 2s delay: ensures all hero CSS animations complete (last one ends at ~1.8s)
-  // before below-fold sections mount and stress the main thread
-  setTimeout(() => { belowFoldReady.value = true }, 2000)
+  // 2.5s delay: scroll hint ends at mount+2.2s (delay 1.2s + duration 1.0s)
+  // 300ms buffer before below-fold sections mount and stress the main thread
+  setTimeout(() => { belowFoldReady.value = true }, 2500)
 })
 </script>
 
