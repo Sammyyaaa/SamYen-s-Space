@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, nextTick } from 'vue'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import DefaultLayout from '@/layouts/DefaultLayout.vue'
 import HeroSection from '@/components/sections/HeroSection.vue'
 import MarqueeSection from '@/components/sections/MarqueeSection.vue'
@@ -10,9 +11,13 @@ import ContactSection from '@/components/sections/ContactSection.vue'
 const belowFoldReady = ref(false)
 
 onMounted(() => {
-  // 2.5s delay: scroll hint ends at mount+2.2s (delay 1.2s + duration 1.0s)
-  // 300ms buffer before below-fold sections mount and stress the main thread
-  setTimeout(() => { belowFoldReady.value = true }, 2500)
+  // Only defer heavy sections (Iconify API + orb animations)
+  // ProjectsSection mounts immediately so its ScrollTrigger is ready before user scrolls there
+  setTimeout(async () => {
+    belowFoldReady.value = true
+    await nextTick()
+    ScrollTrigger.refresh()
+  }, 2500)
 })
 </script>
 
@@ -20,9 +25,9 @@ onMounted(() => {
   <DefaultLayout>
     <HeroSection />
     <MarqueeSection />
+    <ProjectsSection />
+    <MarqueeSection />
     <template v-if="belowFoldReady">
-      <ProjectsSection />
-      <MarqueeSection />
       <AboutSection />
       <ContactSection />
     </template>
