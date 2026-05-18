@@ -22,8 +22,8 @@ function runTypewriter() {
   let phraseIndex = 0
   let charIndex = 0
   let isDeleting = false
-  // Desktop: wait for GSAP animations (~1.8s); Mobile: wait for CSS stagger to complete
-  let pauseUntil = performance.now() + (isDesktop ? 1800 : 1500)
+  // Desktop: wait for GSAP animations (~1.8s); Mobile: elements appear at 0.4s, start typing immediately
+  let pauseUntil = performance.now() + (isDesktop ? 1800 : 400)
 
   function tick(now: number) {
     if (!alive) return
@@ -505,10 +505,10 @@ function scrollToProjects() {
     animation: fade-up 0.9s 0.4s ease forwards;
   }
   .hero-cta-group {
-    animation: fade-up 0.8s 0.8s ease forwards;
+    animation: fade-up 0.9s 0.4s ease forwards;
   }
   .hero-scroll-hint {
-    animation: fade-up 1s 1.2s ease forwards;
+    animation: fade-up 0.9s 0.4s ease forwards;
   }
 }
 </style>
