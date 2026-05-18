@@ -23,9 +23,11 @@ watch(scrollY, (y) => {
   isScrolled.value = y > 50
 })
 
+const isDesktop = window.innerWidth >= 1024
+
 onMounted(() => {
   initTheme()
-  if (!navRef.value) return
+  if (!navRef.value || !isDesktop) return
   gsap.from(navRef.value, {
     y: -80,
     opacity: 0,
@@ -138,7 +140,10 @@ function scrollTo(href: string) {
       </div>
     </div>
 
-    <!-- Mobile menu overlay -->
+  </nav>
+
+  <!-- Teleport to body to avoid backdrop-filter/transform stacking context issues -->
+  <Teleport to="body">
     <Transition name="mobile-menu">
       <div v-if="isMenuOpen" class="nav-mobile" role="dialog" aria-modal="true">
         <ul class="nav-mobile__links" role="list">
@@ -172,11 +177,16 @@ function scrollTo(href: string) {
         </ul>
       </div>
     </Transition>
-  </nav>
+  </Teleport>
 </template>
 
 <style scoped>
 @reference "@/styles/main.css";
+
+@keyframes nav-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
 
 .nav-bar {
   position: fixed;
@@ -186,6 +196,13 @@ function scrollTo(href: string) {
   z-index: 100;
   padding: 1.5rem 2rem;
   transition: background 0.4s ease, padding 0.4s ease, backdrop-filter 0.4s ease;
+}
+
+@media (max-width: 1023px) {
+  .nav-bar {
+    opacity: 0;
+    animation: nav-fade-in 0.8s 0.1s ease forwards;
+  }
 }
 
 .nav-bar--scrolled {
@@ -358,7 +375,7 @@ function scrollTo(href: string) {
   @apply bg-surface-950/95 backdrop-blur-2xl;
   position: fixed;
   inset: 0;
-  z-index: -1;
+  z-index: 99;
   display: flex;
   align-items: center;
   justify-content: center;

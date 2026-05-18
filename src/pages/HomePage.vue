@@ -11,8 +11,14 @@ import ContactSection from '@/components/sections/ContactSection.vue'
 const belowFoldReady = ref(false)
 
 onMounted(() => {
-  // Only defer heavy sections (Iconify API + orb animations)
-  // ProjectsSection mounts immediately so its ScrollTrigger is ready before user scrolls there
+  // Refresh ScrollTrigger after first paint so ProjectsSection positions are correct
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      ScrollTrigger.refresh()
+    })
+  })
+
+  // Defer heavy sections (Iconify API + orb animations)
   setTimeout(async () => {
     belowFoldReady.value = true
     await nextTick()
