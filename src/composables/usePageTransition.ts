@@ -1,54 +1,65 @@
-import { ref } from 'vue'
+import { ref, nextTick } from 'vue'
 import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { getLenis } from '@/composables/useLenis'
 import router from '@/router'
 
 const isTransitioning = ref(false)
+export const isReturningHome = ref(false)
 let savedHomeScrollY = 0
 
-// 離開首頁時立即記錄 Lenis 捲動位置，確保精確還原
-router.beforeEach((_, from) => {
+// 離開首頁時記錄捲動位置；導向首頁時標記為返回狀態
+router.beforeEach((to, from) => {
   if (from.name === 'home') {
     savedHomeScrollY = window.scrollY
+  }
+  if (to.name === 'home') {
+    isReturningHome.value = true
   }
 })
 
 /**
  * 頁面過渡動畫。
  *
- * 重要：enter 動畫結束後必須用 clearProps: 'all' 清除 GSAP 殘留的 inline transform。
- * 若不清除，layout 根元素會保留 transform: matrix(...) inline style，
- * 使 position: fixed 子元素以 layout 為 containing block，
- * 捲動時偏移至可視區域外。
+ * enter 只做 opacity，不加 y transform。
+ * 原因：y transform 作用於頁面根元素時，所有子元素的 getBoundingClientRect 會帶入
+ * 偏移量，導致 ScrollTrigger 在使用者捲動期間計算位置錯誤，section 動畫無法即時觸發。
+ *
+ * 重要：enter 動畫結束後必須用 clearProps: 'all' 清除 GSAP 殘留的 inline opacity。
  */
 export function usePageTransition() {
   function enter(el: Element, done: () => void) {
     const isHome = router.currentRoute.value.name === 'home'
 
-    // 防止進場前的單幀閃爍
     gsap.set(el, { opacity: 0 })
 
     if (isHome && savedHomeScrollY > 0) {
-      // 返回首頁：還原離開時的精確位置
-      getLenis()?.scrollTo(savedHomeScrollY, { immediate: true })
-      window.scrollTo(0, savedHomeScrollY)
+      // 延後至 nextTick，讓 HomePage 先 mount 所有 deferred section（belowFoldReady），
+      // 確保 DOM 完整後再還原捲動位置與 refresh ScrollTrigger
+      nextTick(() => {
+        window.scrollTo(0, savedHomeScrollY)
+        getLenis()?.scrollTo(savedHomeScrollY, { immediate: true })
+        ScrollTrigger.refresh()
+      })
     } else if (!isHome) {
-      // 其他頁面：從頂部開始
-      getLenis()?.scrollTo(0, { immediate: true })
       window.scrollTo(0, 0)
+      getLenis()?.scrollTo(0, { immediate: true })
+      ScrollTrigger.refresh()
+    } else {
+      ScrollTrigger.refresh()
     }
 
     gsap.fromTo(
       el,
-      { opacity: 0, y: 24 },
+      { opacity: 0 },
       {
         opacity: 1,
-        y: 0,
-        duration: 0.65,
+        duration: 0.5,
         ease: 'power3.out',
         clearProps: 'all',
         onComplete: () => {
           isTransitioning.value = false
+          isReturningHome.value = false
           done()
         },
       },
