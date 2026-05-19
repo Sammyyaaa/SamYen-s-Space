@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
 import AppCursor from '@/components/ui/AppCursor.vue'
+import AppNav from '@/components/ui/AppNav.vue'
 import { usePageTransition } from '@/composables/usePageTransition'
 
 const { enter, leave } = usePageTransition()
@@ -15,6 +16,7 @@ const { enter, leave } = usePageTransition()
     導致捲動後游標與導覽列偏移至可視區域外。
   -->
   <AppCursor />
+  <AppNav />
 
   <RouterView v-slot="{ Component, route }">
     <Transition

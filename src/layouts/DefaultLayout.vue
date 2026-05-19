@@ -3,7 +3,6 @@ import { onMounted } from 'vue'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useLenis } from '@/composables/useLenis'
-import AppNav from '@/components/ui/AppNav.vue'
 import AppFooter from '@/components/ui/AppFooter.vue'
 import ScrollToTop from '@/components/ui/ScrollToTop.vue'
 
@@ -24,7 +23,6 @@ onMounted(() => {
 
 <template>
   <div class="layout">
-    <AppNav />
     <main class="layout__main">
       <slot />
     </main>

@@ -7,6 +7,7 @@ import router from '@/router'
 const isTransitioning = ref(false)
 export const isReturningHome = ref(false)
 export const isProjectToProject = ref(false)
+export const pendingScrollTarget = ref<string | null>(null)
 let savedHomeScrollY = 0
 
 // 離開首頁時記錄捲動位置；導向首頁時標記為返回狀態
@@ -34,7 +35,7 @@ export function usePageTransition() {
 
     gsap.set(el, { opacity: 0 })
 
-    if (isHome && savedHomeScrollY > 0) {
+    if (isHome && savedHomeScrollY > 0 && !pendingScrollTarget.value) {
       // 延後至 nextTick，讓 HomePage 先 mount 所有 deferred section（belowFoldReady），
       // 確保 DOM 完整後再還原捲動位置與 refresh ScrollTrigger
       nextTick(() => {
@@ -62,6 +63,11 @@ export function usePageTransition() {
           isTransitioning.value = false
           isReturningHome.value = false
           isProjectToProject.value = false
+          if (pendingScrollTarget.value) {
+            const target = document.querySelector(pendingScrollTarget.value)
+            getLenis()?.scrollTo(target ?? 0, { duration: 0.9 })
+            pendingScrollTarget.value = null
+          }
           done()
         },
       },

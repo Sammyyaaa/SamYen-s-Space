@@ -1,9 +1,15 @@
 <script setup lang="ts">
 import { ref, onMounted, watch } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 import { gsap } from 'gsap'
 import { useWindowScroll } from '@vueuse/core'
 import { setCursorVariant, useMagnetic } from '@/composables/useCursor'
 import { useTheme } from '@/composables/useTheme'
+import { getLenis } from '@/composables/useLenis'
+import { pendingScrollTarget } from '@/composables/usePageTransition'
+
+const router = useRouter()
+const route = useRoute()
 
 const { y: scrollY } = useWindowScroll()
 const isScrolled = ref(false)
@@ -47,8 +53,18 @@ function closeMenu() {
 
 function scrollTo(href: string) {
   closeMenu()
-  const el = document.querySelector(href)
-  el?.scrollIntoView({ behavior: 'smooth' })
+  if (route.name !== 'home') {
+    pendingScrollTarget.value = href
+    router.push({ name: 'home' })
+  } else {
+    const el = document.querySelector(href)
+    const lenis = getLenis()
+    if (lenis && el) {
+      lenis.scrollTo(el, { duration: 0.9 })
+    } else {
+      el?.scrollIntoView({ behavior: 'smooth' })
+    }
+  }
 }
 </script>
 
