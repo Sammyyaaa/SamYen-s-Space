@@ -16,14 +16,14 @@ const { enter, leave } = usePageTransition()
   -->
   <AppCursor />
 
-  <RouterView v-slot="{ Component }">
+  <RouterView v-slot="{ Component, route }">
     <Transition
       mode="out-in"
       :css="false"
       @enter="enter"
       @leave="leave"
     >
-      <component :is="Component" />
+      <component :is="Component" :key="route.fullPath" />
     </Transition>
   </RouterView>
 </template>

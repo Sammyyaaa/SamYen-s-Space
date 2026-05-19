@@ -6,6 +6,7 @@ import router from '@/router'
 
 const isTransitioning = ref(false)
 export const isReturningHome = ref(false)
+export const isProjectToProject = ref(false)
 let savedHomeScrollY = 0
 
 // 離開首頁時記錄捲動位置；導向首頁時標記為返回狀態
@@ -60,6 +61,7 @@ export function usePageTransition() {
         onComplete: () => {
           isTransitioning.value = false
           isReturningHome.value = false
+          isProjectToProject.value = false
           done()
         },
       },
@@ -68,13 +70,22 @@ export function usePageTransition() {
 
   function leave(el: Element, done: () => void) {
     isTransitioning.value = true
-    gsap.to(el, {
-      opacity: 0,
-      y: -16,
-      duration: 0.35,
-      ease: 'power2.in',
-      onComplete: done,
-    })
+    if (isProjectToProject.value) {
+      gsap.to(el, {
+        opacity: 0,
+        duration: 0.35,
+        ease: 'power3.in',
+        onComplete: done,
+      })
+    } else {
+      gsap.to(el, {
+        opacity: 0,
+        y: -16,
+        duration: 0.35,
+        ease: 'power2.in',
+        onComplete: done,
+      })
+    }
   }
 
   return { enter, leave, isTransitioning }
