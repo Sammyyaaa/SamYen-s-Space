@@ -21,10 +21,10 @@ const router = createRouter({
       redirect: '/',
     },
   ],
-  scrollBehavior(to, _from, savedPosition) {
-    if (savedPosition) return savedPosition
+  scrollBehavior(to) {
+    // 捲動位置完全由 usePageTransition 管理，僅保留 hash 錨點導航
     if (to.hash) return { el: to.hash, behavior: 'smooth' }
-    return { top: 0 }
+    return false
   },
 })
 
