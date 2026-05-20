@@ -1,7 +1,7 @@
 import { onMounted, onBeforeUnmount, type Ref } from 'vue'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { prefersReducedMotion } from '@/utils/helpers'
+import { prefersReducedMotion, isTouchDevice } from '@/utils/helpers'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -50,7 +50,7 @@ export function useReveal(
         ? containerRef.value!.children
         : containerRef.value
 
-      if (prefersReducedMotion()) {
+      if (prefersReducedMotion() || isTouchDevice()) {
         gsap.set(targets, { opacity: 1, y: 0 })
         return
       }
@@ -151,7 +151,7 @@ export function useParallax(
   let ctx: gsap.Context
 
   onMounted(() => {
-    if (!containerRef.value || !targetRef.value || prefersReducedMotion()) return
+    if (!containerRef.value || !targetRef.value || prefersReducedMotion() || isTouchDevice()) return
 
     ctx = gsap.context(() => {
       gsap.to(targetRef.value, {

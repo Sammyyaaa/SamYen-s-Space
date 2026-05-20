@@ -1,5 +1,6 @@
 import { onMounted, onBeforeUnmount, ref } from 'vue'
 import Lenis from 'lenis'
+import { isTouchDevice } from '@/utils/helpers'
 
 let lenisInstance: Lenis | null = null
 
@@ -12,6 +13,7 @@ export function useLenis() {
   const lenis = ref<Lenis | null>(null)
 
   function initLenis() {
+    if (isTouchDevice()) return
     if (lenisInstance) {
       lenis.value = lenisInstance
       return

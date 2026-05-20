@@ -11,13 +11,13 @@ gsap.registerPlugin(ScrollTrigger)
 const { lenis } = useLenis()
 
 // 唯一 Lenis 驅動源：GSAP ticker，確保每幀只更新一次
+// 行動端 lenis 為 null（isTouchDevice），直接跳過，使用瀏覽器原生捲動
 onMounted(() => {
   if (!lenis.value) return
   lenis.value.on('scroll', ScrollTrigger.update)
   gsap.ticker.add((time) => {
     lenis.value?.raf(time * 1000)
   })
-  gsap.ticker.lagSmoothing(0)
 })
 </script>
 

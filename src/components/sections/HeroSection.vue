@@ -475,6 +475,20 @@ function scrollToProjects() {
   to   { opacity: 1; transform: translateY(0); }
 }
 
+/* Mobile: reduce orb size/blur to cut GPU paint cost */
+@media (max-width: 1023px) {
+  .hero-orb--blue {
+    width: 280px;
+    height: 280px;
+    filter: blur(40px);
+  }
+  .hero-orb--purple {
+    width: 220px;
+    height: 220px;
+    filter: blur(40px);
+  }
+}
+
 /* Mobile: CSS-driven entrance (replaces GSAP timeline, runs on compositor thread) */
 @media (max-width: 1023px) {
   .hero-title__word {
