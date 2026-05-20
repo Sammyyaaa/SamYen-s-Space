@@ -17,9 +17,9 @@ useReveal(statsRef, { y: 40, duration: 1, stagger: 0.1, start: "top 80%" });
 useReveal(skillsRef, { y: 30, duration: 0.9, stagger: 0.06, start: "top 82%" });
 
 const skillCategories = [
+  "frameworks",
   "basics",
   "styling",
-  "frameworks",
   "state",
   "build",
   "api",
