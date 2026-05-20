@@ -65,7 +65,12 @@ export function usePageTransition() {
           isProjectToProject.value = false
           if (pendingScrollTarget.value) {
             const target = document.querySelector(pendingScrollTarget.value)
-            getLenis()?.scrollTo(target ?? 0, { duration: 0.9 })
+            const lenis = getLenis()
+            if (lenis && target) {
+              lenis.scrollTo(target, { duration: 0.9 })
+            } else if (target) {
+              target.scrollIntoView({ behavior: 'smooth' })
+            }
             pendingScrollTarget.value = null
           }
           done()
