@@ -1,177 +1,27 @@
 <script setup lang="ts">
-import { ref, onMounted, onBeforeUnmount } from 'vue'
-import { gsap } from 'gsap'
+import { ref } from 'vue'
 import { useReveal } from '@/composables/useScrollAnimation'
 import { setCursorVariant, useMagnetic } from '@/composables/useCursor'
-import { lerp, prefersReducedMotion } from '@/utils/helpers'
 
-const isDesktop = window.innerWidth >= 1024
-
-const sectionRef   = ref<HTMLElement | null>(null)
-const contentRef   = ref<HTMLElement | null>(null)
-const { elRef: githubBtnRef } = useMagnetic(0.7)
-const { elRef: emailBtnRef  } = useMagnetic(0.7)
+const contentRef = ref<HTMLElement | null>(null)
+const { elRef: githubBtnRef } = useMagnetic(1.2)
+const { elRef: emailBtnRef  } = useMagnetic(1.2)
 
 useReveal(contentRef, { y: 60, duration: 1.2, stagger: 0 })
 
-// ── 引力追蹤球 ──
-const orbRefs = ref<HTMLElement[]>([])
-
-interface OrbConfig {
-  lerpFactor: number
-  idleAmpX: number; idleAmpY: number
-  idleFreqX: number; idleFreqY: number
-  idlePhaseX: number; idlePhaseY: number
-  orbitPhase: number  // 環繞時的起始角度偏移（rad）
-}
-
-const ORB_CONFIGS: readonly OrbConfig[] = [
-  { lerpFactor: 0.20, idleAmpX: 110, idleAmpY:  55, idleFreqX: 0.0008, idleFreqY: 0.0011, idlePhaseX: 0,   idlePhaseY: 0.5,  orbitPhase: 0           },
-  { lerpFactor: 0.12, idleAmpX:  80, idleAmpY:  90, idleFreqX: 0.0012, idleFreqY: 0.0009, idlePhaseX: 1.2, idlePhaseY: 2.1,  orbitPhase: Math.PI / 2 },
-  { lerpFactor: 0.07, idleAmpX: 130, idleAmpY:  45, idleFreqX: 0.0007, idleFreqY: 0.0015, idlePhaseX: 2.5, idlePhaseY: 0.8,  orbitPhase: Math.PI     },
-  { lerpFactor: 0.04, idleAmpX:  55, idleAmpY: 110, idleFreqX: 0.0015, idleFreqY: 0.0007, idlePhaseX: 4.1, idlePhaseY: 3.3,  orbitPhase: Math.PI * 1.5 },
-] as const
-
-const ORBIT_RADIUS = 56      // 環繞半徑 px
-const ORBIT_SPEED  = 0.00314 // rad/ms ≈ 1 圈 / 2s
-
-const orbX = [0, 0, 0, 0]
-const orbY = [0, 0, 0, 0]
-const blendState  = { factor: 0 }  // 0=idle, 1=cursor tracking
-const orbitBlend  = { factor: 0 }  // 0=cursor tracking, 1=orbiting
-const targetState = { x: 0, y: 0 } // 游標相對 section 中心
-
-let orbitCenterX = 0
-let orbitCenterY = 0
-let isInSection  = false
-let rafId = 0
-
-function tick() {
-  const now = performance.now()
-  for (let i = 0; i < 4; i++) {
-    const cfg = ORB_CONFIGS[i]
-    const el  = orbRefs.value[i]
-    if (!el) continue
-
-    // Idle sine（持續計算）
-    const idleX = Math.sin(now * cfg.idleFreqX + cfg.idlePhaseX) * cfg.idleAmpX
-    const idleY = Math.sin(now * cfg.idleFreqY + cfg.idlePhaseY) * cfg.idleAmpY
-
-    // 游標追蹤目標
-    const trackX = lerp(idleX, targetState.x, blendState.factor)
-    const trackY = lerp(idleY, targetState.y, blendState.factor)
-
-    // 環繞目標（以 GitHub 為圓心）
-    const angle  = now * ORBIT_SPEED + cfg.orbitPhase
-    const orbitX = orbitCenterX + Math.cos(angle) * ORBIT_RADIUS
-    const orbitY = orbitCenterY + Math.sin(angle) * ORBIT_RADIUS
-
-    // 最終目標：追蹤 ↔ 環繞 平滑混合
-    const desiredX = lerp(trackX, orbitX, orbitBlend.factor)
-    const desiredY = lerp(trackY, orbitY, orbitBlend.factor)
-
-    // lerp factor：環繞時加快，讓圓形更流暢
-    const f = lerp(lerp(0.08, cfg.lerpFactor, blendState.factor), 0.18, orbitBlend.factor)
-
-    orbX[i] += (desiredX - orbX[i]) * f
-    orbY[i] += (desiredY - orbY[i]) * f
-
-    gsap.set(el, { x: orbX[i], y: orbY[i] })
-  }
-  rafId = requestAnimationFrame(tick)
-}
-
-// ── Section 事件 ──
-function onSectionEnter() {
-  isInSection = true
-  setCursorVariant('drag')
-  gsap.killTweensOf(blendState)
-  gsap.to(blendState, { factor: 1, duration: 0.6, ease: 'power2.out' })
-}
-
-function onSectionLeave() {
-  isInSection = false
-  setCursorVariant('default')
-  gsap.killTweensOf(blendState)
-  gsap.killTweensOf(targetState)
-  gsap.to(blendState,  { factor: 0, duration: 0.8, ease: 'power3.out' })
-  gsap.to(targetState, { x: 0, y: 0, duration: 0.8, ease: 'power3.out' })
-}
-
-function onSectionMouseMove(e: MouseEvent) {
-  const rect = sectionRef.value?.getBoundingClientRect()
-  if (!rect) return
-  targetState.x = e.clientX - rect.left - rect.width  / 2
-  targetState.y = e.clientY - rect.top  - rect.height / 2
-}
-
-// ── 通用：icon hover 觸發環繞 ──
-function onIconEnter(elRef: { value: HTMLElement | null }) {
-  setCursorVariant('hover')
-  const sectionRect = sectionRef.value?.getBoundingClientRect()
-  const iconEl      = elRef.value as HTMLElement | null
-  if (!sectionRect || !iconEl) return
-  const r = iconEl.getBoundingClientRect()
-  orbitCenterX = (r.left + r.width  / 2) - (sectionRect.left + sectionRect.width  / 2)
-  orbitCenterY = (r.top  + r.height / 2) - (sectionRect.top  + sectionRect.height / 2)
-  gsap.killTweensOf(orbitBlend)
-  gsap.to(orbitBlend, { factor: 1, duration: 0.5, ease: 'power2.out' })
-}
-
-function onIconLeave() {
-  setCursorVariant(isInSection ? 'drag' : 'default')
-  gsap.killTweensOf(orbitBlend)
-  gsap.to(orbitBlend, { factor: 0, duration: 0.6, ease: 'power2.out' })
-}
-
-const onGithubEnter = () => onIconEnter(githubBtnRef as { value: HTMLElement | null })
-const onGithubLeave = onIconLeave
-const onEmailEnter  = () => onIconEnter(emailBtnRef  as { value: HTMLElement | null })
-const onEmailLeave  = onIconLeave
-
-onMounted(() => {
-  if (!sectionRef.value || !isDesktop) return
-  orbRefs.value.forEach(el => {
-    if (el) gsap.set(el, { xPercent: -50, yPercent: -50 })
-  })
-  if (!prefersReducedMotion()) rafId = requestAnimationFrame(tick)
-  sectionRef.value.addEventListener('mouseenter', onSectionEnter)
-  sectionRef.value.addEventListener('mouseleave', onSectionLeave)
-  sectionRef.value.addEventListener('mousemove',  onSectionMouseMove, { passive: true })
-})
-
-onBeforeUnmount(() => {
-  cancelAnimationFrame(rafId)
-  gsap.killTweensOf(blendState)
-  gsap.killTweensOf(orbitBlend)
-  gsap.killTweensOf(targetState)
-  if (sectionRef.value) {
-    sectionRef.value.removeEventListener('mouseenter', onSectionEnter)
-    sectionRef.value.removeEventListener('mouseleave', onSectionLeave)
-    sectionRef.value.removeEventListener('mousemove',  onSectionMouseMove)
-  }
-})
+const onGithubEnter = () => setCursorVariant('hover')
+const onGithubLeave = () => setCursorVariant('default')
+const onEmailEnter  = () => setCursorVariant('hover')
+const onEmailLeave  = () => setCursorVariant('default')
 </script>
 
 <template>
   <section
-    ref="sectionRef"
     id="contact"
     class="contact-section noise-overlay"
     aria-labelledby="contact-title"
   >
     <div class="contact-bg" aria-hidden="true" />
-
-    <!-- 引力追蹤球（桌機限定） -->
-    <template v-if="isDesktop">
-      <div
-        v-for="(cfg, i) in ORB_CONFIGS"
-        :key="i"
-        :ref="(el) => { if (el) orbRefs[i] = el as HTMLElement }"
-        :class="`contact-orb contact-orb--${i + 1}`"
-        aria-hidden="true"
-      />
-    </template>
 
     <div ref="contentRef" class="contact-content">
       <span class="section-eyebrow">Contact</span>
@@ -308,47 +158,4 @@ onBeforeUnmount(() => {
   height: 48px;
 }
 
-/* 引力追蹤球 */
-.contact-orb {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  border-radius: 50%;
-  pointer-events: none;
-  will-change: transform;
-  filter: blur(2px);
-  z-index: 0;
-}
-
-.contact-orb--1 {
-  width: 16px;
-  height: 16px;
-  background: rgba(68, 97, 242, 0.9);
-  box-shadow: 0 0 12px 4px rgba(68, 97, 242, 0.6), 0 0 28px 8px rgba(68, 97, 242, 0.25);
-}
-
-.contact-orb--2 {
-  width: 13px;
-  height: 13px;
-  background: rgba(168, 85, 247, 0.8);
-  box-shadow: 0 0 10px 3px rgba(168, 85, 247, 0.55), 0 0 24px 7px rgba(168, 85, 247, 0.2);
-}
-
-.contact-orb--3 {
-  width: 11px;
-  height: 11px;
-  background: rgba(68, 97, 242, 0.65);
-  box-shadow: 0 0 9px 3px rgba(68, 97, 242, 0.4), 0 0 20px 6px rgba(68, 97, 242, 0.15);
-}
-
-.contact-orb--4 {
-  width: 9px;
-  height: 9px;
-  background: rgba(6, 182, 212, 0.55);
-  box-shadow: 0 0 8px 3px rgba(6, 182, 212, 0.4), 0 0 18px 5px rgba(6, 182, 212, 0.15);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .contact-orb { filter: none; }
-}
 </style>

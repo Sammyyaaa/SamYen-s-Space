@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onBeforeUnmount } from "vue";
+import { gsap } from "gsap";
 import { Icon } from "@iconify/vue";
 import { usePortfolioStore } from "@/stores/portfolioStore";
 import { useReveal } from "@/composables/useScrollAnimation";
@@ -84,8 +85,6 @@ const iconsInnerRef = ref<HTMLElement | null>(null);
 // Marquee state — single source of truth
 let marqueeX = 0;
 let halfWidth = 0;
-let lastTs: number | null = null;
-let rafId: number | null = null;
 const MARQUEE_SPEED = 80; // px/s
 
 // Interaction state
@@ -94,22 +93,19 @@ let isHoveringStrip = false;
 let pointerStartX = 0;
 let dragStartX = 0;
 
-function tickMarquee(ts: number) {
-  rafId = requestAnimationFrame(tickMarquee);
+// gsap.ticker callback — deltaTime is in ms
+function tickMarquee(_time: number, deltaTime: number) {
   const inner = iconsInnerRef.value;
   if (!inner) return;
 
   if (!halfWidth) halfWidth = inner.scrollWidth / 2;
 
   if (!isDragging && !isHoveringStrip) {
-    if (lastTs !== null) {
-      const dt = (ts - lastTs) / 1000;
-      marqueeX -= MARQUEE_SPEED * dt;
-      if (marqueeX <= -halfWidth) marqueeX += halfWidth;
-    }
+    const dt = deltaTime / 1000;
+    marqueeX -= MARQUEE_SPEED * dt;
+    if (marqueeX <= -halfWidth) marqueeX += halfWidth;
     inner.style.transform = `translateX(${marqueeX}px)`;
   }
-  lastTs = ts;
 }
 
 onMounted(() => {
@@ -117,11 +113,11 @@ onMounted(() => {
     // On touch devices, use CSS animation instead of RAF to avoid jank
     iconsInnerRef.value?.classList.add("is-css-marquee");
   } else {
-    rafId = requestAnimationFrame(tickMarquee);
+    gsap.ticker.add(tickMarquee);
   }
 });
 onBeforeUnmount(() => {
-  if (rafId !== null) cancelAnimationFrame(rafId);
+  gsap.ticker.remove(tickMarquee);
 });
 
 function onIconEnter() {
@@ -133,11 +129,9 @@ function onIconLeave() {
 
 function onStripMouseEnter() {
   isHoveringStrip = true;
-  lastTs = null; // reset so no time jump on resume
 }
 function onStripMouseLeave() {
   isHoveringStrip = false;
-  lastTs = null;
   if (!isDragging) setCursorVariant("default");
 }
 
@@ -179,7 +173,6 @@ function onStripPointerUp(e?: PointerEvent) {
   ) {
     strip.releasePointerCapture(e.pointerId);
   }
-  lastTs = null; // reset so rAF picks up from here without time jump
   setCursorVariant(isHoveringStrip ? "hover" : "default");
 }
 </script>

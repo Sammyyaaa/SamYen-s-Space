@@ -11,7 +11,10 @@ const ringRef = ref<HTMLDivElement | null>(null)
 // 追蹤 GSAP 內部位置（避免每幀讀取 ref.value 造成 getter 開銷）
 let dotX = 0, dotY = 0
 let ringX = 0, ringY = 0
-let rafId = 0
+let setDotX: (v: number) => void
+let setDotY: (v: number) => void
+let setRingX: (v: number) => void
+let setRingY: (v: number) => void
 
 function tick() {
   // 點：高 lerp 因子 → 幾乎即時跟隨
@@ -22,11 +25,9 @@ function tick() {
   ringX += (cursorX.value - ringX) * 0.12
   ringY += (cursorY.value - ringY) * 0.12
 
-  // 統一用 GSAP 的 x/y 寫入（與 scale 共用同一個 transform matrix，不衝突）
-  gsap.set(dotRef.value,  { x: dotX,  y: dotY  })
-  gsap.set(ringRef.value, { x: ringX, y: ringY })
-
-  rafId = requestAnimationFrame(tick)
+  // quickSetter 省去每幀的屬性解析開銷，與 scale 共用同一個 transform matrix
+  setDotX(dotX);  setDotY(dotY)
+  setRingX(ringX); setRingY(ringY)
 }
 
 onMounted(() => {
@@ -36,10 +37,15 @@ onMounted(() => {
   gsap.set(dotRef.value,  { xPercent: -50, yPercent: -50 })
   gsap.set(ringRef.value, { xPercent: -50, yPercent: -50, scale: 0.25 })
 
-  rafId = requestAnimationFrame(tick)
+  setDotX  = gsap.quickSetter(dotRef.value,  'x', 'px') as (v: number) => void
+  setDotY  = gsap.quickSetter(dotRef.value,  'y', 'px') as (v: number) => void
+  setRingX = gsap.quickSetter(ringRef.value, 'x', 'px') as (v: number) => void
+  setRingY = gsap.quickSetter(ringRef.value, 'y', 'px') as (v: number) => void
+
+  gsap.ticker.add(tick)
 })
 
-onBeforeUnmount(() => cancelAnimationFrame(rafId))
+onBeforeUnmount(() => gsap.ticker.remove(tick))
 
 // 基礎尺寸 160px = 最大顯示尺寸，預設縮到 0.25 = 40px
 // GPU 紋理以 160px 建立，scale 只做縮小/還原，永不放大 → 保持銳利
