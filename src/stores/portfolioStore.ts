@@ -237,7 +237,7 @@ export const usePortfolioStore = defineStore('portfolio', () => {
 
   // ── Stats ──
   const stats = ref<Stat[]>([
-    { value: '1+', label: '年前端開發' },
+    { value: '20+', label: '掌握技術' },
     { value: '7', label: '項完成專案' },
     { value: '3', label: '金融保險系統' },
     { value: '∞', label: '對細節的執著' },
