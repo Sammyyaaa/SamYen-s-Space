@@ -30,12 +30,12 @@
   --color-surface-800: #1a1a1a;
   --color-surface-700: #222222;
   --color-surface-600: #2e2e2e;
-  --color-surface-500: #3a3a3a;
-  --color-surface-400: #606060;
-  --color-surface-300: #909090;
-  --color-surface-200: #b8b8b8;
-  --color-surface-100: #d0d0d0;
-  --color-surface-50:  #e8e8e8;
+  --color-surface-500: #707070;
+  --color-surface-400: #a0a0a0;
+  --color-surface-300: #c8c8c8;
+  --color-surface-200: #cccccc;
+  --color-surface-100: #e0e0e0;
+  --color-surface-50:  #f0f0f0;
 
   /* Easing */
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
