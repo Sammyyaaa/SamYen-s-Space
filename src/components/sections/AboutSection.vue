@@ -1,166 +1,186 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
-import { Icon } from '@iconify/vue'
-import { usePortfolioStore } from '@/stores/portfolioStore'
-import { useReveal } from '@/composables/useScrollAnimation'
-import { setCursorVariant } from '@/composables/useCursor'
-import { isTouchDevice } from '@/utils/helpers'
+import { ref, computed, onMounted, onBeforeUnmount } from "vue";
+import { Icon } from "@iconify/vue";
+import { usePortfolioStore } from "@/stores/portfolioStore";
+import { useReveal } from "@/composables/useScrollAnimation";
+import { setCursorVariant } from "@/composables/useCursor";
+import { isTouchDevice } from "@/utils/helpers";
 
-const store = usePortfolioStore()
-const sectionRef = ref<HTMLElement | null>(null)
-const statsRef = ref<HTMLElement | null>(null)
-const textRef = ref<HTMLElement | null>(null)
-const skillsRef = ref<HTMLElement | null>(null)
+const store = usePortfolioStore();
+const sectionRef = ref<HTMLElement | null>(null);
+const statsRef = ref<HTMLElement | null>(null);
+const textRef = ref<HTMLElement | null>(null);
+const skillsRef = ref<HTMLElement | null>(null);
 
-useReveal(textRef, { y: 50, duration: 1.1, stagger: 0 })
-useReveal(statsRef, { y: 40, duration: 1, stagger: 0.1, start: 'top 80%' })
-useReveal(skillsRef, { y: 30, duration: 0.9, stagger: 0.06, start: 'top 82%' })
+useReveal(textRef, { y: 50, duration: 1.1, stagger: 0 });
+useReveal(statsRef, { y: 40, duration: 1, stagger: 0.1, start: "top 80%" });
+useReveal(skillsRef, { y: 30, duration: 0.9, stagger: 0.06, start: "top 82%" });
 
-const skillCategories = ['basics', 'styling', 'frameworks', 'state', 'build', 'api', 'uiux', 'devtools', 'aitools'] as const
-type SkillCategory = typeof skillCategories[number]
+const skillCategories = [
+  "basics",
+  "styling",
+  "frameworks",
+  "state",
+  "build",
+  "api",
+  "uiux",
+  "devtools",
+  "aitools",
+] as const;
+type SkillCategory = (typeof skillCategories)[number];
 
 const categoryLabel: Record<SkillCategory, string> = {
-  basics: 'Basics',
-  styling: 'Styling',
-  frameworks: 'Frameworks',
-  state: 'State Management',
-  build: 'Building Tools',
-  api: 'API',
-  uiux: 'UI/UX',
-  devtools: 'Dev Tools',
-  aitools: 'AI Development Tools',
-}
+  basics: "Basics",
+  styling: "Styling",
+  frameworks: "Frameworks",
+  state: "State Management",
+  build: "Building Tools",
+  api: "API",
+  uiux: "UI/UX",
+  devtools: "Dev Tools",
+  aitools: "AI Development Tools",
+};
 
 const skillIconMap: Record<string, string> = {
-  'HTML5': 'logos:html-5',
-  'CSS3': 'logos:css-3',
-  'JavaScript ES6+': 'logos:javascript',
-  'TypeScript': 'logos:typescript-icon',
-  'jQuery': 'logos:jquery',
-  'Sass': 'logos:sass',
-  'Bootstrap': 'logos:bootstrap',
-  'Tailwind CSS': 'logos:tailwindcss-icon',
-  'Vue': 'logos:vue',
-  'Nuxt 3': 'logos:nuxt-icon',
-  'Angular': 'logos:angular-icon',
-  'Pinia': 'logos:pinia',
-  'RxJS': 'logos:reactivex',
-  'Vite': 'logos:vitejs',
-  'npm': 'logos:npm-icon',
-  'Yarn': 'logos:yarn',
-  'Axios': 'logos:axios',
-  'Figma': 'logos:figma',
-  'Photoshop': 'logos:adobe-photoshop',
-  'Illustrator': 'logos:adobe-illustrator',
-  'ESLint': 'logos:eslint',
-  'Prettier': 'logos:prettier',
-  'Git': 'logos:git-icon',
-  'GitHub': 'logos:github-icon',
-  'SourceTree': 'logos:sourcetree',
-  'Postman': 'logos:postman-icon',
-}
+  HTML5: "logos:html-5",
+  CSS3: "logos:css-3",
+  "JavaScript ES6+": "logos:javascript",
+  TypeScript: "logos:typescript-icon",
+  jQuery: "logos:jquery",
+  Sass: "logos:sass",
+  Bootstrap: "logos:bootstrap",
+  "Tailwind CSS": "logos:tailwindcss-icon",
+  Vue: "logos:vue",
+  "Nuxt 3": "logos:nuxt-icon",
+  Angular: "logos:angular-icon",
+  Pinia: "logos:pinia",
+  RxJS: "logos:reactivex",
+  Vite: "logos:vitejs",
+  npm: "logos:npm-icon",
+  Yarn: "logos:yarn",
+  Axios: "logos:axios",
+  Figma: "logos:figma",
+  Photoshop: "logos:adobe-photoshop",
+  Illustrator: "logos:adobe-illustrator",
+  ESLint: "logos:eslint",
+  Prettier: "logos:prettier",
+  Git: "logos:git-icon",
+  GitHub: "logos:github-icon",
+  SourceTree: "logos:sourcetree",
+  Postman: "logos:postman-icon",
+};
 
 const iconSkills = computed(() =>
-  store.skills.filter(s => skillIconMap[s.name])
-)
-const iconSkillsLoop = computed(() => [...iconSkills.value, ...iconSkills.value])
+  store.skills.filter((s) => skillIconMap[s.name]),
+);
+const iconSkillsLoop = computed(() => [
+  ...iconSkills.value,
+  ...iconSkills.value,
+]);
 
-const stripRef = ref<HTMLElement | null>(null)
-const iconsInnerRef = ref<HTMLElement | null>(null)
+const stripRef = ref<HTMLElement | null>(null);
+const iconsInnerRef = ref<HTMLElement | null>(null);
 
 // Marquee state — single source of truth
-let marqueeX = 0
-let halfWidth = 0
-let lastTs: number | null = null
-let rafId: number | null = null
-const MARQUEE_SPEED = 80 // px/s
+let marqueeX = 0;
+let halfWidth = 0;
+let lastTs: number | null = null;
+let rafId: number | null = null;
+const MARQUEE_SPEED = 80; // px/s
 
 // Interaction state
-let isDragging = false
-let isHoveringStrip = false
-let pointerStartX = 0
-let dragStartX = 0
+let isDragging = false;
+let isHoveringStrip = false;
+let pointerStartX = 0;
+let dragStartX = 0;
 
 function tickMarquee(ts: number) {
-  rafId = requestAnimationFrame(tickMarquee)
-  const inner = iconsInnerRef.value
-  if (!inner) return
+  rafId = requestAnimationFrame(tickMarquee);
+  const inner = iconsInnerRef.value;
+  if (!inner) return;
 
-  if (!halfWidth) halfWidth = inner.scrollWidth / 2
+  if (!halfWidth) halfWidth = inner.scrollWidth / 2;
 
   if (!isDragging && !isHoveringStrip) {
     if (lastTs !== null) {
-      const dt = (ts - lastTs) / 1000
-      marqueeX -= MARQUEE_SPEED * dt
-      if (marqueeX <= -halfWidth) marqueeX += halfWidth
+      const dt = (ts - lastTs) / 1000;
+      marqueeX -= MARQUEE_SPEED * dt;
+      if (marqueeX <= -halfWidth) marqueeX += halfWidth;
     }
-    inner.style.transform = `translateX(${marqueeX}px)`
+    inner.style.transform = `translateX(${marqueeX}px)`;
   }
-  lastTs = ts
+  lastTs = ts;
 }
 
 onMounted(() => {
   if (isTouchDevice()) {
     // On touch devices, use CSS animation instead of RAF to avoid jank
-    iconsInnerRef.value?.classList.add('is-css-marquee')
+    iconsInnerRef.value?.classList.add("is-css-marquee");
   } else {
-    rafId = requestAnimationFrame(tickMarquee)
+    rafId = requestAnimationFrame(tickMarquee);
   }
-})
-onBeforeUnmount(() => { if (rafId !== null) cancelAnimationFrame(rafId) })
+});
+onBeforeUnmount(() => {
+  if (rafId !== null) cancelAnimationFrame(rafId);
+});
 
 function onIconEnter() {
-  if (!isDragging) setCursorVariant('hover')
+  if (!isDragging) setCursorVariant("hover");
 }
 function onIconLeave() {
-  if (!isDragging) setCursorVariant('default')
+  if (!isDragging) setCursorVariant("default");
 }
 
 function onStripMouseEnter() {
-  isHoveringStrip = true
-  lastTs = null  // reset so no time jump on resume
+  isHoveringStrip = true;
+  lastTs = null; // reset so no time jump on resume
 }
 function onStripMouseLeave() {
-  isHoveringStrip = false
-  lastTs = null
-  if (!isDragging) setCursorVariant('default')
+  isHoveringStrip = false;
+  lastTs = null;
+  if (!isDragging) setCursorVariant("default");
 }
 
 function onStripPointerDown(e: PointerEvent) {
-  const strip = stripRef.value
-  if (!strip) return
-  e.preventDefault()
-  isDragging = true
-  pointerStartX = e.clientX
-  dragStartX = marqueeX
+  const strip = stripRef.value;
+  if (!strip) return;
+  e.preventDefault();
+  isDragging = true;
+  pointerStartX = e.clientX;
+  dragStartX = marqueeX;
   if (iconsInnerRef.value) {
-    iconsInnerRef.value.style.pointerEvents = 'none'
-    if (!halfWidth) halfWidth = iconsInnerRef.value.scrollWidth / 2
+    iconsInnerRef.value.style.pointerEvents = "none";
+    if (!halfWidth) halfWidth = iconsInnerRef.value.scrollWidth / 2;
   }
-  strip.setPointerCapture(e.pointerId)
-  setCursorVariant('drag')
+  strip.setPointerCapture(e.pointerId);
+  setCursorVariant("drag");
 }
 
 function onStripPointerMove(e: PointerEvent) {
-  if (!isDragging || !iconsInnerRef.value || !halfWidth) return
-  const delta = e.clientX - pointerStartX
-  marqueeX = dragStartX + delta
+  if (!isDragging || !iconsInnerRef.value || !halfWidth) return;
+  const delta = e.clientX - pointerStartX;
+  marqueeX = dragStartX + delta;
   // Keep within loop range so it continues seamlessly after release
-  while (marqueeX > 0) marqueeX -= halfWidth
-  while (marqueeX <= -halfWidth) marqueeX += halfWidth
-  iconsInnerRef.value.style.transform = `translateX(${marqueeX}px)`
+  while (marqueeX > 0) marqueeX -= halfWidth;
+  while (marqueeX <= -halfWidth) marqueeX += halfWidth;
+  iconsInnerRef.value.style.transform = `translateX(${marqueeX}px)`;
 }
 
 function onStripPointerUp(e?: PointerEvent) {
-  if (!isDragging) return
-  isDragging = false
-  if (iconsInnerRef.value) iconsInnerRef.value.style.pointerEvents = ''
-  const strip = stripRef.value
-  if (strip && e && strip.hasPointerCapture && strip.hasPointerCapture(e.pointerId)) {
-    strip.releasePointerCapture(e.pointerId)
+  if (!isDragging) return;
+  isDragging = false;
+  if (iconsInnerRef.value) iconsInnerRef.value.style.pointerEvents = "";
+  const strip = stripRef.value;
+  if (
+    strip &&
+    e &&
+    strip.hasPointerCapture &&
+    strip.hasPointerCapture(e.pointerId)
+  ) {
+    strip.releasePointerCapture(e.pointerId);
   }
-  lastTs = null  // reset so rAF picks up from here without time jump
-  setCursorVariant(isHoveringStrip ? 'hover' : 'default')
+  lastTs = null; // reset so rAF picks up from here without time jump
+  setCursorVariant(isHoveringStrip ? "hover" : "default");
 }
 </script>
 
@@ -182,22 +202,18 @@ function onStripPointerUp(e?: PointerEvent) {
           <span class="text-gradient">SamYen</span>
         </h2>
         <div class="about-body">
+          <p>前端工程師，有金融保險前台與客戶端管理後台的開發與維護的經驗。</p>
           <p>
-            前端工程師，曾任職於毅聲科技有限公司，專注於金融保險前台與客戶端管理後台的開發與維護。
-          </p>
-          <p>
-            擅長依照產品規格文件進行切版，開發前端模組與共用元件；與 UI/UX 設計師討論設計可行性並根據 Figma 設計稿完成實作；與後端工程師串接 API，負責文件對接與測試，以及專案上版與上線部署流程。
+            擅長依照產品規格文件進行切版，開發前端模組與共用元件；與 UI/UX
+            設計師討論設計可行性並根據 Figma 設計稿完成實作；與後端工程師串接
+            API，負責文件對接與測試，以及專案上版與上線部署流程。
           </p>
         </div>
       </div>
 
       <!-- Right: Stats -->
       <div ref="statsRef" class="about-stats">
-        <div
-          v-for="stat in store.stats"
-          :key="stat.label"
-          class="about-stat"
-        >
+        <div v-for="stat in store.stats" :key="stat.label" class="about-stat">
           <span class="about-stat__value">{{ stat.value }}</span>
           <span class="about-stat__label">{{ stat.label }}</span>
         </div>
@@ -241,10 +257,14 @@ function onStripPointerUp(e?: PointerEvent) {
           :key="category"
           class="about-skills__category"
         >
-          <span class="about-skills__cat-label">{{ categoryLabel[category] }}</span>
+          <span class="about-skills__cat-label">{{
+            categoryLabel[category]
+          }}</span>
           <div class="about-skills__list">
             <span
-              v-for="skill in store.skills.filter(s => s.category === category)"
+              v-for="skill in store.skills.filter(
+                (s) => s.category === category,
+              )"
               :key="skill.name"
               class="about-skills__chip"
             >
@@ -353,8 +373,20 @@ function onStripPointerUp(e?: PointerEvent) {
   overflow-x: clip;
   padding-top: 0.75rem;
   margin-bottom: 2.5rem;
-  mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
-  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 8%,
+    black 92%,
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 8%,
+    black 92%,
+    transparent 100%
+  );
   touch-action: pan-y;
   cursor: none;
   user-select: none;
@@ -367,8 +399,12 @@ function onStripPointerUp(e?: PointerEvent) {
 }
 
 @keyframes marquee-scroll {
-  from { transform: translateX(0) }
-  to   { transform: translateX(-50%) }
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 .tech-icons-inner.is-css-marquee {
@@ -405,7 +441,10 @@ function onStripPointerUp(e?: PointerEvent) {
   border-radius: 0.75rem;
   background: var(--tech-icon-bg);
   border: 1px solid var(--tech-icon-border);
-  transition: background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
 .tech-icon-item:hover .tech-icon-wrap {
@@ -491,7 +530,7 @@ function onStripPointerUp(e?: PointerEvent) {
 }
 
 .about-skills__chip::before {
-  content: '·';
+  content: "·";
   position: absolute;
   left: 0;
   @apply text-brand-500;
