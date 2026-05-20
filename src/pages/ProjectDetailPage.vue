@@ -277,6 +277,9 @@ function navigateToProject(id: string) {
 .project-detail__section {
   @apply border border-surface-800 rounded-2xl;
   background: var(--card-bg);
+  backdrop-filter: var(--card-blur);
+  -webkit-backdrop-filter: var(--card-blur);
+  box-shadow: var(--card-shine);
   padding: 1.5rem;
 }
 
@@ -381,17 +384,21 @@ function navigateToProject(id: string) {
 }
 
 .project-detail__related-card {
-  @apply bg-surface-900 border border-surface-800 rounded-2xl overflow-hidden;
-  background: none;
+  @apply border border-surface-800 rounded-2xl overflow-hidden;
+  background: var(--card-bg);
+  backdrop-filter: var(--card-blur);
+  -webkit-backdrop-filter: var(--card-blur);
+  box-shadow: var(--card-shine);
   cursor: none;
   text-align: left;
-  transition: border-color 0.3s;
+  transition: border-color 0.3s, box-shadow 0.4s;
   display: flex;
   flex-direction: column;
 }
 
 .project-detail__related-card:hover {
   @apply border-surface-600;
+  box-shadow: var(--card-shine-hover);
 }
 
 .project-detail__related-info {

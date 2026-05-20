@@ -239,9 +239,9 @@ onBeforeUnmount(() => {
   position: relative;
   padding: 10rem 2rem;
   overflow: hidden;
-  background: rgba(255, 255, 255, 0.008);
-  backdrop-filter: blur(24px) saturate(1.6);
-  -webkit-backdrop-filter: blur(24px) saturate(1.6);
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: var(--card-blur);
+  -webkit-backdrop-filter: var(--card-blur);
   border-top: 1px solid rgba(255, 255, 255, 0.07);
 }
 

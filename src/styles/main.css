@@ -95,11 +95,14 @@
   --glass-bg-hover:     rgba(255, 255, 255, 0.16);
   --glass-border-hover: rgba(255, 255, 255, 0.32);
   /* Project cards */
-  --card-bg:           linear-gradient(145deg, #222222 0%, #181818 100%);
+  --card-bg:           rgba(255, 255, 255, 0.07);
   --card-border:       rgba(255, 255, 255, 0.06);
   --card-border-hover: rgba(255, 255, 255, 0.14);
   --card-overlay-bg:   rgba(5, 5, 7, 0.65);
-  --filter-active-bg:  linear-gradient(145deg, #222222 0%, #181818 100%);
+  --filter-active-bg:  rgba(255, 255, 255, 0.08);
+  --card-shine:        inset -1px 0 0 rgba(255,255,255,0.10), inset 0 -1px 0 rgba(255,255,255,0.10);
+  --card-shine-hover:  inset -1px 0 0 rgba(255,255,255,0.18), inset 0 -1px 0 rgba(255,255,255,0.18);
+  --card-blur:         blur(0.8px);
   --card-title-color:  #ffffff;
   /* Tech icon strip */
   --tech-icon-bg:            rgba(255, 255, 255, 0.05);
@@ -170,6 +173,9 @@ html.light-mode {
   --card-border-hover: rgba(0, 0, 0, 0.22);
   --card-overlay-bg:   rgba(245, 245, 245, 0.75);
   --filter-active-bg:  rgba(0, 0, 0, 0.05);
+  --card-shine:        none;
+  --card-shine-hover:  none;
+  --card-blur:         blur(0.8px);
   --card-title-color:  #080808;
   /* Tech icon strip */
   --tech-icon-bg:            rgba(0, 0, 0, 0.05);

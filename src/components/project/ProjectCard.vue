@@ -77,15 +77,19 @@ function navigateToProject() {
   position: relative;
   @apply rounded-2xl overflow-hidden;
   background: var(--card-bg);
+  backdrop-filter: var(--card-blur);
+  -webkit-backdrop-filter: var(--card-blur);
   border: 1px solid var(--card-border);
+  box-shadow: var(--card-shine);
   cursor: none;
-  transition: border-color 0.4s;
+  transition: border-color 0.4s, box-shadow 0.4s;
   display: flex;
   flex-direction: column;
 }
 
 .project-card:hover {
   border-color: var(--card-border-hover);
+  box-shadow: var(--card-shine-hover);
 }
 
 /* Meta */

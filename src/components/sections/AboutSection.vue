@@ -317,10 +317,14 @@ function onStripPointerUp(e?: PointerEvent) {
 .about-stat {
   @apply border border-surface-800 rounded-2xl;
   background: var(--card-bg);
+  backdrop-filter: var(--card-blur);
+  -webkit-backdrop-filter: var(--card-blur);
+  box-shadow: var(--card-shine);
   padding: 2rem 1.5rem;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+  transition: box-shadow 0.4s;
 }
 
 .about-stat__value {
@@ -458,6 +462,9 @@ function onStripPointerUp(e?: PointerEvent) {
 .about-skills__category {
   @apply border border-surface-800 rounded-2xl;
   background: var(--card-bg);
+  backdrop-filter: var(--card-blur);
+  -webkit-backdrop-filter: var(--card-blur);
+  box-shadow: var(--card-shine);
   padding: 1.25rem 1.5rem;
 }
 
