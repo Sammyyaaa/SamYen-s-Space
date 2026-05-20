@@ -48,7 +48,7 @@ src/
 1. `main.ts` → createApp + Pinia + Router → mount `#app`
 2. `App.vue` → RouterView with GSAP transition hooks
 3. `DefaultLayout.vue` → init Lenis singleton → sync ScrollTrigger
-4. `AppCursor.vue` → global mousemove listener → RAF loop for ring lag
+4. `AppCursor.vue` → global pointermove listener → `gsap.ticker` loop for ring lag（與 Lenis 共用同一條 RAF）
 5. 各 Section 的 `useReveal` / `useParallax` → onMounted 時建立 GSAP context
 
 ## 關鍵設計決策
@@ -76,15 +76,15 @@ gsap.ticker.lagSmoothing(0)
 ### GSAP Context 清理
 所有動畫透過 `gsap.context()` 包裹，在 `onBeforeUnmount` 中呼叫 `ctx.revert()` 確保動畫清理，避免記憶體洩漏。
 
-### rAF 驅動的跑馬燈（AboutSection）
-技術 icon strip 以 `requestAnimationFrame` 迴圈取代 CSS `@keyframes`，原因是 CSS animation 重啟（`animation: none` → 新 animation）在不同瀏覽器的時序行為不一致，導致拖曳後位置跳回。
+### gsap.ticker 驅動的跑馬燈（AboutSection）
+技術 icon strip 以 `gsap.ticker` 迴圈取代 CSS `@keyframes`，原因是 CSS animation 重啟（`animation: none` → 新 animation）在不同瀏覽器的時序行為不一致，導致拖曳後位置跳回。
 
-rAF 模式下 `marqueeX` 為唯一位置真相：
-- **自動捲動**：每幀 `marqueeX -= speed * dt`，超過 `-halfWidth` 時 `+= halfWidth` 無縫循環
-- **暫停**：`isHoveringStrip = true` 讓迴圈跳過更新；`lastTs = null` 在恢復時重置時間基準，避免累積死時間造成跳躍
+ticker 模式下 `marqueeX` 為唯一位置真相：
+- **自動捲動**：每幀 `marqueeX -= speed * (deltaTime / 1000)`，超過 `-halfWidth` 時 `+= halfWidth` 無縫循環；`deltaTime` 由 `gsap.ticker` callback 直接提供，無需手動追蹤時間戳
+- **暫停**：`isHoveringStrip = true` 讓迴圈跳過更新
 - **拖曳**：`onStripPointerDown` 記錄 `dragStartX = marqueeX`，`pointermove` 直接 `marqueeX = dragStartX + delta`，`pointerup` 後下一幀直接從新 `marqueeX` 繼續
 
-RAF 迴圈在 `onMounted` 啟動，`onBeforeUnmount` 呼叫 `cancelAnimationFrame` 清理。
+ticker callback 在 `onMounted` 透過 `gsap.ticker.add()` 註冊，`onBeforeUnmount` 呼叫 `gsap.ticker.remove()` 清理。
 
 ## 資料流
 

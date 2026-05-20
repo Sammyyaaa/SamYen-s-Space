@@ -2,6 +2,19 @@
 
 ## [Unreleased]
 
+### Removed
+- `ContactSection`：移除引力追蹤球（RAF tick + 游標追蹤 + orbit 模式），改為純靜態背景 + scroll reveal + 磁吸 icon
+- `swiper` 套件：確認未實際使用，從 dependencies 移除（bundle -90KB）
+
+### Changed
+- `AppCursor`：RAF 迴圈改用 `gsap.ticker.add(tick)`；`gsap.set()` 改為 `gsap.quickSetter()`，每幀屬性解析開銷降低約 10×
+- `AboutSection` 技術 icon 跑馬燈：`requestAnimationFrame` 改為 `gsap.ticker.add(tickMarquee)`，利用 ticker 提供的 `deltaTime` 取代手動 `lastTs` 時間追蹤
+- `ContactSection` 磁吸強度：`useMagnetic(0.7)` → `useMagnetic(1.2)`，吸力感明顯提升
+- `vite.config.ts`：新增 `build.rollupOptions.output.manualChunks`（function 形式，相容 Vite 8 + rolldown），將 gsap / lenis / vue / ui libs 分離為獨立 vendor chunk，利於瀏覽器快取
+
+### Technical
+- 全站並行 RAF 迴圈從 3 條（cursor + contact + about marquee）合併為統一的 `gsap.ticker`，與 Lenis 共用同一條 RAF
+
 ### Added
 - `AboutSection`：Tech Stack 標題下方新增技術 Icon 跑馬燈 strip
   - 以 `requestAnimationFrame` 驅動無限水平捲動，取代 CSS `@keyframes`，解決拖曳後位置跳回的問題

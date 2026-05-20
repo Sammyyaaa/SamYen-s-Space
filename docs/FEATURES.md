@@ -39,8 +39,8 @@
 #### About Section
 - 個人介紹文字
 - 4 格統計數字卡（年資、專案數等）
-- **技術 Icon 跑馬燈**：Tech Stack 標題正下方顯示一整排彩色技術 icon，以 `requestAnimationFrame` 驅動無限水平捲動
-  - 速度：80 px/s，捲到 `-halfWidth` 時補回 `+halfWidth` 形成無縫循環
+- **技術 Icon 跑馬燈**：Tech Stack 標題正下方顯示一整排彩色技術 icon，以 `gsap.ticker` 驅動無限水平捲動
+  - 速度：80 px/s，捲到 `-halfWidth` 時補回 `+halfWidth` 形成無縫循環；delta 時間由 ticker 的 `deltaTime` 參數直接提供
   - **Hover 暫停**：滑鼠進入整條 strip 時停止捲動；離開後從原位繼續
   - **拖曳捲動**：`pointerdown / pointermove / pointerup` 手勢直接拖動 strip，鬆手後從拖放位置無縫繼續自動捲動
   - **游標互動**：hover 切換為 `hover` variant；拖曳時切換為 `drag` variant
@@ -56,7 +56,7 @@
 
 #### Contact Section
 - Email icon（`x0710078@gmail.com`）+ GitHub icon 並排，48px 尺寸、5rem 間距
-- 兩個 icon hover 時觸發相同的引力球環繞效果（`useMagnetic` + orbitCenter 切換）
+- 兩個 icon 具備磁吸效果（`useMagnetic(1.2)`），hover 時游標切換為 `hover` variant
 - 背景漸層光暈
 
 #### 頁面過渡
@@ -78,7 +78,6 @@
 
 ### 🚧 待開發
 
-- [ ] Swiper 行動端作品輪播
 - [ ] 實際作品截圖圖片
 - [ ] WebGL / Three.js 背景粒子效果
 - [ ] Mouse parallax（游標帶動元素偏移）

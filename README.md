@@ -7,9 +7,8 @@
 - **自定義磁吸游標**：雙層設計，6 種 variant，`mix-blend-mode: difference` 全場景可見
 - **暗色 / 亮色主題**：`html.light-mode` class 驅動，所有色彩透過 CSS 變數自動切換
 - **GSAP 動畫系統**：ScrollTrigger 滾動揭示、頁面 fade+slide 過渡、Hero 文字入場
-- **Lenis 慣性滾動**：與 GSAP ScrollTrigger 完整同步
-- **技術 Icon 跑馬燈**：rAF 驅動無限捲動，支援 hover 暫停與 pointer 拖曳
-- **Contact 引力球**：游標追蹤 + icon hover 觸發環繞效果（`useMagnetic`）
+- **Lenis 慣性滾動**：與 GSAP ScrollTrigger 完整同步，所有 RAF 動畫統一至 `gsap.ticker`
+- **技術 Icon 跑馬燈**：`gsap.ticker` 驅動無限捲動，支援 hover 暫停與 pointer 拖曳
 - **作品詳情頁**：完整專案說明、技術標籤、連結按鈕（無連結時自動 disabled）
 
 ## 技術棧
@@ -22,7 +21,6 @@
 | 樣式 | Tailwind CSS v4 (`@tailwindcss/vite`) |
 | 動畫 | GSAP 3 + ScrollTrigger |
 | 滾動 | Lenis 1 (慣性平滑滾動) |
-| 輪播 | Swiper 12 |
 | Icon | @iconify/vue 5 (`logos:*` 系列) |
 | 工具 | VueUse 14、Pinia 3、Vue Router 4 |
 
@@ -59,7 +57,7 @@ npm run preview
 ├── MarqueeSection   — 純 CSS 無限跑馬燈文字帶
 ├── ProjectsSection  — 作品集網格（All / Featured 篩選）
 ├── AboutSection     — 個人簡介、統計數字、技術 icon 跑馬燈、技術棧分類
-└── ContactSection   — Email + GitHub icon（引力球環繞效果）
+└── ContactSection   — Email + GitHub icon（磁吸效果）
 
 作品詳情頁 (/project/:id)
 └── 完整說明、功能分區、技術標籤、前往查看按鈕
