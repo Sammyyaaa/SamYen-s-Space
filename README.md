@@ -1,6 +1,7 @@
 # SamYen — Immersive Digital Portfolio
 
-高質感沉浸式數位作品集，以科技感暗黑美學、流暢動畫與互動敘事為核心。
+基於 Vue 3、GSAP 與 Lenis 打造的沉浸式數位個人作品集。
+以暗黑科技美學為主視覺語言並支援亮色模式切換，整合自定義磁吸游標（6 種 variant）、ScrollTrigger 滾動揭示、慣性平滑滾動與頁面過渡，實現全場景流暢互動體驗。
 
 ## 核心特色
 
