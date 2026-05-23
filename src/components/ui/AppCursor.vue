@@ -17,9 +17,9 @@ let setRingX: (v: number) => void
 let setRingY: (v: number) => void
 
 function tick() {
-  // 點：高 lerp 因子 → 幾乎即時跟隨
-  dotX  += (cursorX.value - dotX)  * 0.85
-  dotY  += (cursorY.value - dotY)  * 0.85
+  // 點：直接賦值 → 與原生游標同等即時
+  dotX = cursorX.value
+  dotY = cursorY.value
 
   // 環：低 lerp 因子 → 滯後感
   ringX += (cursorX.value - ringX) * 0.12
