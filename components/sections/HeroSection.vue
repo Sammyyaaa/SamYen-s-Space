@@ -71,27 +71,28 @@ onMounted(() => {
   if (isDesktop) {
     const tl = gsap.timeline({ delay: 0.2 })
 
-    // Stagger title words
-    tl.from('.hero-title__word', {
-      y: '100%',
-      opacity: 0,
-      duration: 1.2,
-      stagger: 0.12,
-      ease: 'power4.out',
-    })
-    .from(
+    // Stagger title words — fromTo() 明確指定 TO 值，避免讀到 CSS opacity:0 當作終態
+    tl.fromTo(
+      '.hero-title__word',
+      { y: '100%', opacity: 0 },
+      { y: '0%', opacity: 1, duration: 1.2, stagger: 0.12, ease: 'power4.out' },
+    )
+    .fromTo(
       subtitleRef.value,
-      { y: 30, opacity: 0, duration: 0.9, ease: 'power3.out' },
+      { y: 30, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.9, ease: 'power3.out' },
       '-=0.6',
     )
-    .from(
+    .fromTo(
       ctaRef.value,
-      { y: 20, opacity: 0, duration: 0.8, ease: 'power3.out' },
+      { y: 20, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out' },
       '-=0.5',
     )
-    .from(
+    .fromTo(
       scrollHintRef.value,
-      { opacity: 0, duration: 1, ease: 'power2.out' },
+      { opacity: 0 },
+      { opacity: 1, duration: 1, ease: 'power2.out' },
       '-=0.2',
     )
   }
@@ -466,6 +467,22 @@ function scrollToProjects() {
 @keyframes fade-up {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }
+}
+
+/* Desktop: CSS 初始隱藏，防止 SSR 先顯示再 GSAP 動畫的閃爍，由 GSAP timeline fromTo() 負責揭示 */
+@media (min-width: 1024px) {
+  .hero-title__word {
+    opacity: 0;
+  }
+  .hero-subtitle {
+    opacity: 0;
+  }
+  .hero-cta-group {
+    opacity: 0;
+  }
+  .hero-scroll-hint {
+    opacity: 0;
+  }
 }
 
 @keyframes title-slide-up {
