@@ -1,14 +1,14 @@
 # SamYen — Immersive Digital Portfolio
 
-基於 Vue 3、GSAP 與 Lenis 打造的沉浸式數位個人作品集。
-以暗黑科技美學為主視覺語言並支援亮色模式切換，整合自定義磁吸游標（6 種 variant）、ScrollTrigger 滾動揭示、慣性平滑滾動與頁面過渡，實現全場景流暢互動體驗。
+基於 Vue 3、GSAP 與原生捲動打造的沉浸式數位個人作品集。
+以暗黑科技美學為主視覺語言並支援亮色模式切換，整合自定義磁吸游標（6 種 variant）、ScrollTrigger 滾動揭示、GPU 合成層原生捲動與頁面過渡，實現全場景流暢互動體驗。
 
 ## 核心特色
 
 - **自定義磁吸游標**：雙層設計，6 種 variant，`mix-blend-mode: difference` 全場景可見
 - **暗色 / 亮色主題**：`html.light-mode` class 驅動，所有色彩透過 CSS 變數自動切換
 - **GSAP 動畫系統**：ScrollTrigger 滾動揭示、頁面 fade+slide 過渡、Hero 文字入場
-- **Lenis 慣性滾動**：與 GSAP ScrollTrigger 完整同步，所有 RAF 動畫統一至 `gsap.ticker`
+- **原生捲動優化**：瀏覽器原生捲動（GPU 合成層），GSAP ScrollTrigger 自動同步，`lagSmoothing` 防幀率跳動
 - **技術 Icon 跑馬燈**：`gsap.ticker` 驅動無限捲動，支援 hover 暫停與 pointer 拖曳
 - **作品詳情頁**：完整專案說明、技術標籤、連結按鈕（無連結時自動 disabled）
 
@@ -21,7 +21,7 @@
 | 建置 | Vite 8 |
 | 樣式 | Tailwind CSS v4 (`@tailwindcss/vite`) |
 | 動畫 | GSAP 3 + ScrollTrigger |
-| 滾動 | Lenis 1 (慣性平滑滾動) |
+| 滾動 | 原生瀏覽器捲動（GPU 合成優化）|
 | Icon | @iconify/vue 5 (`logos:*` 系列) |
 | 工具 | VueUse 14、Pinia 3、Vue Router 4 |
 
@@ -68,8 +68,8 @@ npm run preview
 
 | 文件 | 說明 |
 |------|------|
-| [ARCHITECTURE.md](./ARCHITECTURE.md) | 架構設計、目錄結構、資料流 |
-| [DEVELOPMENT.md](./DEVELOPMENT.md) | 開發規範、命名規則、新增流程 |
-| [FEATURES.md](./FEATURES.md) | 功能清單與完成狀態 |
-| [TESTING.md](./TESTING.md) | 測試規範與指南 |
-| [CHANGELOG.md](./CHANGELOG.md) | 更新日誌 |
+| [ARCHITECTURE.md](./docs/ARCHITECTURE.md) | 架構設計、目錄結構、資料流 |
+| [DEVELOPMENT.md](./docs/DEVELOPMENT.md) | 開發規範、命名規則、新增流程 |
+| [FEATURES.md](./docs/FEATURES.md) | 功能清單與完成狀態 |
+| [TESTING.md](./docs/TESTING.md) | 測試規範與指南 |
+| [CHANGELOG.md](./docs/CHANGELOG.md) | 更新日誌 |
