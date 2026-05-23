@@ -22,7 +22,7 @@ const { elRef: backBtnRef } = useMagnetic(0.3)
 
 function navigateToProject(id: string) {
   transitionStore.isProjectToProject = true
-  navigateTo({ name: 'project-id', params: { id } })
+  navigateTo(`/project/${id}`)
 }
 </script>
 

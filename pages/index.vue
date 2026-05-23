@@ -25,12 +25,14 @@ onMounted(() => {
 </script>
 
 <template>
-  <HeroSection />
-  <MarqueeSection />
-  <ProjectsSection />
-  <MarqueeSection />
-  <template v-if="belowFoldReady">
-    <AboutSection />
-    <ContactSection />
-  </template>
+  <div>
+    <HeroSection />
+    <MarqueeSection />
+    <ProjectsSection />
+    <MarqueeSection />
+    <template v-if="belowFoldReady">
+      <AboutSection />
+      <ContactSection />
+    </template>
+  </div>
 </template>

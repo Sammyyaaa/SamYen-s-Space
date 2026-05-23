@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useRouter } from 'vue-router'
 import { setCursorVariant } from '@/composables/useCursor'
 import { formatIndex } from '@/utils/helpers'
 import type { Project } from '@/types'
@@ -10,14 +9,13 @@ const props = defineProps<{
   index: number
 }>()
 
-const router = useRouter()
 const cardRef = ref<HTMLElement | null>(null)
 
 function onEnter() { setCursorVariant('project') }
 function onLeave() { setCursorVariant('default') }
 
 function navigateToProject() {
-  router.push({ name: 'project', params: { id: props.project.id } })
+  navigateTo(`/project/${props.project.id}`)
 }
 </script>
 

@@ -5,6 +5,7 @@ let initialized = false
 
 export function useTheme() {
   function applyTheme(dark: boolean) {
+    if (!import.meta.client) return
     document.documentElement.classList.toggle('light-mode', !dark)
     try { localStorage.setItem('theme', dark ? 'dark' : 'light') } catch { /* ignore */ }
   }
@@ -15,7 +16,7 @@ export function useTheme() {
   }
 
   function initTheme() {
-    if (initialized) return
+    if (initialized || !import.meta.client) return
     initialized = true
     try {
       const saved = localStorage.getItem('theme')

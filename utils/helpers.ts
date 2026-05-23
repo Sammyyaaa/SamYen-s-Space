@@ -51,9 +51,13 @@ export const formatIndex = (index: number): string => padNumber(index + 1)
 // ── Device detection ──
 
 /** Check if device supports touch */
-export const isTouchDevice = (): boolean =>
-  'ontouchstart' in window || navigator.maxTouchPoints > 0
+export const isTouchDevice = (): boolean => {
+  if (!import.meta.client) return false
+  return 'ontouchstart' in window || navigator.maxTouchPoints > 0
+}
 
 /** Check if reduced motion is preferred */
-export const prefersReducedMotion = (): boolean =>
-  window.matchMedia('(prefers-reduced-motion: reduce)').matches
+export const prefersReducedMotion = (): boolean => {
+  if (!import.meta.client) return false
+  return window.matchMedia('(prefers-reduced-motion: reduce)').matches
+}

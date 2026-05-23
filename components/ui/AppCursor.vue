@@ -55,11 +55,12 @@ const variants = {
   hover:   { ringScale: 0.45,  ringOpacity: 0.9, dotScale: 0.4, ringBorder: 3.3 },
   text:    { ringScale: 0.7,   ringOpacity: 0.4, dotScale: 0,   ringBorder: 2.1 },
   link:    { ringScale: 0.5,   ringOpacity: 0.9, dotScale: 1.2, ringBorder: 3   },
-  project: { ringScale: 0.875, ringOpacity: 0.7, dotScale: 0,   ringBorder: 1.7 },
+  project: { ringScale: 0.875, ringOpacity: 0.7, dotScale: 0.4, ringBorder: 1.7 },
   drag:    { ringScale: 0.55,  ringOpacity: 0.7, dotScale: 0.3, ringBorder: 2.7 },
 } as const
 
 watch(() => store.variant, (v) => {
+  if (!ringRef.value || !dotRef.value) return
   const cfg = variants[v] ?? variants.default
 
   gsap.to(ringRef.value, {

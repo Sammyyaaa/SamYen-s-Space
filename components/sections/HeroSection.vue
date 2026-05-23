@@ -5,7 +5,7 @@ import { setCursorVariant, useMagnetic } from '@/composables/useCursor'
 
 const typedText = ref('')
 
-const isDesktop = window.innerWidth >= 1024
+const isDesktop = import.meta.client ? window.innerWidth >= 1024 : false
 const eyebrowPhrases = isDesktop
   ? ['Frontend Engineer · Precision · Craft · Reliable · Systematic · Detail-Driven']
   : [
@@ -29,7 +29,7 @@ function runTypewriter() {
     rafId = requestAnimationFrame(tick)
     if (now < pauseUntil) return
 
-    const current = eyebrowPhrases[phraseIndex]
+    const current = eyebrowPhrases[phraseIndex] ?? ''
 
     if (!isDeleting) {
       charIndex++
@@ -180,7 +180,7 @@ function scrollToProjects() {
           href="#contact"
           class="hero-cta hero-cta--secondary"
           @click.prevent="scrollToSection('#contact')"
-          @mouseenter="setCursorVariant('link')"
+          @mouseenter="setCursorVariant('hover')"
           @mouseleave="setCursorVariant('default')"
         >
           Get in Touch

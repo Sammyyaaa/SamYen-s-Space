@@ -13,6 +13,16 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
   ],
 
+  components: {
+    dirs: [{ path: '~/components', pathPrefix: false }],
+  },
+
+  nitro: {
+    experimental: {
+      websocket: false,
+    },
+  },
+
   vite: {
     plugins: [tailwindcss()],
     build: {

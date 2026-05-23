@@ -4,8 +4,7 @@ import { useRouter, useRoute } from 'vue-router'
 import { gsap } from 'gsap'
 import { useWindowScroll } from '@vueuse/core'
 import { setCursorVariant, useMagnetic } from '@/composables/useCursor'
-import { useTheme } from '@/composables/useTheme'
-import { pendingScrollTarget } from '@/composables/usePageTransition'
+import { useTheme } from '~/composables/useTheme'
 
 const router = useRouter()
 const route = useRoute()
@@ -16,6 +15,7 @@ const isMenuOpen = ref(false)
 const navRef = ref<HTMLElement | null>(null)
 const { elRef: menuBtnRef } = useMagnetic(0.3)
 const { isDark, toggleTheme, initTheme } = useTheme()
+const transitionStore = useTransitionStore()
 
 // Desktop center links (Contact 移至右側 CTA)
 const navLinks = [
@@ -28,7 +28,7 @@ watch(scrollY, (y) => {
   isScrolled.value = y > 50
 })
 
-const isDesktop = window.innerWidth >= 1024
+const isDesktop = import.meta.client ? window.innerWidth >= 1024 : false
 
 onMounted(() => {
   initTheme()
@@ -42,6 +42,15 @@ onMounted(() => {
   })
 })
 
+function goHome() {
+  if (route.name === 'index') {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  } else {
+    transitionStore.isReturningHome = true
+    router.push({ name: 'index' })
+  }
+}
+
 function toggleMenu() {
   isMenuOpen.value = !isMenuOpen.value
 }
@@ -52,9 +61,10 @@ function closeMenu() {
 
 function scrollTo(href: string) {
   closeMenu()
-  if (route.name !== 'home') {
-    pendingScrollTarget.value = href
-    router.push({ name: 'home' })
+  if (route.name !== 'index') {
+    transitionStore.isReturningHome = true
+    transitionStore.pendingScrollTarget = href
+    router.push({ name: 'index' })
   } else {
     const el = document.querySelector(href)
     el?.scrollIntoView({ behavior: 'smooth' })
@@ -76,6 +86,7 @@ function scrollTo(href: string) {
         href="/"
         class="nav-logo"
         aria-label="SamYen home"
+        @click.prevent="goHome"
         @mouseenter="setCursorVariant('hover')"
         @mouseleave="setCursorVariant('default')"
       >
@@ -89,7 +100,7 @@ function scrollTo(href: string) {
             :href="link.href"
             class="nav-link"
             @click.prevent="scrollTo(link.href)"
-            @mouseenter="setCursorVariant('link')"
+            @mouseenter="setCursorVariant('hover')"
             @mouseleave="setCursorVariant('default')"
           >
             {{ link.label }}

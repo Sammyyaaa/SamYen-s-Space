@@ -1,6 +1,7 @@
 import { nextTick } from 'vue'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
+import { setCursorVariant } from '~/composables/useCursor'
 
 export function usePageTransition() {
   const route = useRoute()
@@ -50,6 +51,7 @@ export function usePageTransition() {
 
   function leave(el: Element, done: () => void) {
     store.isTransitioning = true
+    setCursorVariant('default')
     if (store.isProjectToProject) {
       gsap.to(el, { opacity: 0, duration: 0.35, ease: 'power3.in', onComplete: done })
     } else {

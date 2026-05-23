@@ -14,15 +14,17 @@ const { enter, leave } = usePageTransition()
     使所有 position: fixed 子元素的基準變為 layout 而非 viewport，
     導致捲動後游標與導覽列偏移至可視區域外。
   -->
-  <AppCursor />
+  <ClientOnly><AppCursor /></ClientOnly>
   <AppNav />
 
-  <NuxtPage
-    :transition="{
-      mode: 'out-in',
-      css: false,
-      onEnter: enter,
-      onLeave: leave,
-    }"
-  />
+  <NuxtLayout>
+    <NuxtPage
+      :transition="{
+        mode: 'out-in',
+        css: false,
+        onEnter: enter,
+        onLeave: leave,
+      }"
+    />
+  </NuxtLayout>
 </template>
