@@ -1,6 +1,19 @@
 # CHANGELOG.md
 
-## [Unreleased]
+## [0.2.0] - 2026-05-24
+
+### Migration
+- 從 Vue 3 + Vite 遷移至 Nuxt 4（srcDir: '.'，Nitro server，file-based routing）
+- SSR hydration 修復：AppCursor 以 `<ClientOnly>` 包覆，isTouchDevice 加 `import.meta.client` guard
+- 路由改以路徑字串導航（`navigateTo('/project/${id}')`），移除 Vue Router named-route 依賴
+- 頁面過渡修復：`pages/index.vue` 改用單一根節點（`<div>` wrapper），解決 GSAP `leave()` Fragment 問題
+- 游標系統修復：`leave()` 內新增 `setCursorVariant('default')` 防止跨頁後游標卡大
+- `project` variant `dotScale`：0 → 0.4（游標小白點在專案卡 hover 時不再消失）
+- 導航連結游標：`setCursorVariant('link')` → `'hover'`（Work / About / Skills 中白點正常反應）
+- `AppNav scrollTo`：從非首頁點擊導航連結時設 `isReturningHome = true`，確保 deferred section 已 mount
+- `AppNav` logo：改為 SPA 路由（`@click.prevent` + `goHome()`），不再觸發整頁重新整理
+- GSAP null target 修復：`AppCursor` watch 加 ref null guard（touch 模式 refs 為 null）
+- WSL2 開發環境：新增 `NITRO_NO_UNIX_SOCKET=1` + `scripts/fix-unix-socket.cjs` monkey-patch
 
 ### Removed
 - `lenis` 套件（`npm uninstall lenis`）：移除慣性滾動，全站改為瀏覽器原生捲動（GPU 合成層級，在低階裝置上更流暢）

@@ -1,6 +1,6 @@
 # SamYen — Immersive Digital Portfolio
 
-基於 Vue 3、GSAP 與原生捲動打造的沉浸式數位個人作品集。
+基於 Nuxt 4 + Vue 3、GSAP 與原生捲動打造的沉浸式數位個人作品集。
 以暗黑科技美學為主視覺語言並支援亮色模式切換，整合自定義磁吸游標（6 種 variant）、ScrollTrigger 滾動揭示、GPU 合成層原生捲動與頁面過渡，實現全場景流暢互動體驗。
 
 ## 核心特色
@@ -16,14 +16,14 @@
 
 | 類別 | 技術 |
 |------|------|
-| 框架 | Vue 3 (Composition API, `<script setup>`) |
+| 框架 | Nuxt 4 + Vue 3 (Composition API, `<script setup>`) |
 | 語言 | TypeScript |
-| 建置 | Vite 8 |
+| 建置 | Nitro（Nuxt 內建） |
 | 樣式 | Tailwind CSS v4 (`@tailwindcss/vite`) |
 | 動畫 | GSAP 3 + ScrollTrigger |
 | 滾動 | 原生瀏覽器捲動（GPU 合成優化）|
 | Icon | @iconify/vue 5 (`logos:*` 系列) |
-| 工具 | VueUse 14、Pinia 3、Vue Router 4 |
+| 工具 | VueUse 14、Pinia 3、Nuxt 內建路由 |
 
 ## 快速開始
 
@@ -33,7 +33,7 @@ npm install
 
 # 啟動開發伺服器
 npm run dev
-# → http://localhost:5173
+# → http://localhost:3000
 
 # 生產建置
 npm run build
@@ -48,7 +48,8 @@ npm run preview
 |------|------|
 | `npm run dev` | 啟動 HMR 開發伺服器 |
 | `npm run build` | TypeScript 型別檢查 + 生產建置 |
-| `npm run preview` | 本地預覽 dist/ |
+| `npm run preview` | 本地預覽 .output/ |
+| `npm run prepare` | 生成 Nuxt TypeScript 型別宣告 |
 
 ## 頁面結構
 
