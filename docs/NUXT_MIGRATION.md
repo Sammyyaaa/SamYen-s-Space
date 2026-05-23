@@ -2,6 +2,47 @@
 
 > 建立日期：2026-05-23
 
+---
+
+## 結構對照：Vue 3 原版 vs Nuxt 4
+
+```
+Vue 3 + Vite（vue3-project 分支）     Nuxt 4（nuxt4-project 分支）
+─────────────────────────────────     ────────────────────────────
+index.html                        →   (Nuxt 自動生成，內容移至 nuxt.config.ts app.head)
+vite.config.ts                    →   nuxt.config.ts
+src/main.ts                       →   (移除，Nuxt 自動初始化)
+src/App.vue                       →   app.vue（RouterView → NuxtPage）
+src/router/index.ts               →   (移除，改為 pages/ 檔案路由)
+                                      middleware/cursor-reset.ts（取代 router.beforeEach）
+src/pages/HomePage.vue            →   pages/index.vue
+src/pages/ProjectDetailPage.vue   →   pages/project/[id].vue
+src/layouts/DefaultLayout.vue     →   layouts/default.vue
+src/components/ui/                →   components/ui/
+src/components/sections/          →   components/sections/
+src/components/project/           →   components/project/
+src/composables/useCursor.ts      →   composables/useCursor.ts（module-level refs → cursorStore）
+src/composables/usePageTransition →   composables/usePageTransition.ts（module-level refs → transitionStore）
+src/composables/useScrollAnimation→   composables/useScrollAnimation.ts（直接搬移）
+src/stores/portfolioStore.ts      →   stores/portfolioStore.ts（直接搬移）
+                                      stores/cursorStore.ts（新增）
+                                      stores/transitionStore.ts（新增）
+                                      plugins/gsap.client.ts（新增，取代 layout 內的 gsap.registerPlugin）
+src/types/index.ts                →   types/index.ts（直接搬移）
+src/utils/helpers.ts              →   utils/helpers.ts（直接搬移）
+src/styles/main.css               →   assets/styles/main.css
+public/                           →   public/（原封不動）
+```
+
+### 路由名稱對照
+
+| Vue 3 路由名稱 | Nuxt 4 自動生成名稱 | 路徑 |
+|--------------|------------------|------|
+| `home` | `index` | `/` |
+| `project` | `project-id` | `/project/:id` |
+
+---
+
 ## 背景與目標
 
 專案目前為 Vue 3 + Vite 8 架構，升級至 Nuxt 4.1.3 可獲得：
