@@ -37,3 +37,22 @@ __screenshots__/
 
 # Vite
 *.timestamp-*-*.mjs
+
+# Nuxt
+.nuxt/
+.output/
+.nitro/
+
+# Claude Code
+.claude/
+
+# WSL2 / shell environment dotfiles
+.bash_profile
+.bashrc
+.profile
+.zprofile
+.zshrc
+.gitconfig
+.gitmodules
+.ripgreprc
+.mcp.json
