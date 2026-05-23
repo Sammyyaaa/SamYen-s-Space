@@ -10,18 +10,16 @@
 - 6 種 variant：`default / hover / text / link / project / drag`
 - 觸控裝置自動停用（`isTouchDevice()` 檢測）
 - 磁吸效果：`useMagnetic(strength)` 讓按鈕在游標靠近時吸附
+- 靜止偵測優化：移動量 < 0.05px 時跳過 GPU 更新，減少不必要合成觸發
 
 #### Hero Section
 - 全螢幕高度（`100dvh`）
 - GSAP 入場動畫：標題文字逐字 stagger 上浮
-- 視差背景：滾動時背景圖層以 0.4 速度偏移
-- 浮動 CTA 動畫：GSAP `yoyo` 無限上下浮動
-- 滾動提示圖示：進入滾動後自動消失
 - 背景動態光暈（CSS animation + blur）
 
-#### 頁面平滑滾動
-- Lenis 慣性滾動（duration: 1.2s, expo easing）
-- 與 GSAP ScrollTrigger 完整同步
+#### 頁面滾動
+- 瀏覽器原生捲動（GPU 合成層級，在低階裝置上最流暢）
+- GSAP ScrollTrigger 自動監聽原生 scroll，section 動畫正常觸發
 - 支援鍵盤導航
 
 #### 導航列

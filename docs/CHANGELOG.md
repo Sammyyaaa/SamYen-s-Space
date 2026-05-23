@@ -3,6 +3,19 @@
 ## [Unreleased]
 
 ### Removed
+- `lenis` 套件（`npm uninstall lenis`）：移除慣性滾動，全站改為瀏覽器原生捲動（GPU 合成層級，在低階裝置上更流暢）
+- `useLenis` composable 實作（改為空 stub 保留 import 相容性，`getLenis()` 永遠回傳 `null`）
+- `HeroSection` 視差背景效果（移除 `useParallax(sectionRef, bgRef)`，消除每幀移動大型模糊元素的 GPU 開銷）
+
+### Changed
+- `DefaultLayout`：移除 Lenis RAF 驅動與 `ScrollTrigger.update` 同步；改由 ScrollTrigger 自動監聽原生 scroll；保留 `gsap.ticker.lagSmoothing(500, 33)` 防止掉幀追幀
+- `AppCursor`：tick 函式加入靜止偵測（threshold `0.05px`），點與環各自獨立判斷，靜止時跳過 `quickSetter` 呼叫，減少不必要 GPU 合成觸發
+- `HeroSection` orb：desktop 尺寸縮減（藍 `600px→500px`、紫 `500px→400px`），`filter: blur` 從 `80px` 降至 `50px`，降低 GPU 光柵化面積
+- `useReveal` 預設參數：y `50→30`、duration `1→0.7`、ease `power4.out→power3.out`，section 入場幀工作量減少
+- `ProjectsSection`：`useReveal` 傳入參數配合調整（y `60/50→30`，duration `1.1/1→0.7`）
+- 所有 `getLenis()` 呼叫替換為原生 `window.scrollTo` / `element.scrollIntoView`（`AppNav`、`ScrollToTop`、`usePageTransition`、`ProjectDetailPage`）
+
+### Removed
 - `ContactSection`：移除引力追蹤球（RAF tick + 游標追蹤 + orbit 模式），改為純靜態背景 + scroll reveal + 磁吸 icon
 - `swiper` 套件：確認未實際使用，從 dependencies 移除（bundle -90KB）
 
