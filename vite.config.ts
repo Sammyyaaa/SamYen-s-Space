@@ -20,8 +20,7 @@ export default defineConfig({
       output: {
         manualChunks(id: string) {
           if (id.includes('node_modules/gsap'))        return 'vendor-gsap'
-          if (id.includes('node_modules/lenis'))       return 'vendor-lenis'
-          if (id.includes('node_modules/@vueuse') ||
+if (id.includes('node_modules/@vueuse') ||
               id.includes('node_modules/@iconify'))    return 'vendor-ui'
           if (id.includes('node_modules/vue') ||
               id.includes('node_modules/vue-router') ||

@@ -12,8 +12,8 @@ const headingRef = ref<HTMLElement | null>(null)
 const gridRef = ref<HTMLElement | null>(null)
 
 const isMobile = window.innerWidth < 1024
-useReveal(headingRef, { y: 60, duration: 1.1 })
-useReveal(gridRef, { y: 50, duration: 1, stagger: isMobile ? 0 : 0.12, start: 'top 80%' })
+useReveal(headingRef, { y: 30, duration: 0.7 })
+useReveal(gridRef, { y: 30, duration: 0.7, stagger: isMobile ? 0 : 0.1, start: 'top 80%' })
 
 const activeFilter = ref<'all' | 'company' | 'personal' | 'team'>('all')
 

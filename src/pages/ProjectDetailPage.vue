@@ -3,7 +3,6 @@ import { computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { usePortfolioStore } from '@/stores/portfolioStore'
 import { setCursorVariant, useMagnetic } from '@/composables/useCursor'
-import { getLenis } from '@/composables/useLenis'
 import { isProjectToProject } from '@/composables/usePageTransition'
 import DefaultLayout from '@/layouts/DefaultLayout.vue'
 
@@ -22,16 +21,8 @@ if (!project.value) {
 const { elRef: backBtnRef } = useMagnetic(0.3)
 
 function navigateToProject(id: string) {
-  const lenis = getLenis()
   isProjectToProject.value = true
-  if (lenis && window.scrollY > 80) {
-    lenis.scrollTo(0, {
-      duration: 0.7,
-      onComplete: () => router.push({ name: 'project', params: { id } }),
-    })
-  } else {
-    router.push({ name: 'project', params: { id } })
-  }
+  router.push({ name: 'project', params: { id } })
 }
 </script>
 

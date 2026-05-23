@@ -5,7 +5,6 @@ import { gsap } from 'gsap'
 import { useWindowScroll } from '@vueuse/core'
 import { setCursorVariant, useMagnetic } from '@/composables/useCursor'
 import { useTheme } from '@/composables/useTheme'
-import { getLenis } from '@/composables/useLenis'
 import { pendingScrollTarget } from '@/composables/usePageTransition'
 
 const router = useRouter()
@@ -58,12 +57,7 @@ function scrollTo(href: string) {
     router.push({ name: 'home' })
   } else {
     const el = document.querySelector(href)
-    const lenis = getLenis()
-    if (lenis && el) {
-      lenis.scrollTo(el, { duration: 0.9 })
-    } else {
-      el?.scrollIntoView({ behavior: 'smooth' })
-    }
+    el?.scrollIntoView({ behavior: 'smooth' })
   }
 }
 </script>

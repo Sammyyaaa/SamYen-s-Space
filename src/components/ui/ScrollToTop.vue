@@ -3,7 +3,6 @@ import { ref, computed, onMounted, watch } from 'vue'
 import { gsap } from 'gsap'
 import { useWindowScroll } from '@vueuse/core'
 import { setCursorVariant } from '@/composables/useCursor'
-import { getLenis } from '@/composables/useLenis'
 
 const { y: scrollY } = useWindowScroll()
 const btnRef = ref<HTMLButtonElement | null>(null)
@@ -31,12 +30,7 @@ onMounted(() => {
 })
 
 function scrollToTop() {
-  const lenis = getLenis()
-  if (lenis) {
-    lenis.scrollTo(0, { duration: 1.4 })
-  } else {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
-  }
+  window.scrollTo({ top: 0, behavior: 'smooth' })
 }
 </script>
 

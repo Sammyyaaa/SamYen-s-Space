@@ -2,7 +2,6 @@
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { gsap } from 'gsap'
 import { setCursorVariant, useMagnetic } from '@/composables/useCursor'
-import { useParallax } from '@/composables/useScrollAnimation'
 
 const typedText = ref('')
 
@@ -66,9 +65,6 @@ const scrollHintRef = ref<HTMLElement | null>(null)
 const { elRef: ctaBtnRef } = useMagnetic(0.5)
 const { elRef: titleWord1Ref } = useMagnetic(0.2)
 const { elRef: titleWord2Ref } = useMagnetic(0.2)
-
-// Background parallax on scroll
-useParallax(sectionRef, bgRef, { speed: 0.4 })
 
 // Hero entrance animation
 onMounted(() => {
@@ -233,20 +229,22 @@ function scrollToProjects() {
 }
 
 .hero-orb--blue {
-  width: 600px;
-  height: 600px;
+  width: 500px;
+  height: 500px;
   background: var(--orb-primary);
   top: -10%;
   right: -5%;
+  filter: blur(50px);
   animation: orb-float 8s ease-in-out infinite;
 }
 
 .hero-orb--purple {
-  width: 500px;
-  height: 500px;
+  width: 400px;
+  height: 400px;
   background: var(--orb-secondary);
   bottom: -10%;
   left: -5%;
+  filter: blur(50px);
   animation: orb-float 10s ease-in-out infinite reverse;
 }
 

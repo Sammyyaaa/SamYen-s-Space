@@ -1,7 +1,6 @@
 import { ref, nextTick } from 'vue'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import { getLenis } from '@/composables/useLenis'
 import router from '@/router'
 
 const isTransitioning = ref(false)
@@ -40,12 +39,10 @@ export function usePageTransition() {
       // 確保 DOM 完整後再還原捲動位置與 refresh ScrollTrigger
       nextTick(() => {
         window.scrollTo(0, savedHomeScrollY)
-        getLenis()?.scrollTo(savedHomeScrollY, { immediate: true })
         ScrollTrigger.refresh()
       })
     } else if (!isHome) {
       window.scrollTo(0, 0)
-      getLenis()?.scrollTo(0, { immediate: true })
       ScrollTrigger.refresh()
     } else {
       ScrollTrigger.refresh()
@@ -65,10 +62,7 @@ export function usePageTransition() {
           isProjectToProject.value = false
           if (pendingScrollTarget.value) {
             const target = document.querySelector(pendingScrollTarget.value)
-            const lenis = getLenis()
-            if (lenis && target) {
-              lenis.scrollTo(target, { duration: 0.9 })
-            } else if (target) {
+            if (target) {
               target.scrollIntoView({ behavior: 'smooth' })
             }
             pendingScrollTarget.value = null

@@ -31,10 +31,10 @@ export function useReveal(
   options: RevealOptions = {},
 ) {
   const {
-    y = 50,
+    y = 30,
     opacity = 0,
-    duration = 1,
-    ease = 'power4.out',
+    duration = 0.7,
+    ease = 'power3.out',
     stagger = 0,
     delay = 0,
     start = 'top 85%',
