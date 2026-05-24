@@ -14,8 +14,12 @@ if (!project.value) {
   await navigateTo('/', { replace: true })
 }
 
-useHead({
-  title: project.value ? `${project.value.title} — SamYen` : "SamYen's Space",
+useSeoMeta({
+  title: () => project.value ? `${project.value.title} — SamYen` : "SamYen's Space",
+  description: () => project.value?.description ?? '',
+  ogTitle: () => project.value?.title ?? "SamYen's Space",
+  ogDescription: () => project.value?.description ?? '',
+  ogUrl: () => `https://samyen-s-space.vercel.app/project/${route.params.id}`,
 })
 
 const { elRef: backBtnRef } = useMagnetic(0.3)

@@ -1,5 +1,7 @@
 import tailwindcss from "@tailwindcss/vite";
 
+const SITE_URL = "https://samyen-s-space.vercel.app"; // ← 部署後確認並替換為實際 Vercel URL
+
 export default defineNuxtConfig({
   compatibilityDate: "2025-05-23",
 
@@ -9,7 +11,25 @@ export default defineNuxtConfig({
 
   css: ["~/assets/styles/main.css"],
 
-  modules: ["@pinia/nuxt"],
+  modules: ["@pinia/nuxt", "@nuxtjs/sitemap"],
+
+  site: {
+    url: SITE_URL,
+    name: "SamYen's Space",
+  },
+
+  sitemap: {
+    urls: [
+      "/",
+      "/project/nanshan-life-insurance",
+      "/project/nanshan-property-insurance",
+      "/project/nanshan-sales-platform",
+      "/project/blog-nuxt3",
+      "/project/social-vue",
+      "/project/foomosa",
+      "/project/architect-website",
+    ],
+  },
 
   components: {
     dirs: [{ path: "~/components", pathPrefix: false }],
@@ -57,8 +77,19 @@ export default defineNuxtConfig({
             "SamYen 的前端工程作品集：金融保險系統開發經驗，主要以 Vue / Nuxt / Angular 生態系與 UI/UX 設計對接。",
         },
         { property: "og:type", content: "website" },
+        { property: "og:url", content: SITE_URL },
+        { property: "og:site_name", content: "SamYen's Space" },
+        { name: "twitter:card", content: "summary" },
+        { name: "twitter:title", content: "SamYen's Space" },
+        {
+          name: "twitter:description",
+          content:
+            "SamYen 的前端工程作品集：金融保險系統開發經驗，主要以 Vue / Nuxt / Angular 生態系與 UI/UX 設計對接。",
+        },
+        { name: "robots", content: "index, follow" },
       ],
       link: [
+        { rel: "canonical", href: SITE_URL },
         { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
         { rel: "preconnect", href: "https://fonts.googleapis.com" },
         {
