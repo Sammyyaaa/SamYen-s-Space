@@ -237,7 +237,7 @@ function onStripPointerUp(e?: PointerEvent) {
             @mouseleave="onIconLeave"
           >
             <div class="tech-icon-wrap">
-              <Icon :icon="skillIconMap[skill.name]" class="tech-icon" />
+              <Icon :icon="skillIconMap[skill.name]!" class="tech-icon" />
             </div>
             <span class="tech-icon-label">{{ skill.name }}</span>
           </div>

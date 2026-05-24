@@ -13,8 +13,7 @@ export function usePageTransition() {
     gsap.set(el, { opacity: 0 })
 
     if (isHome && store.savedHomeScrollY > 0 && !store.pendingScrollTarget) {
-      // 延後至 nextTick，讓 HomePage 先 mount 所有 deferred section（belowFoldReady），
-      // 確保 DOM 完整後再還原捲動位置與 refresh ScrollTrigger
+      // 延後至 nextTick，確保 DOM 穩定後再還原捲動位置與 refresh ScrollTrigger
       nextTick(() => {
         window.scrollTo(0, store.savedHomeScrollY)
         ScrollTrigger.refresh()
