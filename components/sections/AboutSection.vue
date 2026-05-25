@@ -69,6 +69,7 @@ const skillIconMap: Record<string, string> = {
   GitHub: "logos:github-icon",
   SourceTree: "logos:sourcetree",
   Postman: "logos:postman-icon",
+  "Claude Code": "simple-icons:anthropic",
   "GitHub Copilot": "simple-icons:githubcopilot",
   "Codex CLI": "logos:openai-icon",
 };
