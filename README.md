@@ -1,6 +1,6 @@
 # SamYen — Immersive Digital Portfolio
 
-從 Vue 3 + Vite 到 Nuxt 4 的完整重構 — 沉浸式動畫、自定義磁吸游標、SSR 首屏優化，呈現暗黑科技美學的數位個人作品集。
+從 Vue 3 + Vite 到 Nuxt 4 的完整重構 — 沉浸式動畫、自定義磁吸游標、SSR 主視覺區優化，呈現暗黑科技美學的數位個人作品集。
 支援亮色模式切換，整合 GSAP ScrollTrigger、GPU 合成層原生捲動與頁面過渡，實現全場景流暢互動體驗。
 
 ## 重構升級紀錄
