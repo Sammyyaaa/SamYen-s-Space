@@ -13,7 +13,7 @@
 - 手動維護 `vite.config.ts` chunk 分割
 
 **升級動機**
-- 引入 SSR / SSG 支援，改善 SEO 與首屏效能
+- 引入 SSR / SSG 支援，改善 SEO 與主視覺區效能
 - 接入 Nuxt 生態（`@pinia/nuxt`、`@nuxtjs/sitemap`）
 - file-based routing 取代 Vue Router 手動設定
 
