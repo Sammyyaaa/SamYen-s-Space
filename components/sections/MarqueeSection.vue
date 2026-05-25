@@ -12,7 +12,7 @@ const words = [
   // Building Tools
   'Vite', '·', 'npm', '·', 'Yarn', '·',
   // API
-  'Ajax', '·', 'Axios', '·', 'Fetch', '·', 'RESTful', '·',
+  'Ajax', '·', 'Axios', '·', 'Fetch', '·', 'RESTful', '·', 'TanStack Query', '·',
   // UI/UX
   'Photoshop', '·', 'Illustrator', '·', 'Figma', '·',
   // Dev Tools

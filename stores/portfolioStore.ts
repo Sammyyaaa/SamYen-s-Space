@@ -316,6 +316,7 @@ export const usePortfolioStore = defineStore("portfolio", () => {
     { name: "Axios", category: "api" },
     { name: "Fetch", category: "api" },
     { name: "RESTful", category: "api" },
+    { name: "TanStack Query", category: "api" },
     { name: "Photoshop", category: "uiux" },
     { name: "Illustrator", category: "uiux" },
     { name: "Figma", category: "uiux" },

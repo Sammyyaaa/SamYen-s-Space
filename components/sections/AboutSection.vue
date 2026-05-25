@@ -60,6 +60,7 @@ const skillIconMap: Record<string, string> = {
   npm: "logos:npm-icon",
   Yarn: "logos:yarn",
   Axios: "logos:axios",
+  "TanStack Query": "logos:react-query",
   Figma: "logos:figma",
   Photoshop: "logos:adobe-photoshop",
   Illustrator: "logos:adobe-illustrator",
