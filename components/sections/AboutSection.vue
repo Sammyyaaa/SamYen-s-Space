@@ -69,6 +69,8 @@ const skillIconMap: Record<string, string> = {
   GitHub: "logos:github-icon",
   SourceTree: "logos:sourcetree",
   Postman: "logos:postman-icon",
+  "GitHub Copilot": "simple-icons:githubcopilot",
+  "Codex CLI": "logos:openai-icon",
 };
 
 const iconSkills = computed(() =>

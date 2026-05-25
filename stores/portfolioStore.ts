@@ -326,6 +326,8 @@ export const usePortfolioStore = defineStore("portfolio", () => {
     { name: "SourceTree", category: "devtools" },
     { name: "Postman", category: "devtools" },
     { name: "Claude Code", category: "aitools" },
+    { name: "GitHub Copilot", category: "aitools" },
+    { name: "Codex CLI", category: "aitools" },
     { name: "Spec-driven Development", category: "aitools" },
     { name: "Sandbox", category: "aitools" },
   ]);

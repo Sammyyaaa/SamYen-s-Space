@@ -18,7 +18,7 @@ const words = [
   // Dev Tools
   'ESLint', '·', 'Prettier', '·', 'Git', '·', 'GitHub', '·', 'SourceTree', '·', 'Postman', '·',
   // AI Development Tools
-  'Claude Code', '·', 'Spec-driven Development', '·', 'Sandbox', '·',
+  'Claude Code', '·', 'GitHub Copilot', '·', 'Codex CLI', '·', 'Spec-driven Development', '·', 'Sandbox', '·',
 ]
 
 // 三份確保任何螢幕寬度都不中斷
