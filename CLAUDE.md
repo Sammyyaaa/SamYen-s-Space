@@ -3,15 +3,15 @@
 ## 專案概述
 
 **SamYen — Immersive Digital Portfolio**
-Vue 3 + TypeScript + Vite + Tailwind CSS v4 + GSAP + ScrollTrigger + Lenis + Swiper + VueUse
+Nuxt 4 + Vue 3 + TypeScript + Tailwind CSS v4 + GSAP + ScrollTrigger + VueUse
 
-高質感沉浸式數位作品集網站，以暗黑科技美學、自定義磁吸游標、視差滾動、GSAP 動畫為核心視覺體驗。
+高質感沉浸式數位作品集網站，以暗黑科技美學、自定義磁吸游標、原生捲動優化、GSAP 動畫為核心視覺體驗。
 
 ## 常用指令
 
 ```bash
-npm run dev        # 啟動開發伺服器 (http://localhost:5173)
-npm run build      # 生產建置 → dist/
+npm run dev        # 啟動開發伺服器 (http://localhost:3000)
+npm run build      # TypeScript 型別檢查 + 生產建置 → .output/
 npm run preview    # 預覽生產建置
 ```
 
@@ -25,9 +25,6 @@ npm run preview    # 預覽生產建置
 
 ## 詳細文件
 
-- `./docs/README.md` — 項目介紹與快速開始
-- `./docs/ARCHITECTURE.md` — 架構、目錄結構、資料流
-- `./docs/DEVELOPMENT.md` — 開發規範、命名規則
-- `./docs/FEATURES.md` — 功能列表與完成狀態
-- `./docs/TESTING.md` — 測試規範與指南
+- `./README.md` — 項目介紹、技術棧、重構升級紀錄
 - `./docs/CHANGELOG.md` — 更新日誌
+- `./docs/archive/` — 舊版 Vue 3 + Vite 架構文件（ARCHITECTURE / DEVELOPMENT / FEATURES / TESTING）

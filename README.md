@@ -1,7 +1,28 @@
 # SamYen — Immersive Digital Portfolio
 
-基於 Nuxt 4 + Vue 3、GSAP 與原生捲動打造的沉浸式數位個人作品集。
-以暗黑科技美學為主視覺語言並支援亮色模式切換，整合自定義磁吸游標（6 種 variant）、ScrollTrigger 滾動揭示、GPU 合成層原生捲動與頁面過渡，實現全場景流暢互動體驗。
+從 Vue 3 + Vite 到 Nuxt 4 的完整重構 — 沉浸式動畫、自定義磁吸游標、SSR 首屏優化，呈現暗黑科技美學的數位個人作品集。
+支援亮色模式切換，整合 GSAP ScrollTrigger、GPU 合成層原生捲動與頁面過渡，實現全場景流暢互動體驗。
+
+## 重構升級紀錄
+
+### v0.1.0 → v0.2.0：從 Vue 3 + Vite 升級至 Nuxt 4（2026-05-24）
+
+**原始技術棧（v0.1.0）**
+- Vue 3 + Vite（純 CSR）+ Vue Router 4
+- Lenis 慣性滾動 + Swiper 輪播
+- 手動維護 `vite.config.ts` chunk 分割
+
+**升級動機**
+- 引入 SSR / SSG 支援，改善 SEO 與首屏效能
+- 接入 Nuxt 生態（`@pinia/nuxt`、`@nuxtjs/sitemap`）
+- file-based routing 取代 Vue Router 手動設定
+
+**主要變更**
+- Nitro server 取代 Vite dev server；`srcDir: '.'` 維持原有目錄結構
+- SSR hydration 處理：`AppCursor` 以 `<ClientOnly>` 包覆，`isTouchDevice` 加 `import.meta.client` guard
+- 移除 Lenis，改用瀏覽器原生捲動（GPU 合成層）
+- 移除 Swiper（bundle 減少約 90KB）
+- 統一 3 條獨立 RAF 為 `gsap.ticker` 單一管線
 
 ## 核心特色
 
@@ -69,8 +90,6 @@ npm run preview
 
 | 文件 | 說明 |
 |------|------|
-| [ARCHITECTURE.md](./docs/ARCHITECTURE.md) | 架構設計、目錄結構、資料流 |
-| [DEVELOPMENT.md](./docs/DEVELOPMENT.md) | 開發規範、命名規則、新增流程 |
-| [FEATURES.md](./docs/FEATURES.md) | 功能清單與完成狀態 |
-| [TESTING.md](./docs/TESTING.md) | 測試規範與指南 |
 | [CHANGELOG.md](./docs/CHANGELOG.md) | 更新日誌 |
+
+> ARCHITECTURE.md、DEVELOPMENT.md、FEATURES.md、TESTING.md 描述舊版 Vue 3 + Vite 架構，已歸檔至 [docs/archive/](./docs/archive/)。
