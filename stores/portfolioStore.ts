@@ -181,7 +181,9 @@ export const usePortfolioStore = defineStore("portfolio", () => {
       title: "社群網站",
       subtitle: "Side Project · Vue.js",
       description:
-        "以社群為主的網站，與好友有著良好互動以及留言、點讚、收藏等功能。這個網站使用 Vue 3 作為前端框架，來創建各種功能豐富的組件，例如個人資料頁面、文章頁面、評論系統等。運用 Vuex 進行全域狀態管理，使用 Vue Router 達成各頁面間的切換，以及 Vite 作為開發工具。",
+        "以 Vue 3 作為前端框架，仿 Instagram 的社群網站，實作個人資料頁面、文章頁面、評論系統、文章編輯等功能模組。透過 Vuex 進行全域狀態管理，統一管理文章資料、使用者資訊與頁面狀態，提升資料讀取與維護效率。",
+      contribution:
+        "Vue Router 建立多頁面路由架構，完成個人資料頁、文章詳情頁與編輯頁之間的切換流程。專案並採用 Vite 作為開發建置工具，加快開發環境啟動速度與前端開發效率。",
       tags: ["Vue 3", "Vuex", "Vue Router", "Vite"],
       tools: ["Git"],
       year: "2023",
