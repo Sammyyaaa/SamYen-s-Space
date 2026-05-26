@@ -87,6 +87,7 @@ function navigateToProject(id: string) {
       </button>
 
       <p class="project-detail__desc">{{ project.description }}</p>
+      <p v-if="project.contribution" class="project-detail__desc">{{ project.contribution }}</p>
 
       <!-- Feature sections -->
       <div v-if="project.sections?.length" class="project-detail__sections">

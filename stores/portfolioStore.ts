@@ -207,6 +207,8 @@ export const usePortfolioStore = defineStore("portfolio", () => {
       title: "Foomosa 臺中美食餐廳資訊整合平台",
       subtitle: "團隊協作 · Node.js",
       description:
+        "以 Node.js + Express + MySQL 建構的台灣美食發現平台，消費者端可依時段與天氣智能推薦餐廳、瀏覽菜單與活動優惠、留下評論評分、管理收藏清單與兌換積分；店家後台則提供菜單管理、活動上架、業務分析圖表。",
+      contribution:
         "專案負責頁面「會員專區」，透過 Chart.js 做出幸運轉盤旋轉動畫效果。經由 Node.js 串接 MySQL 資料庫取得動態資料，Session 會接收不同使用者 ID 狀態，顯示該使用者登入頁面。jQuery Ajax 請求遵守 RESTful API 動態編輯資料，在 EJS 模板中渲染出會員專區的個人介面。",
       tags: [
         "Node.js",

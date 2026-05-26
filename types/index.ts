@@ -22,6 +22,7 @@ export interface Project {
   featured?: boolean
   sections?: ProjectSection[]
   tools?: string[]
+  contribution?: string
 }
 
 export interface Stat {
