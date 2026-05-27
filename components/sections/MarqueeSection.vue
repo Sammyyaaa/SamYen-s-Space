@@ -61,6 +61,8 @@ const words = [
   'Figma',
   '·',
   // Dev Tools
+  'VSCode',
+  '·',
   'ESLint',
   '·',
   'Prettier',
