@@ -48,6 +48,7 @@
 | 滾動 | 原生瀏覽器捲動（GPU 合成優化）                     |
 | Icon | @iconify/vue 5 (`logos:*` 系列)                    |
 | 工具 | VueUse 14、Pinia 3、Nuxt 內建路由                  |
+| 程式品質 | ESLint (`@nuxt/eslint`)、Prettier               |
 
 ## 快速開始
 
@@ -68,12 +69,15 @@ npm run preview
 
 ## 常用指令
 
-| 指令              | 說明                           |
-| ----------------- | ------------------------------ |
-| `npm run dev`     | 啟動 HMR 開發伺服器            |
-| `npm run build`   | TypeScript 型別檢查 + 生產建置 |
-| `npm run preview` | 本地預覽 .output/              |
-| `npm run prepare` | 生成 Nuxt TypeScript 型別宣告  |
+| 指令                | 說明                           |
+| ------------------- | ------------------------------ |
+| `npm run dev`       | 啟動 HMR 開發伺服器            |
+| `npm run build`     | TypeScript 型別檢查 + 生產建置 |
+| `npm run preview`   | 本地預覽 .output/              |
+| `npm run prepare`   | 生成 Nuxt TypeScript 型別宣告  |
+| `npm run lint`      | ESLint 檢查                    |
+| `npm run lint:fix`  | ESLint 自動修正                |
+| `npm run format`    | Prettier 格式化全專案          |
 
 ## 頁面結構
 

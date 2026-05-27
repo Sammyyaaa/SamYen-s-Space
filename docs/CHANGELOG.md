@@ -1,5 +1,20 @@
 # CHANGELOG.md
 
+## [0.3.0] - 2026-05-27
+
+### Added
+
+- 引入 ESLint（`@nuxt/eslint`）與 Prettier，建立程式碼品質工具鏈
+  - `eslint.config.mjs`：flat config，關閉 `vue/multi-word-component-names`，允許空 catch block
+  - `.prettierrc`：單引號、無分號、es5 trailing comma、printWidth 100
+  - `package.json` 新增 `lint` / `lint:fix` / `format` scripts
+
+### Changed
+
+- 全專案統一程式碼風格（`prettier --write .` + `eslint --fix`）
+  - `portfolioStore.ts`、`nuxt.config.ts` 引號由雙引號改為單引號、移除分號
+  - 各 Vue template 中 `<br/>` 修正為 `<br>`，attribute 排序符合 Vue 規範
+
 ## [0.2.0] - 2026-05-24
 
 ### Migration
