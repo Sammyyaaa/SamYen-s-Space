@@ -36,10 +36,10 @@ public/                           →   public/（原封不動）
 
 ### 路由名稱對照
 
-| Vue 3 路由名稱 | Nuxt 4 自動生成名稱 | 路徑 |
-|--------------|------------------|------|
-| `home` | `index` | `/` |
-| `project` | `project-id` | `/project/:id` |
+| Vue 3 路由名稱 | Nuxt 4 自動生成名稱 | 路徑           |
+| -------------- | ------------------- | -------------- |
+| `home`         | `index`             | `/`            |
+| `project`      | `project-id`        | `/project/:id` |
 
 ---
 
@@ -59,11 +59,11 @@ public/                           →   public/（原封不動）
 
 ## 關鍵破壞性問題（必須解決）
 
-| # | 問題 | 位置 | 原因 |
-|---|------|------|------|
-| 1 | module-level refs | `src/composables/useCursor.ts` L6-9 | SSR 中 module-level 狀態跨請求共享，導致狀態污染 |
-| 2 | module-level refs + `router.beforeEach` | `src/composables/usePageTransition.ts` | 同上；且 module 層呼叫 router 會在 Nuxt hydration 前執行 |
-| 3 | 手動 `createRouter` | `src/router/index.ts` | Nuxt 自動管理 router，手動建立需移除 |
+| #   | 問題                                    | 位置                                   | 原因                                                     |
+| --- | --------------------------------------- | -------------------------------------- | -------------------------------------------------------- |
+| 1   | module-level refs                       | `src/composables/useCursor.ts` L6-9    | SSR 中 module-level 狀態跨請求共享，導致狀態污染         |
+| 2   | module-level refs + `router.beforeEach` | `src/composables/usePageTransition.ts` | 同上；且 module 層呼叫 router 會在 Nuxt hydration 前執行 |
+| 3   | 手動 `createRouter`                     | `src/router/index.ts`                  | Nuxt 自動管理 router，手動建立需移除                     |
 
 ---
 
@@ -127,11 +127,11 @@ git checkout -b nuxt4-project
 
 **三個分支的用途：**
 
-| 分支 | 用途 |
-|------|------|
-| `main` | Vercel 部署目標；遷移完成後由 `nuxt4-project` merge 進來 |
-| `vue3-project` | 永久保存 Vue 3 + Vite 原版，不會被動到，隨時可取回 |
-| `nuxt4-project` | Nuxt 4 遷移工作分支，完成測試後 merge → `main` |
+| 分支            | 用途                                                     |
+| --------------- | -------------------------------------------------------- |
+| `main`          | Vercel 部署目標；遷移完成後由 `nuxt4-project` merge 進來 |
+| `vue3-project`  | 永久保存 Vue 3 + Vite 原版，不會被動到，隨時可取回       |
+| `nuxt4-project` | Nuxt 4 遷移工作分支，完成測試後 merge → `main`           |
 
 **其他準備：**
 
@@ -165,18 +165,15 @@ export default defineNuxtConfig({
 
   css: ['~/assets/styles/main.css'],
 
-  modules: [
-    '@pinia/nuxt',
-    '@vueuse/nuxt',
-  ],
+  modules: ['@pinia/nuxt', '@vueuse/nuxt'],
 
   vite: {
-    plugins: [tailwindcss()],   // Tailwind CSS v4
+    plugins: [tailwindcss()], // Tailwind CSS v4
     build: {
       rollupOptions: {
         output: {
           manualChunks(id: string) {
-            if (id.includes('gsap'))     return 'vendor-gsap'
+            if (id.includes('gsap')) return 'vendor-gsap'
             if (id.includes('@iconify')) return 'vendor-ui'
           },
         },
@@ -208,19 +205,19 @@ export default defineNuxtConfig({
 
 ### Phase 2｜目錄結構搬移
 
-| 動作 | 來源（現況） | 目標（Nuxt 4） |
-|------|-------------|----------------|
-| 搬移 | `src/components/` | `components/` |
-| 搬移 | `src/stores/portfolioStore.ts` | `stores/portfolioStore.ts` |
-| 搬移 | `src/types/index.ts` | `types/index.ts` |
-| 搬移 | `src/utils/helpers.ts` | `utils/helpers.ts` |
-| 搬移 | `src/styles/main.css` | `assets/styles/main.css` |
-| 重命名 | `src/layouts/DefaultLayout.vue` | `layouts/default.vue` |
-| 重命名 | `src/pages/HomePage.vue` | `pages/index.vue` |
-| 重命名 | `src/pages/ProjectDetailPage.vue` | `pages/project/[id].vue` |
-| 調整內容 | `src/App.vue` | `app.vue` |
-| **刪除** | `src/router/index.ts` | — （Nuxt 自動路由） |
-| **刪除** | `src/main.ts` | — （Nuxt 自動初始化） |
+| 動作     | 來源（現況）                      | 目標（Nuxt 4）             |
+| -------- | --------------------------------- | -------------------------- |
+| 搬移     | `src/components/`                 | `components/`              |
+| 搬移     | `src/stores/portfolioStore.ts`    | `stores/portfolioStore.ts` |
+| 搬移     | `src/types/index.ts`              | `types/index.ts`           |
+| 搬移     | `src/utils/helpers.ts`            | `utils/helpers.ts`         |
+| 搬移     | `src/styles/main.css`             | `assets/styles/main.css`   |
+| 重命名   | `src/layouts/DefaultLayout.vue`   | `layouts/default.vue`      |
+| 重命名   | `src/pages/HomePage.vue`          | `pages/index.vue`          |
+| 重命名   | `src/pages/ProjectDetailPage.vue` | `pages/project/[id].vue`   |
+| 調整內容 | `src/App.vue`                     | `app.vue`                  |
+| **刪除** | `src/router/index.ts`             | — （Nuxt 自動路由）        |
+| **刪除** | `src/main.ts`                     | — （Nuxt 自動初始化）      |
 
 ---
 
@@ -286,8 +283,11 @@ export const useTransitionStore = defineStore('transition', () => {
   const savedHomeScrollY = ref(0)
 
   return {
-    isTransitioning, isReturningHome, isProjectToProject,
-    pendingScrollTarget, savedHomeScrollY,
+    isTransitioning,
+    isReturningHome,
+    isProjectToProject,
+    pendingScrollTarget,
+    savedHomeScrollY,
   }
 })
 ```
@@ -319,22 +319,25 @@ export default defineNuxtRouteMiddleware(() => {
 
 #### 3-F：pages/project/[id].vue 調整
 
-| 現況 | 改為 |
-|------|------|
-| `route.params.id` | 不需修改（Nuxt 相容） |
+| 現況                                               | 改為                                                 |
+| -------------------------------------------------- | ---------------------------------------------------- |
+| `route.params.id`                                  | 不需修改（Nuxt 相容）                                |
 | `router.push({ name: 'project', params: { id } })` | `navigateTo({ name: 'project-id', params: { id } })` |
-| `if (!project) router.push('/')` | `throw createError({ statusCode: 404 })` |
-| `document.title = ...` | `useHead({ title: ... })` |
+| `if (!project) router.push('/')`                   | `throw createError({ statusCode: 404 })`             |
+| `document.title = ...`                             | `useHead({ title: ... })`                            |
 
 ---
 
 #### 3-G：Tailwind CSS v4 路徑更新
 
 各 `<style scoped>` 的 `@reference` 路徑從：
+
 ```css
 @reference "@/styles/main.css";
 ```
+
 改為：
+
 ```css
 @reference "~/assets/styles/main.css";
 ```
@@ -347,6 +350,7 @@ export default defineNuxtRouteMiddleware(() => {
 `index.html` 本身由 Nuxt 自動生成，不再手動維護。
 
 各頁面個別的 title 改用：
+
 ```ts
 // pages/index.vue
 useHead({ title: "SamYen's Space" })
@@ -370,22 +374,22 @@ useHead({ title: `${project.title} — SamYen` })
 
 ## 不需修改的檔案
 
-| 檔案 | 原因 |
-|------|------|
-| `composables/useScrollAnimation.ts` | 無 module-level state，直接搬移 |
-| `composables/useLenis.ts` | stub 佔位，可直接刪除 |
-| `stores/portfolioStore.ts` | Composition API 風格，Nuxt 完整相容 |
-| `types/index.ts` | 純 TypeScript interface，無框架依賴 |
-| `utils/helpers.ts` | 純函式，無框架依賴 |
-| `components/` 所有組件 | 整體相容，僅需將 `setCursorVariant()` 呼叫改為 store action |
+| 檔案                                | 原因                                                        |
+| ----------------------------------- | ----------------------------------------------------------- |
+| `composables/useScrollAnimation.ts` | 無 module-level state，直接搬移                             |
+| `composables/useLenis.ts`           | stub 佔位，可直接刪除                                       |
+| `stores/portfolioStore.ts`          | Composition API 風格，Nuxt 完整相容                         |
+| `types/index.ts`                    | 純 TypeScript interface，無框架依賴                         |
+| `utils/helpers.ts`                  | 純函式，無框架依賴                                          |
+| `components/` 所有組件              | 整體相容，僅需將 `setCursorVariant()` 呼叫改為 store action |
 
 ---
 
 ## 風險評估
 
-| 風險 | 等級 | 緩解策略 |
-|------|------|---------|
-| GSAP ScrollTrigger SSR 報錯 | 高 | 所有 GSAP 相關程式碼加 `import.meta.client` 判斷或放入 `.client.ts` plugin |
-| `window`/`document` 直接存取 | 中 | 改用 Nuxt 的 `useNuxtApp().$el` 或 `onMounted` 內存取 |
-| 游標狀態 SSR hydration mismatch | 中 | `AppCursor` 加 `<ClientOnly>` 包裹 |
-| Tailwind v4 + Nuxt module 相容 | 低 | 優先使用 `@tailwindcss/vite` 而非 `@nuxtjs/tailwindcss` |
+| 風險                            | 等級 | 緩解策略                                                                   |
+| ------------------------------- | ---- | -------------------------------------------------------------------------- |
+| GSAP ScrollTrigger SSR 報錯     | 高   | 所有 GSAP 相關程式碼加 `import.meta.client` 判斷或放入 `.client.ts` plugin |
+| `window`/`document` 直接存取    | 中   | 改用 Nuxt 的 `useNuxtApp().$el` 或 `onMounted` 內存取                      |
+| 游標狀態 SSR hydration mismatch | 中   | `AppCursor` 加 `<ClientOnly>` 包裹                                         |
+| Tailwind v4 + Nuxt module 相容  | 低   | 優先使用 `@tailwindcss/vite` 而非 `@nuxtjs/tailwindcss`                    |

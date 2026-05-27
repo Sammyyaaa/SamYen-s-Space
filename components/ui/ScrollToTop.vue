@@ -43,8 +43,17 @@ function scrollToTop() {
     @mouseenter="setCursorVariant('hover')"
     @mouseleave="setCursorVariant('default')"
   >
-    <svg class="scroll-top__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-      <path d="M18 15l-6-6-6 6"/>
+    <svg
+      class="scroll-top__icon"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="1.5"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M18 15l-6-6-6 6" />
     </svg>
     <span class="scroll-top__label">TOP</span>
   </button>
@@ -73,7 +82,10 @@ function scrollToTop() {
   backdrop-filter: blur(24px) saturate(180%) brightness(1.05);
   -webkit-backdrop-filter: blur(24px) saturate(180%) brightness(1.05);
   color: var(--glass-text);
-  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    background 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .scroll-top:hover {

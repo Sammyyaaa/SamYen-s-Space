@@ -2,23 +2,88 @@
 // 一份完整的技術關鍵字組
 const words = [
   // Basics
-  'HTML5', '·', 'CSS3', '·', 'RWD', '·', 'JavaScript ES6+', '·', 'TypeScript', '·', 'jQuery', '·',
+  'HTML5',
+  '·',
+  'CSS3',
+  '·',
+  'RWD',
+  '·',
+  'JavaScript ES6+',
+  '·',
+  'TypeScript',
+  '·',
+  'jQuery',
+  '·',
   // Styling
-  'Sass', '·', 'Bootstrap', '·', 'Tailwind CSS', '·',
+  'Sass',
+  '·',
+  'Bootstrap',
+  '·',
+  'Tailwind CSS',
+  '·',
   // Frameworks
-  'Vue', '·', 'Nuxt 3', '·', 'Angular', '·',
+  'Vue',
+  '·',
+  'Nuxt 3',
+  '·',
+  'Angular',
+  '·',
   // State Management
-  'Vuex', '·', 'Pinia', '·', 'RxJS', '·',
+  'Vuex',
+  '·',
+  'Pinia',
+  '·',
+  'RxJS',
+  '·',
   // Building Tools
-  'Vite', '·', 'npm', '·', 'Yarn', '·',
+  'Vite',
+  '·',
+  'npm',
+  '·',
+  'Yarn',
+  '·',
   // API
-  'Ajax', '·', 'Axios', '·', 'Fetch', '·', 'RESTful', '·', 'TanStack Query', '·',
+  'Ajax',
+  '·',
+  'Axios',
+  '·',
+  'Fetch',
+  '·',
+  'RESTful',
+  '·',
+  'TanStack Query',
+  '·',
   // UI/UX
-  'Photoshop', '·', 'Illustrator', '·', 'Figma', '·',
+  'Photoshop',
+  '·',
+  'Illustrator',
+  '·',
+  'Figma',
+  '·',
   // Dev Tools
-  'ESLint', '·', 'Prettier', '·', 'Git', '·', 'GitHub', '·', 'SourceTree', '·', 'Postman', '·',
+  'ESLint',
+  '·',
+  'Prettier',
+  '·',
+  'Git',
+  '·',
+  'GitHub',
+  '·',
+  'SourceTree',
+  '·',
+  'Postman',
+  '·',
   // AI Development Tools
-  'Claude Code', '·', 'GitHub Copilot', '·', 'Codex CLI', '·', 'Spec-driven Development', '·', 'Sandbox', '·',
+  'Claude Code',
+  '·',
+  'GitHub Copilot',
+  '·',
+  'Codex CLI',
+  '·',
+  'Spec-driven Development',
+  '·',
+  'Sandbox',
+  '·',
 ]
 
 // 三份確保任何螢幕寬度都不中斷
@@ -93,11 +158,17 @@ const track = [...words, ...words, ...words]
 }
 
 @keyframes marquee-scroll {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-33.333%); }
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-33.333%);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .marquee__track { animation: none; }
+  .marquee__track {
+    animation: none;
+  }
 }
 </style>

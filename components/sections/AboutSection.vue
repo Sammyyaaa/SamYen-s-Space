@@ -1,193 +1,178 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, onBeforeUnmount } from "vue";
-import { gsap } from "gsap";
-import { Icon } from "@iconify/vue";
-import { usePortfolioStore } from "@/stores/portfolioStore";
-import { useReveal } from "@/composables/useScrollAnimation";
-import { setCursorVariant } from "@/composables/useCursor";
-import { isTouchDevice } from "@/utils/helpers";
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
+import { gsap } from 'gsap'
+import { Icon } from '@iconify/vue'
+import { usePortfolioStore } from '@/stores/portfolioStore'
+import { useReveal } from '@/composables/useScrollAnimation'
+import { setCursorVariant } from '@/composables/useCursor'
+import { isTouchDevice } from '@/utils/helpers'
 
-const store = usePortfolioStore();
-const sectionRef = ref<HTMLElement | null>(null);
-const statsRef = ref<HTMLElement | null>(null);
-const textRef = ref<HTMLElement | null>(null);
-const skillsRef = ref<HTMLElement | null>(null);
+const store = usePortfolioStore()
+const sectionRef = ref<HTMLElement | null>(null)
+const statsRef = ref<HTMLElement | null>(null)
+const textRef = ref<HTMLElement | null>(null)
+const skillsRef = ref<HTMLElement | null>(null)
 
-useReveal(textRef, { y: 50, duration: 1.1, stagger: 0 });
-useReveal(statsRef, { y: 40, duration: 1, stagger: 0.1, start: "top 80%" });
-useReveal(skillsRef, { y: 30, duration: 0.9, stagger: 0.06, start: "top 82%" });
+useReveal(textRef, { y: 50, duration: 1.1, stagger: 0 })
+useReveal(statsRef, { y: 40, duration: 1, stagger: 0.1, start: 'top 80%' })
+useReveal(skillsRef, { y: 30, duration: 0.9, stagger: 0.06, start: 'top 82%' })
 
 const skillCategories = [
-  "frameworks",
-  "basics",
-  "styling",
-  "state",
-  "build",
-  "api",
-  "uiux",
-  "devtools",
-  "aitools",
-] as const;
-type SkillCategory = (typeof skillCategories)[number];
+  'frameworks',
+  'basics',
+  'styling',
+  'state',
+  'build',
+  'api',
+  'uiux',
+  'devtools',
+  'aitools',
+] as const
+type SkillCategory = (typeof skillCategories)[number]
 
 const categoryLabel: Record<SkillCategory, string> = {
-  basics: "Basics",
-  styling: "Styling",
-  frameworks: "Frameworks",
-  state: "State Management",
-  build: "Building Tools",
-  api: "API",
-  uiux: "UI/UX",
-  devtools: "Dev Tools",
-  aitools: "AI Development Tools",
-};
+  basics: 'Basics',
+  styling: 'Styling',
+  frameworks: 'Frameworks',
+  state: 'State Management',
+  build: 'Building Tools',
+  api: 'API',
+  uiux: 'UI/UX',
+  devtools: 'Dev Tools',
+  aitools: 'AI Development Tools',
+}
 
 const skillIconMap: Record<string, string> = {
-  HTML5: "logos:html-5",
-  CSS3: "logos:css-3",
-  "JavaScript ES6+": "logos:javascript",
-  TypeScript: "logos:typescript-icon",
-  jQuery: "logos:jquery",
-  Sass: "logos:sass",
-  Bootstrap: "logos:bootstrap",
-  "Tailwind CSS": "logos:tailwindcss-icon",
-  Vue: "logos:vue",
-  "Nuxt 3": "logos:nuxt-icon",
-  Angular: "logos:angular-icon",
-  Pinia: "logos:pinia",
-  RxJS: "logos:reactivex",
-  Vite: "logos:vitejs",
-  npm: "logos:npm-icon",
-  Yarn: "logos:yarn",
-  Axios: "logos:axios",
-  "TanStack Query": "logos:react-query",
-  Figma: "logos:figma",
-  Photoshop: "logos:adobe-photoshop",
-  Illustrator: "logos:adobe-illustrator",
-  ESLint: "logos:eslint",
-  Prettier: "logos:prettier",
-  Git: "logos:git-icon",
-  GitHub: "logos:github-icon",
-  SourceTree: "logos:sourcetree",
-  Postman: "logos:postman-icon",
-  "Claude Code": "simple-icons:anthropic",
-  "GitHub Copilot": "simple-icons:githubcopilot",
-  "Codex CLI": "logos:openai-icon",
-};
+  HTML5: 'logos:html-5',
+  CSS3: 'logos:css-3',
+  'JavaScript ES6+': 'logos:javascript',
+  TypeScript: 'logos:typescript-icon',
+  jQuery: 'logos:jquery',
+  Sass: 'logos:sass',
+  Bootstrap: 'logos:bootstrap',
+  'Tailwind CSS': 'logos:tailwindcss-icon',
+  Vue: 'logos:vue',
+  'Nuxt 3': 'logos:nuxt-icon',
+  Angular: 'logos:angular-icon',
+  Pinia: 'logos:pinia',
+  RxJS: 'logos:reactivex',
+  Vite: 'logos:vitejs',
+  npm: 'logos:npm-icon',
+  Yarn: 'logos:yarn',
+  Axios: 'logos:axios',
+  'TanStack Query': 'logos:react-query',
+  Figma: 'logos:figma',
+  Photoshop: 'logos:adobe-photoshop',
+  Illustrator: 'logos:adobe-illustrator',
+  ESLint: 'logos:eslint',
+  Prettier: 'logos:prettier',
+  Git: 'logos:git-icon',
+  GitHub: 'logos:github-icon',
+  SourceTree: 'logos:sourcetree',
+  Postman: 'logos:postman-icon',
+  'Claude Code': 'simple-icons:anthropic',
+  'GitHub Copilot': 'simple-icons:githubcopilot',
+  'Codex CLI': 'logos:openai-icon',
+}
 
-const iconSkills = computed(() =>
-  store.skills.filter((s) => skillIconMap[s.name]),
-);
-const iconSkillsLoop = computed(() => [
-  ...iconSkills.value,
-  ...iconSkills.value,
-]);
+const iconSkills = computed(() => store.skills.filter((s) => skillIconMap[s.name]))
+const iconSkillsLoop = computed(() => [...iconSkills.value, ...iconSkills.value])
 
-const stripRef = ref<HTMLElement | null>(null);
-const iconsInnerRef = ref<HTMLElement | null>(null);
+const stripRef = ref<HTMLElement | null>(null)
+const iconsInnerRef = ref<HTMLElement | null>(null)
 
 // Marquee state — single source of truth
-let marqueeX = 0;
-let halfWidth = 0;
-const MARQUEE_SPEED = 80; // px/s
+let marqueeX = 0
+let halfWidth = 0
+const MARQUEE_SPEED = 80 // px/s
 
 // Interaction state
-let isDragging = false;
-let isHoveringStrip = false;
-let pointerStartX = 0;
-let dragStartX = 0;
+let isDragging = false
+let isHoveringStrip = false
+let pointerStartX = 0
+let dragStartX = 0
 
 // gsap.ticker callback — deltaTime is in ms
 function tickMarquee(_time: number, deltaTime: number) {
-  const inner = iconsInnerRef.value;
-  if (!inner) return;
+  const inner = iconsInnerRef.value
+  if (!inner) return
 
-  if (!halfWidth) halfWidth = inner.scrollWidth / 2;
+  if (!halfWidth) halfWidth = inner.scrollWidth / 2
 
   if (!isDragging && !isHoveringStrip) {
-    const dt = deltaTime / 1000;
-    marqueeX -= MARQUEE_SPEED * dt;
-    if (marqueeX <= -halfWidth) marqueeX += halfWidth;
-    inner.style.transform = `translateX(${marqueeX}px)`;
+    const dt = deltaTime / 1000
+    marqueeX -= MARQUEE_SPEED * dt
+    if (marqueeX <= -halfWidth) marqueeX += halfWidth
+    inner.style.transform = `translateX(${marqueeX}px)`
   }
 }
 
 onMounted(() => {
   if (isTouchDevice()) {
     // On touch devices, use CSS animation instead of RAF to avoid jank
-    iconsInnerRef.value?.classList.add("is-css-marquee");
+    iconsInnerRef.value?.classList.add('is-css-marquee')
   } else {
-    gsap.ticker.add(tickMarquee);
+    gsap.ticker.add(tickMarquee)
   }
-});
+})
 onBeforeUnmount(() => {
-  gsap.ticker.remove(tickMarquee);
-});
+  gsap.ticker.remove(tickMarquee)
+})
 
 function onIconEnter() {
-  if (!isDragging) setCursorVariant("hover");
+  if (!isDragging) setCursorVariant('hover')
 }
 function onIconLeave() {
-  if (!isDragging) setCursorVariant("default");
+  if (!isDragging) setCursorVariant('default')
 }
 
 function onStripMouseEnter() {
-  isHoveringStrip = true;
+  isHoveringStrip = true
 }
 function onStripMouseLeave() {
-  isHoveringStrip = false;
-  if (!isDragging) setCursorVariant("default");
+  isHoveringStrip = false
+  if (!isDragging) setCursorVariant('default')
 }
 
 function onStripPointerDown(e: PointerEvent) {
-  const strip = stripRef.value;
-  if (!strip) return;
-  e.preventDefault();
-  isDragging = true;
-  pointerStartX = e.clientX;
-  dragStartX = marqueeX;
+  const strip = stripRef.value
+  if (!strip) return
+  e.preventDefault()
+  isDragging = true
+  pointerStartX = e.clientX
+  dragStartX = marqueeX
   if (iconsInnerRef.value) {
-    iconsInnerRef.value.style.pointerEvents = "none";
-    if (!halfWidth) halfWidth = iconsInnerRef.value.scrollWidth / 2;
+    iconsInnerRef.value.style.pointerEvents = 'none'
+    if (!halfWidth) halfWidth = iconsInnerRef.value.scrollWidth / 2
   }
-  strip.setPointerCapture(e.pointerId);
-  setCursorVariant("drag");
+  strip.setPointerCapture(e.pointerId)
+  setCursorVariant('drag')
 }
 
 function onStripPointerMove(e: PointerEvent) {
-  if (!isDragging || !iconsInnerRef.value || !halfWidth) return;
-  const delta = e.clientX - pointerStartX;
-  marqueeX = dragStartX + delta;
+  if (!isDragging || !iconsInnerRef.value || !halfWidth) return
+  const delta = e.clientX - pointerStartX
+  marqueeX = dragStartX + delta
   // Keep within loop range so it continues seamlessly after release
-  while (marqueeX > 0) marqueeX -= halfWidth;
-  while (marqueeX <= -halfWidth) marqueeX += halfWidth;
-  iconsInnerRef.value.style.transform = `translateX(${marqueeX}px)`;
+  while (marqueeX > 0) marqueeX -= halfWidth
+  while (marqueeX <= -halfWidth) marqueeX += halfWidth
+  iconsInnerRef.value.style.transform = `translateX(${marqueeX}px)`
 }
 
 function onStripPointerUp(e?: PointerEvent) {
-  if (!isDragging) return;
-  isDragging = false;
-  if (iconsInnerRef.value) iconsInnerRef.value.style.pointerEvents = "";
-  const strip = stripRef.value;
-  if (
-    strip &&
-    e &&
-    strip.hasPointerCapture &&
-    strip.hasPointerCapture(e.pointerId)
-  ) {
-    strip.releasePointerCapture(e.pointerId);
+  if (!isDragging) return
+  isDragging = false
+  if (iconsInnerRef.value) iconsInnerRef.value.style.pointerEvents = ''
+  const strip = stripRef.value
+  if (strip && e && strip.hasPointerCapture && strip.hasPointerCapture(e.pointerId)) {
+    strip.releasePointerCapture(e.pointerId)
   }
-  setCursorVariant(isHoveringStrip ? "hover" : "default");
+  setCursorVariant(isHoveringStrip ? 'hover' : 'default')
 }
 </script>
 
 <template>
-  <section
-    ref="sectionRef"
-    id="about"
-    class="about-section"
-    aria-labelledby="about-title"
-  >
+  <section id="about" ref="sectionRef" class="about-section" aria-labelledby="about-title">
     <!-- Section eyebrow -->
     <span class="section-eyebrow">About</span>
 
@@ -195,7 +180,7 @@ function onStripPointerUp(e?: PointerEvent) {
       <!-- Left: Text -->
       <div ref="textRef" class="about-text">
         <h2 id="about-title" class="about-title">
-          Hi, I'm<br />
+          Hi, I'm<br >
           <span class="text-gradient">SamYen</span>
         </h2>
         <div class="about-body">
@@ -249,19 +234,11 @@ function onStripPointerUp(e?: PointerEvent) {
       </div>
 
       <div ref="skillsRef" class="about-skills__grid">
-        <div
-          v-for="category in skillCategories"
-          :key="category"
-          class="about-skills__category"
-        >
-          <span class="about-skills__cat-label">{{
-            categoryLabel[category]
-          }}</span>
+        <div v-for="category in skillCategories" :key="category" class="about-skills__category">
+          <span class="about-skills__cat-label">{{ categoryLabel[category] }}</span>
           <div class="about-skills__list">
             <span
-              v-for="skill in store.skills.filter(
-                (s) => s.category === category,
-              )"
+              v-for="skill in store.skills.filter((s) => s.category === category)"
               :key="skill.name"
               class="about-skills__chip"
             >
@@ -370,13 +347,7 @@ function onStripPointerUp(e?: PointerEvent) {
   overflow-x: clip;
   padding-top: 0.75rem;
   margin-bottom: 2.5rem;
-  mask-image: linear-gradient(
-    to right,
-    transparent 0%,
-    black 8%,
-    black 92%,
-    transparent 100%
-  );
+  mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
   -webkit-mask-image: linear-gradient(
     to right,
     transparent 0%,
@@ -527,7 +498,7 @@ function onStripPointerUp(e?: PointerEvent) {
 }
 
 .about-skills__chip::before {
-  content: "·";
+  content: '·';
   position: absolute;
   left: 0;
   @apply text-brand-500;

@@ -54,19 +54,25 @@ src/
 ## 關鍵設計決策
 
 ### Tailwind v4 Scoped Style
+
 每個 `<style scoped>` 使用 `@apply` 前，必須在頂部加：
+
 ```css
 @reference "@/styles/main.css";
 ```
+
 自定義 utility（`text-gradient`、`glass`）在 `@apply` 中無法使用，需展開為原生 CSS。
 
 ### 游標系統 (Singleton Pattern)
+
 `useCursor.ts` 以模組層級的 `ref` 儲存全域游標狀態。
 任何元件呼叫 `setCursorVariant(variant)` 即可改變游標外觀。
 `AppCursor.vue` 只需在 App 根層渲染一次。
 
 ### Lenis + GSAP ScrollTrigger 整合
+
 Lenis 覆寫原生滾動，因此 ScrollTrigger 需透過 Lenis 事件更新：
+
 ```ts
 lenis.on('scroll', ScrollTrigger.update)
 gsap.ticker.add((time) => lenis.raf(time * 1000))
@@ -74,12 +80,15 @@ gsap.ticker.lagSmoothing(0)
 ```
 
 ### GSAP Context 清理
+
 所有動畫透過 `gsap.context()` 包裹，在 `onBeforeUnmount` 中呼叫 `ctx.revert()` 確保動畫清理，避免記憶體洩漏。
 
 ### gsap.ticker 驅動的跑馬燈（AboutSection）
+
 技術 icon strip 以 `gsap.ticker` 迴圈取代 CSS `@keyframes`，原因是 CSS animation 重啟（`animation: none` → 新 animation）在不同瀏覽器的時序行為不一致，導致拖曳後位置跳回。
 
 ticker 模式下 `marqueeX` 為唯一位置真相：
+
 - **自動捲動**：每幀 `marqueeX -= speed * (deltaTime / 1000)`，超過 `-halfWidth` 時 `+= halfWidth` 無縫循環；`deltaTime` 由 `gsap.ticker` callback 直接提供，無需手動追蹤時間戳
 - **暫停**：`isHoveringStrip = true` 讓迴圈跳過更新
 - **拖曳**：`onStripPointerDown` 記錄 `dragStartX = marqueeX`，`pointermove` 直接 `marqueeX = dragStartX + delta`，`pointerup` 後下一幀直接從新 `marqueeX` 繼續

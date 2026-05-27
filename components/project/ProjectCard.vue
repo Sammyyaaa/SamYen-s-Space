@@ -11,8 +11,12 @@ const props = defineProps<{
 
 const cardRef = ref<HTMLElement | null>(null)
 
-function onEnter() { setCursorVariant('project') }
-function onLeave() { setCursorVariant('default') }
+function onEnter() {
+  setCursorVariant('project')
+}
+function onLeave() {
+  setCursorVariant('default')
+}
 
 function navigateToProject() {
   navigateTo(`/project/${props.project.id}`)
@@ -40,12 +44,18 @@ function navigateToProject() {
           <span
             class="project-card__badge"
             :class="{
-              'project-card__badge--company':  project.category === 'company',
+              'project-card__badge--company': project.category === 'company',
               'project-card__badge--personal': project.category === 'personal',
-              'project-card__badge--team':     project.category === 'team',
+              'project-card__badge--team': project.category === 'team',
             }"
           >
-            {{ project.category === 'company' ? '公司專案' : project.category === 'team' ? '團隊作品' : '個人作品' }}
+            {{
+              project.category === 'company'
+                ? '公司專案'
+                : project.category === 'team'
+                  ? '團隊作品'
+                  : '個人作品'
+            }}
           </span>
           <span class="project-card__year">{{ project.period ?? project.year }}</span>
         </div>
@@ -80,7 +90,9 @@ function navigateToProject() {
   border: 1px solid var(--card-border);
   box-shadow: var(--card-shine);
   cursor: none;
-  transition: border-color 0.4s, box-shadow 0.4s;
+  transition:
+    border-color 0.4s,
+    box-shadow 0.4s;
   display: flex;
   flex-direction: column;
 }

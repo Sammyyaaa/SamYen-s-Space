@@ -8,16 +8,19 @@
 ### v0.1.0 → v0.2.0：從 Vue 3 + Vite 升級至 Nuxt 4（2026-05-24）
 
 **原始技術棧（v0.1.0）**
+
 - Vue 3 + Vite（純 CSR）+ Vue Router 4
 - Lenis 慣性滾動 + Swiper 輪播
 - 手動維護 `vite.config.ts` chunk 分割
 
 **升級動機**
+
 - 引入 SSR / SSG 支援，改善 SEO 與主視覺區效能
 - 接入 Nuxt 生態（`@pinia/nuxt`、`@nuxtjs/sitemap`）
 - file-based routing 取代 Vue Router 手動設定
 
 **主要變更**
+
 - Nitro server 取代 Vite dev server；`srcDir: '.'` 維持原有目錄結構
 - SSR hydration 處理：`AppCursor` 以 `<ClientOnly>` 包覆，`isTouchDevice` 加 `import.meta.client` guard
 - 移除 Lenis，改用瀏覽器原生捲動（GPU 合成層）
@@ -35,16 +38,16 @@
 
 ## 技術棧
 
-| 類別 | 技術 |
-|------|------|
+| 類別 | 技術                                               |
+| ---- | -------------------------------------------------- |
 | 框架 | Nuxt 4 + Vue 3 (Composition API, `<script setup>`) |
-| 語言 | TypeScript |
-| 建置 | Nitro（Nuxt 內建） |
-| 樣式 | Tailwind CSS v4 (`@tailwindcss/vite`) |
-| 動畫 | GSAP 3 + ScrollTrigger |
-| 滾動 | 原生瀏覽器捲動（GPU 合成優化）|
-| Icon | @iconify/vue 5 (`logos:*` 系列) |
-| 工具 | VueUse 14、Pinia 3、Nuxt 內建路由 |
+| 語言 | TypeScript                                         |
+| 建置 | Nitro（Nuxt 內建）                                 |
+| 樣式 | Tailwind CSS v4 (`@tailwindcss/vite`)              |
+| 動畫 | GSAP 3 + ScrollTrigger                             |
+| 滾動 | 原生瀏覽器捲動（GPU 合成優化）                     |
+| Icon | @iconify/vue 5 (`logos:*` 系列)                    |
+| 工具 | VueUse 14、Pinia 3、Nuxt 內建路由                  |
 
 ## 快速開始
 
@@ -65,12 +68,12 @@ npm run preview
 
 ## 常用指令
 
-| 指令 | 說明 |
-|------|------|
-| `npm run dev` | 啟動 HMR 開發伺服器 |
-| `npm run build` | TypeScript 型別檢查 + 生產建置 |
-| `npm run preview` | 本地預覽 .output/ |
-| `npm run prepare` | 生成 Nuxt TypeScript 型別宣告 |
+| 指令              | 說明                           |
+| ----------------- | ------------------------------ |
+| `npm run dev`     | 啟動 HMR 開發伺服器            |
+| `npm run build`   | TypeScript 型別檢查 + 生產建置 |
+| `npm run preview` | 本地預覽 .output/              |
+| `npm run prepare` | 生成 Nuxt TypeScript 型別宣告  |
 
 ## 頁面結構
 
@@ -88,8 +91,8 @@ npm run preview
 
 ## 文件索引
 
-| 文件 | 說明 |
-|------|------|
+| 文件                                | 說明     |
+| ----------------------------------- | -------- |
 | [CHANGELOG.md](./docs/CHANGELOG.md) | 更新日誌 |
 
 > ARCHITECTURE.md、DEVELOPMENT.md、FEATURES.md、TESTING.md 描述舊版 Vue 3 + Vite 架構，已歸檔至 [docs/archive/](./docs/archive/)。

@@ -14,7 +14,7 @@ export const mapRange = (
   inMin: number,
   inMax: number,
   outMin: number,
-  outMax: number,
+  outMax: number
 ): number => ((value - inMin) / (inMax - inMin)) * (outMax - outMin) + outMin
 
 // ── DOM helpers ──
@@ -42,8 +42,7 @@ export const getOffsetTop = (el: HTMLElement): number => {
 // ── String helpers ──
 
 /** Pad number with leading zeros */
-export const padNumber = (n: number, digits = 2): string =>
-  String(n).padStart(digits, '0')
+export const padNumber = (n: number, digits = 2): string => String(n).padStart(digits, '0')
 
 /** Format project index for display */
 export const formatIndex = (index: number): string => padNumber(index + 1)

@@ -3,6 +3,7 @@
 ## [0.2.0] - 2026-05-24
 
 ### Migration
+
 - 從 Vue 3 + Vite 遷移至 Nuxt 4（srcDir: '.'，Nitro server，file-based routing）
 - SSR hydration 修復：AppCursor 以 `<ClientOnly>` 包覆，isTouchDevice 加 `import.meta.client` guard
 - 路由改以路徑字串導航（`navigateTo('/project/${id}')`），移除 Vue Router named-route 依賴
@@ -16,11 +17,13 @@
 - WSL2 開發環境：新增 `NITRO_NO_UNIX_SOCKET=1` + `scripts/fix-unix-socket.cjs` monkey-patch
 
 ### Removed
+
 - `lenis` 套件（`npm uninstall lenis`）：移除慣性滾動，全站改為瀏覽器原生捲動（GPU 合成層級，在低階裝置上更流暢）
 - `useLenis` composable 實作（改為空 stub 保留 import 相容性，`getLenis()` 永遠回傳 `null`）
 - `HeroSection` 視差背景效果（移除 `useParallax(sectionRef, bgRef)`，消除每幀移動大型模糊元素的 GPU 開銷）
 
 ### Changed
+
 - `DefaultLayout`：移除 Lenis RAF 驅動與 `ScrollTrigger.update` 同步；改由 ScrollTrigger 自動監聽原生 scroll；保留 `gsap.ticker.lagSmoothing(500, 33)` 防止掉幀追幀
 - `AppCursor`：tick 函式加入靜止偵測（threshold `0.05px`），點與環各自獨立判斷，靜止時跳過 `quickSetter` 呼叫，減少不必要 GPU 合成觸發
 - `HeroSection` orb：desktop 尺寸縮減（藍 `600px→500px`、紫 `500px→400px`），`filter: blur` 從 `80px` 降至 `50px`，降低 GPU 光柵化面積
@@ -29,19 +32,23 @@
 - 所有 `getLenis()` 呼叫替換為原生 `window.scrollTo` / `element.scrollIntoView`（`AppNav`、`ScrollToTop`、`usePageTransition`、`ProjectDetailPage`）
 
 ### Removed
+
 - `ContactSection`：移除引力追蹤球（RAF tick + 游標追蹤 + orbit 模式），改為純靜態背景 + scroll reveal + 磁吸 icon
 - `swiper` 套件：確認未實際使用，從 dependencies 移除（bundle -90KB）
 
 ### Changed
+
 - `AppCursor`：RAF 迴圈改用 `gsap.ticker.add(tick)`；`gsap.set()` 改為 `gsap.quickSetter()`，每幀屬性解析開銷降低約 10×
 - `AboutSection` 技術 icon 跑馬燈：`requestAnimationFrame` 改為 `gsap.ticker.add(tickMarquee)`，利用 ticker 提供的 `deltaTime` 取代手動 `lastTs` 時間追蹤
 - `ContactSection` 磁吸強度：`useMagnetic(0.7)` → `useMagnetic(1.2)`，吸力感明顯提升
 - `vite.config.ts`：新增 `build.rollupOptions.output.manualChunks`（function 形式，相容 Vite 8 + rolldown），將 gsap / lenis / vue / ui libs 分離為獨立 vendor chunk，利於瀏覽器快取
 
 ### Technical
+
 - 全站並行 RAF 迴圈從 3 條（cursor + contact + about marquee）合併為統一的 `gsap.ticker`，與 Lenis 共用同一條 RAF
 
 ### Added
+
 - `AboutSection`：Tech Stack 標題下方新增技術 Icon 跑馬燈 strip
   - 以 `requestAnimationFrame` 驅動無限水平捲動，取代 CSS `@keyframes`，解決拖曳後位置跳回的問題
   - 支援 hover 暫停、pointer 拖曳（`pointerdown / pointermove / pointerup` + `setPointerCapture`）
@@ -64,15 +71,18 @@
   - Foomosa 臺中美食餐廳資訊整合平台
 
 ### Fixed
+
 - `AboutSection` 技術 icon 標籤在亮模式下不可見：改用 `text-surface-400 / text-surface-100` Tailwind 類，透過 `html.light-mode` CSS 變數自動適配兩種模式
 
 ### Technical
+
 - 新增依賴 `@iconify/vue ^5.0.1`
 - `main.css` 新增 `--tech-icon-bg / --tech-icon-border / --tech-icon-bg-hover / --tech-icon-border-hover / --tech-icon-shadow-hover` 五組主題變數，分別定義於 `:root`（暗色）與 `html.light-mode`（亮色）
 
 ## [0.1.0] - 2026-05-17
 
 ### Added
+
 - 完整專案架構建立（Vite + Vue 3 TS + Tailwind CSS v4 + GSAP + Lenis）
 - `AppCursor`：雙層磁吸自定義游標，6 種 variant，mix-blend-mode: difference
 - `AppNav`：固定導航列，滾動玻璃擬態，行動版全螢幕選單
@@ -93,6 +103,7 @@
 - TypeScript 全型別覆蓋
 
 ### Technical
+
 - Tailwind CSS v4（`@tailwindcss/vite` plugin），自訂 `@theme` token
 - 所有 scoped style 加入 `@reference "@/styles/main.css"` 解決 v4 相容問題
 - GSAP context 模式確保動畫記憶體安全清理

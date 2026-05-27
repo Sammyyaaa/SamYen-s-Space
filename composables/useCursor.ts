@@ -14,8 +14,12 @@ export function useCursor() {
     if (!store.isVisible) store.isVisible = true
   }
 
-  function onMouseLeave() { store.isVisible = false }
-  function onMouseEnter() { store.isVisible = true }
+  function onMouseLeave() {
+    store.isVisible = false
+  }
+  function onMouseEnter() {
+    store.isVisible = true
+  }
 
   onMounted(() => {
     if (isTouch) return

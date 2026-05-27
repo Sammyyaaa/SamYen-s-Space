@@ -7,7 +7,11 @@ export function useTheme() {
   function applyTheme(dark: boolean) {
     if (!import.meta.client) return
     document.documentElement.classList.toggle('light-mode', !dark)
-    try { localStorage.setItem('theme', dark ? 'dark' : 'light') } catch { /* ignore */ }
+    try {
+      localStorage.setItem('theme', dark ? 'dark' : 'light')
+    } catch {
+      /* ignore */
+    }
   }
 
   function toggleTheme() {
@@ -25,7 +29,9 @@ export function useTheme() {
         applyTheme(false)
         return
       }
-    } catch { /* ignore */ }
+    } catch {
+      /* ignore */
+    }
     isDark.value = true
   }
 

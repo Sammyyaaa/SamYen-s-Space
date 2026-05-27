@@ -8,11 +8,7 @@ const typedText = ref('')
 const isDesktop = import.meta.client ? window.innerWidth >= 1024 : false
 const eyebrowPhrases = isDesktop
   ? ['Frontend Engineer · Precision · Craft · Reliable · Systematic · Detail-Driven']
-  : [
-      'Frontend Engineer · Precision',
-      'Craft · Reliable',
-      'Systematic · Detail-Driven',
-    ]
+  : ['Frontend Engineer · Precision', 'Craft · Reliable', 'Systematic · Detail-Driven']
 
 let alive = false
 let rafId: number | null = null
@@ -75,26 +71,26 @@ onMounted(() => {
     tl.fromTo(
       '.hero-title__word',
       { y: '100%', opacity: 0 },
-      { y: '0%', opacity: 1, duration: 1.2, stagger: 0.12, ease: 'power4.out' },
+      { y: '0%', opacity: 1, duration: 1.2, stagger: 0.12, ease: 'power4.out' }
     )
-    .fromTo(
-      subtitleRef.value,
-      { y: 30, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.9, ease: 'power3.out' },
-      '-=0.6',
-    )
-    .fromTo(
-      ctaRef.value,
-      { y: 20, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out' },
-      '-=0.5',
-    )
-    .fromTo(
-      scrollHintRef.value,
-      { opacity: 0 },
-      { opacity: 1, duration: 1, ease: 'power2.out' },
-      '-=0.2',
-    )
+      .fromTo(
+        subtitleRef.value,
+        { y: 30, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.9, ease: 'power3.out' },
+        '-=0.6'
+      )
+      .fromTo(
+        ctaRef.value,
+        { y: 20, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.8, ease: 'power3.out' },
+        '-=0.5'
+      )
+      .fromTo(
+        scrollHintRef.value,
+        { opacity: 0 },
+        { opacity: 1, duration: 1, ease: 'power2.out' },
+        '-=0.2'
+      )
   }
   // Mobile: CSS @keyframes handles hero entrance (compositor thread, immune to JS jank)
 
@@ -117,12 +113,7 @@ function scrollToProjects() {
 </script>
 
 <template>
-  <section
-    ref="sectionRef"
-    id="hero"
-    class="hero"
-    aria-label="Hero section"
-  >
+  <section id="hero" ref="sectionRef" class="hero" aria-label="Hero section">
     <!-- Orbs (grid 由 body 全頁提供) -->
     <div ref="bgRef" class="hero-bg" aria-hidden="true">
       <div class="hero-orb hero-orb--blue" />
@@ -134,7 +125,8 @@ function scrollToProjects() {
       <!-- Eyebrow -->
       <p class="hero-eyebrow">
         <span class="hero-eyebrow__dot" aria-hidden="true" />
-        <span class="hero-eyebrow__typed">{{ typedText }}</span><span class="hero-eyebrow__cursor" aria-hidden="true" />
+        <span class="hero-eyebrow__typed">{{ typedText }}</span
+        ><span class="hero-eyebrow__cursor" aria-hidden="true" />
       </p>
 
       <!-- Title — split into words for stagger -->
@@ -145,7 +137,8 @@ function scrollToProjects() {
             class="hero-title__word"
             @mouseenter="setCursorVariant('hover')"
             @mouseleave="setCursorVariant('default')"
-          >SAMYEN'S</span>
+            >SAMYEN'S</span
+          >
         </span>
         <span class="hero-title__line">
           <span
@@ -153,13 +146,14 @@ function scrollToProjects() {
             class="hero-title__word"
             @mouseenter="setCursorVariant('hover')"
             @mouseleave="setCursorVariant('default')"
-          >SPACE.</span>
+            >SPACE.</span
+          >
         </span>
       </h1>
 
       <!-- Subtitle -->
       <p ref="subtitleRef" class="hero-subtitle">
-        A collection of thoughts, code, and digital experiments.<br class="hidden md:block" />
+        A collection of thoughts, code, and digital experiments.<br class="hidden md:block" >
         Where design meets engineering.
       </p>
 
@@ -173,7 +167,13 @@ function scrollToProjects() {
           @mouseleave="setCursorVariant('default')"
         >
           <span>Explore Work</span>
-          <svg class="hero-cta__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <svg
+            class="hero-cta__icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
             <path d="M5 12h14M12 5l7 7-7 7" />
           </svg>
         </button>
@@ -187,8 +187,6 @@ function scrollToProjects() {
           Get in Touch
         </a>
       </div>
-
-
     </div>
 
     <!-- Scroll hint -->
@@ -221,7 +219,6 @@ function scrollToProjects() {
   will-change: transform;
 }
 
-
 .hero-orb {
   position: absolute;
   border-radius: 50%;
@@ -250,8 +247,13 @@ function scrollToProjects() {
 }
 
 @keyframes orb-float {
-  0%, 100% { transform: translate(0, 0); }
-  50% { transform: translate(30px, -30px); }
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+  50% {
+    transform: translate(30px, -30px);
+  }
 }
 
 /* Content */
@@ -304,13 +306,26 @@ function scrollToProjects() {
 }
 
 @keyframes blink-cursor {
-  0%, 45% { opacity: 1; }
-  55%, 100% { opacity: 0; }
+  0%,
+  45% {
+    opacity: 1;
+  }
+  55%,
+  100% {
+    opacity: 0;
+  }
 }
 
 @keyframes pulse-dot {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.6; transform: scale(1.3); }
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.3);
+  }
 }
 
 /* Title */
@@ -448,8 +463,14 @@ function scrollToProjects() {
 }
 
 @keyframes scroll-wheel {
-  0% { transform: translateY(0); opacity: 1; }
-  100% { transform: translateY(12px); opacity: 0; }
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(12px);
+    opacity: 0;
+  }
 }
 
 .hero-scroll-hint__text {
@@ -465,8 +486,14 @@ function scrollToProjects() {
 }
 
 @keyframes fade-up {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Desktop: CSS 初始隱藏，防止 SSR 先顯示再 GSAP 動畫的閃爍，由 GSAP timeline fromTo() 負責揭示 */
@@ -486,8 +513,14 @@ function scrollToProjects() {
 }
 
 @keyframes title-slide-up {
-  from { opacity: 0; transform: translateY(100%); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Mobile: reduce orb size/blur to cut GPU paint cost */

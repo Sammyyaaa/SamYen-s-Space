@@ -2,21 +2,21 @@
 
 ## 命名規則
 
-| 類型 | 規則 | 範例 |
-|------|------|------|
-| 元件 | PascalCase | `ProjectCard.vue` |
-| Composable | camelCase + use 前綴 | `useScrollAnimation.ts` |
-| Store | camelCase + Store 後綴 | `portfolioStore.ts` |
-| CSS 類 | BEM kebab-case | `.project-card__title` |
-| TypeScript interface | PascalCase | `Project`, `CursorState` |
-| GSAP timeline | 描述性 camelCase | `heroEntranceTl` |
+| 類型                 | 規則                   | 範例                     |
+| -------------------- | ---------------------- | ------------------------ |
+| 元件                 | PascalCase             | `ProjectCard.vue`        |
+| Composable           | camelCase + use 前綴   | `useScrollAnimation.ts`  |
+| Store                | camelCase + Store 後綴 | `portfolioStore.ts`      |
+| CSS 類               | BEM kebab-case         | `.project-card__title`   |
+| TypeScript interface | PascalCase             | `Project`, `CursorState` |
+| GSAP timeline        | 描述性 camelCase       | `heroEntranceTl`         |
 
 ## 環境變數
 
-| 變數 | 用途 | 必要 | 預設值 |
-|------|------|------|--------|
-| `VITE_APP_TITLE` | 網站標題 | 否 | `SamYen` |
-| `BASE_URL` | 部署基礎路徑 | 否 | `/` |
+| 變數             | 用途         | 必要 | 預設值   |
+| ---------------- | ------------ | ---- | -------- |
+| `VITE_APP_TITLE` | 網站標題     | 否   | `SamYen` |
+| `BASE_URL`       | 部署基礎路徑 | 否   | `/`      |
 
 ## 新增頁面
 

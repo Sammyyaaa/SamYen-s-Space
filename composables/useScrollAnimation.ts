@@ -26,10 +26,7 @@ interface RevealOptions {
  * Reveal a single element or a list of child elements on scroll.
  * Respects prefers-reduced-motion.
  */
-export function useReveal(
-  containerRef: Ref<HTMLElement | null>,
-  options: RevealOptions = {},
-) {
+export function useReveal(containerRef: Ref<HTMLElement | null>, options: RevealOptions = {}) {
   const {
     y = 30,
     opacity = 0,
@@ -46,9 +43,7 @@ export function useReveal(
     if (!containerRef.value) return
 
     ctx = gsap.context(() => {
-      const targets = stagger
-        ? containerRef.value!.children
-        : containerRef.value
+      const targets = stagger ? containerRef.value!.children : containerRef.value
 
       if (prefersReducedMotion() || isTouchDevice()) {
         gsap.set(targets, { opacity: 1, y: 0 })
@@ -79,7 +74,7 @@ export function useReveal(
  */
 export function useScrollMarquee(
   trackRef: Ref<HTMLElement | null>,
-  options: { speed?: number; direction?: 1 | -1 } = {},
+  options: { speed?: number; direction?: 1 | -1 } = {}
 ) {
   const { speed = 1, direction = -1 } = options
   let ctx: gsap.Context
@@ -108,10 +103,7 @@ export function useScrollMarquee(
  * Pin a section and drive animations via scroll progress.
  * Returns the timeline for custom keyframes.
  */
-export function useScrollPin(
-  sectionRef: Ref<HTMLElement | null>,
-  pinLength = '200%',
-) {
+export function useScrollPin(sectionRef: Ref<HTMLElement | null>, pinLength = '200%') {
   let ctx: gsap.Context
   let tl: gsap.core.Timeline
 
@@ -145,7 +137,7 @@ export function useScrollPin(
 export function useParallax(
   containerRef: Ref<HTMLElement | null>,
   targetRef: Ref<HTMLElement | null>,
-  options: { speed?: number; direction?: 'y' | 'x' } = {},
+  options: { speed?: number; direction?: 'y' | 'x' } = {}
 ) {
   const { speed = 0.3, direction = 'y' } = options
   let ctx: gsap.Context

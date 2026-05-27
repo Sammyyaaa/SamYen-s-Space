@@ -18,29 +18,25 @@ useReveal(gridRef, { y: 30, duration: 0.7, stagger: isMobile ? 0 : 0.1, start: '
 const activeFilter = ref<'all' | 'company' | 'personal' | 'team'>('all')
 
 const visibleProjects = computed(() => {
-  if (activeFilter.value === 'company')  return store.projects.filter(p => p.category === 'company')
-  if (activeFilter.value === 'personal') return store.projects.filter(p => p.category === 'personal')
-  if (activeFilter.value === 'team')     return store.projects.filter(p => p.category === 'team')
+  if (activeFilter.value === 'company')
+    return store.projects.filter((p) => p.category === 'company')
+  if (activeFilter.value === 'personal')
+    return store.projects.filter((p) => p.category === 'personal')
+  if (activeFilter.value === 'team') return store.projects.filter((p) => p.category === 'team')
   return store.projects
 })
 </script>
 
 <template>
-  <section
-    id="projects"
-    class="projects-section"
-    aria-labelledby="projects-title"
-  >
+  <section id="projects" class="projects-section" aria-labelledby="projects-title">
     <!-- Section header -->
     <div ref="headingRef" class="projects-header">
       <span class="section-eyebrow">Selected Work</span>
       <h2 id="projects-title" class="projects-title">
-        Things I've<br />
+        Things I've<br >
         <span class="projects-title__accent">Built &amp; Shipped</span>
       </h2>
-      <p class="projects-desc">
-        從概念到產品，每個專案都是一次突破邊界的嘗試。
-      </p>
+      <p class="projects-desc">從概念到產品，每個專案都是一次突破邊界的嘗試。</p>
 
       <!-- Filter tabs -->
       <div class="projects-filter" role="tablist" aria-label="Filter projects">
@@ -216,7 +212,9 @@ const visibleProjects = computed(() => {
 
 .project-fade-enter-active,
 .project-fade-leave-active {
-  transition: opacity 0.35s ease, transform 0.35s ease;
+  transition:
+    opacity 0.35s ease,
+    transform 0.35s ease;
 }
 .project-fade-enter-from,
 .project-fade-leave-to {

@@ -6,16 +6,14 @@ const route = useRoute()
 const store = usePortfolioStore()
 const transitionStore = useTransitionStore()
 
-const project = computed(() =>
-  store.getProject(route.params.id as string),
-)
+const project = computed(() => store.getProject(route.params.id as string))
 
 if (!project.value) {
   await navigateTo('/', { replace: true })
 }
 
 useSeoMeta({
-  title: () => project.value ? `${project.value.title} — SamYen` : "SamYen's Space",
+  title: () => (project.value ? `${project.value.title} — SamYen` : "SamYen's Space"),
   description: () => project.value?.description ?? '',
   ogTitle: () => project.value?.title ?? "SamYen's Space",
   ogDescription: () => project.value?.description ?? '',
@@ -52,12 +50,18 @@ function navigateToProject(id: string) {
         <span
           class="project-detail__badge"
           :class="{
-            'project-detail__badge--company':  project.category === 'company',
+            'project-detail__badge--company': project.category === 'company',
             'project-detail__badge--personal': project.category === 'personal',
-            'project-detail__badge--team':     project.category === 'team',
+            'project-detail__badge--team': project.category === 'team',
           }"
         >
-          {{ project.category === 'company' ? '公司專案' : project.category === 'team' ? '團隊作品' : '個人作品' }}
+          {{
+            project.category === 'company'
+              ? '公司專案'
+              : project.category === 'team'
+                ? '團隊作品'
+                : '個人作品'
+          }}
         </span>
         <span class="project-detail__period">{{ project.period ?? project.year }}</span>
         <span class="project-detail__category">{{ project.subtitle }}</span>
@@ -98,11 +102,7 @@ function navigateToProject(id: string) {
         >
           <h2 class="project-detail__section-title">{{ section.title }}</h2>
           <ul class="project-detail__section-list">
-            <li
-              v-for="item in section.items"
-              :key="item"
-              class="project-detail__section-item"
-            >
+            <li v-for="item in section.items" :key="item" class="project-detail__section-item">
               {{ item }}
             </li>
           </ul>
@@ -113,11 +113,7 @@ function navigateToProject(id: string) {
       <div class="project-detail__tags-wrap">
         <h2 class="project-detail__tags-title">前端技術與套件</h2>
         <div class="project-detail__tags">
-          <span
-            v-for="tag in project.tags"
-            :key="tag"
-            class="project-detail__tag"
-          >
+          <span v-for="tag in project.tags" :key="tag" class="project-detail__tag">
             {{ tag }}
           </span>
         </div>
@@ -143,7 +139,7 @@ function navigateToProject(id: string) {
       <h2 class="project-detail__related-title">More Work</h2>
       <div class="project-detail__related-grid">
         <button
-          v-for="p in store.projects.filter(p => p.id !== project!.id).slice(0, 3)"
+          v-for="p in store.projects.filter((p) => p.id !== project!.id).slice(0, 3)"
           :key="p.id"
           class="project-detail__related-card"
           @click="navigateToProject(p.id)"
@@ -157,7 +153,8 @@ function navigateToProject(id: string) {
                 v-for="tag in p.tags.slice(0, 3)"
                 :key="tag"
                 class="project-detail__related-tag"
-              >{{ tag }}</span>
+                >{{ tag }}</span
+              >
             </div>
           </div>
           <div
@@ -336,7 +333,9 @@ function navigateToProject(id: string) {
   @apply text-surface-50 rounded-full font-semibold text-sm;
   padding: 0.75rem 1.75rem;
   margin-bottom: 2rem;
-  transition: opacity 0.3s, box-shadow 0.3s;
+  transition:
+    opacity 0.3s,
+    box-shadow 0.3s;
   background: var(--cta-primary-bg);
   color: var(--cta-primary-text);
   border: none;
@@ -380,7 +379,9 @@ function navigateToProject(id: string) {
   box-shadow: var(--card-shine);
   cursor: none;
   text-align: left;
-  transition: border-color 0.3s, box-shadow 0.4s;
+  transition:
+    border-color 0.3s,
+    box-shadow 0.4s;
   display: flex;
   flex-direction: column;
 }

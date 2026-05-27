@@ -32,7 +32,16 @@ export interface Stat {
 
 export interface Skill {
   name: string
-  category: 'basics' | 'styling' | 'frameworks' | 'state' | 'build' | 'api' | 'uiux' | 'devtools' | 'aitools'
+  category:
+    | 'basics'
+    | 'styling'
+    | 'frameworks'
+    | 'state'
+    | 'build'
+    | 'api'
+    | 'uiux'
+    | 'devtools'
+    | 'aitools'
 }
 
 export interface NavLink {
@@ -56,13 +65,7 @@ export interface CursorState {
   scale: number
 }
 
-export type CursorVariant =
-  | 'default'
-  | 'hover'
-  | 'text'
-  | 'link'
-  | 'project'
-  | 'drag'
+export type CursorVariant = 'default' | 'hover' | 'text' | 'link' | 'project' | 'drag'
 
 // ── Page Transition ──
 export interface PageTransitionConfig {

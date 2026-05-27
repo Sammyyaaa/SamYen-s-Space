@@ -19,9 +19,9 @@ const transitionStore = useTransitionStore()
 
 // Desktop center links (Contact 移至右側 CTA)
 const navLinks = [
-  { label: 'Work',   href: '#projects' },
-  { label: 'About',  href: '#about'    },
-  { label: 'Skills', href: '#skills'   },
+  { label: 'Work', href: '#projects' },
+  { label: 'About', href: '#about' },
+  { label: 'Skills', href: '#skills' },
 ]
 
 watch(scrollY, (y) => {
@@ -118,19 +118,37 @@ function scrollTo(href: string) {
           @mouseenter="setCursorVariant('hover')"
           @mouseleave="setCursorVariant('default')"
         >
-          <svg v-if="isDark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <circle cx="12" cy="12" r="4"/>
-            <line x1="12" y1="3" x2="12" y2="5"/>
-            <line x1="12" y1="19" x2="12" y2="21"/>
-            <line x1="3" y1="12" x2="5" y2="12"/>
-            <line x1="19" y1="12" x2="21" y2="12"/>
-            <line x1="5.64" y1="5.64" x2="7.05" y2="7.05"/>
-            <line x1="16.95" y1="16.95" x2="18.36" y2="18.36"/>
-            <line x1="5.64" y1="18.36" x2="7.05" y2="16.95"/>
-            <line x1="16.95" y1="7.05" x2="18.36" y2="5.64"/>
+          <svg
+            v-if="isDark"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <circle cx="12" cy="12" r="4" />
+            <line x1="12" y1="3" x2="12" y2="5" />
+            <line x1="12" y1="19" x2="12" y2="21" />
+            <line x1="3" y1="12" x2="5" y2="12" />
+            <line x1="19" y1="12" x2="21" y2="12" />
+            <line x1="5.64" y1="5.64" x2="7.05" y2="7.05" />
+            <line x1="16.95" y1="16.95" x2="18.36" y2="18.36" />
+            <line x1="5.64" y1="18.36" x2="7.05" y2="16.95" />
+            <line x1="16.95" y1="7.05" x2="18.36" y2="5.64" />
           </svg>
-          <svg v-else viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          <svg
+            v-else
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.5"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
           </svg>
         </button>
 
@@ -160,7 +178,6 @@ function scrollTo(href: string) {
         </button>
       </div>
     </div>
-
   </nav>
 
   <!-- Teleport to body to avoid backdrop-filter/transform stacking context issues -->
@@ -174,24 +191,13 @@ function scrollTo(href: string) {
             class="nav-mobile__item"
             :style="{ transitionDelay: `${i * 0.06}s` }"
           >
-            <a
-              :href="link.href"
-              class="nav-mobile__link"
-              @click.prevent="scrollTo(link.href)"
-            >
+            <a :href="link.href" class="nav-mobile__link" @click.prevent="scrollTo(link.href)">
               {{ link.label }}
             </a>
           </li>
           <!-- Contact 補回行動版選單 -->
-          <li
-            class="nav-mobile__item"
-            :style="{ transitionDelay: `${navLinks.length * 0.06}s` }"
-          >
-            <a
-              href="#contact"
-              class="nav-mobile__link"
-              @click.prevent="scrollTo('#contact')"
-            >
+          <li class="nav-mobile__item" :style="{ transitionDelay: `${navLinks.length * 0.06}s` }">
+            <a href="#contact" class="nav-mobile__link" @click.prevent="scrollTo('#contact')">
               Contact
             </a>
           </li>
@@ -205,8 +211,12 @@ function scrollTo(href: string) {
 @reference "~/assets/styles/main.css";
 
 @keyframes nav-fade-in {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .nav-bar {
@@ -216,7 +226,10 @@ function scrollTo(href: string) {
   right: 0;
   z-index: 100;
   padding: 1.5rem 2rem;
-  transition: background 0.4s ease, padding 0.4s ease, backdrop-filter 0.4s ease;
+  transition:
+    background 0.4s ease,
+    padding 0.4s ease,
+    backdrop-filter 0.4s ease;
 }
 
 @media (max-width: 1023px) {
@@ -275,7 +288,9 @@ function scrollTo(href: string) {
   background: none;
   border: none;
   cursor: none;
-  transition: color 0.3s, background 0.3s;
+  transition:
+    color 0.3s,
+    background 0.3s;
 }
 
 .nav-theme-toggle:hover {
@@ -343,7 +358,9 @@ function scrollTo(href: string) {
   @apply text-sm font-medium text-surface-50 rounded-full;
   border: 1px solid var(--nav-cta-border);
   padding: 0.5rem 1.25rem;
-  transition: background 0.3s, border-color 0.3s;
+  transition:
+    background 0.3s,
+    border-color 0.3s;
 }
 
 @media (min-width: 768px) {
@@ -378,7 +395,9 @@ function scrollTo(href: string) {
   width: 24px;
   height: 1.5px;
   @apply bg-surface-50;
-  transition: transform 0.3s ease, opacity 0.3s ease;
+  transition:
+    transform 0.3s ease,
+    opacity 0.3s ease;
   transform-origin: center;
 }
 
@@ -430,7 +449,9 @@ function scrollTo(href: string) {
 
 .mobile-menu-enter-active,
 .mobile-menu-leave-active {
-  transition: opacity 0.4s ease, transform 0.4s ease;
+  transition:
+    opacity 0.4s ease,
+    transform 0.4s ease;
 }
 .mobile-menu-enter-from,
 .mobile-menu-leave-to {
