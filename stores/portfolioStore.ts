@@ -310,6 +310,7 @@ export const usePortfolioStore = defineStore('portfolio', () => {
     { name: 'Photoshop', category: 'uiux' },
     { name: 'Illustrator', category: 'uiux' },
     { name: 'Figma', category: 'uiux' },
+    { name: 'VSCode', category: 'devtools' },
     { name: 'ESLint', category: 'devtools' },
     { name: 'Prettier', category: 'devtools' },
     { name: 'Git', category: 'devtools' },

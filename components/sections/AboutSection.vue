@@ -64,6 +64,7 @@ const skillIconMap: Record<string, string> = {
   Figma: 'logos:figma',
   Photoshop: 'logos:adobe-photoshop',
   Illustrator: 'logos:adobe-illustrator',
+  VSCode: 'logos:visual-studio-code',
   ESLint: 'logos:eslint',
   Prettier: 'logos:prettier',
   Git: 'logos:git-icon',
