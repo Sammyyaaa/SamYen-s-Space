@@ -232,6 +232,12 @@ function scrollTo(href: string) {
     backdrop-filter 0.4s ease;
 }
 
+@media (min-width: 1024px) {
+  .nav-bar {
+    opacity: 0;
+  }
+}
+
 @media (max-width: 1023px) {
   .nav-bar {
     opacity: 0;
