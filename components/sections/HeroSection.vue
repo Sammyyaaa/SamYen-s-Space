@@ -153,7 +153,7 @@ function scrollToProjects() {
 
       <!-- Subtitle -->
       <p ref="subtitleRef" class="hero-subtitle">
-        A collection of thoughts, code, and digital experiments.<br class="hidden md:block" >
+        A collection of thoughts, code, and digital experiments.<br class="hidden md:block" />
         Where design meets engineering.
       </p>
 
@@ -264,6 +264,12 @@ function scrollToProjects() {
   max-width: 1440px;
   margin: 0 auto;
   padding: 0 2rem;
+}
+
+@media (min-width: 1024px) and (max-height: 800px) {
+  .hero-content {
+    padding-top: 8rem;
+  }
 }
 
 /* Eyebrow */

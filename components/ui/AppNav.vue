@@ -33,13 +33,11 @@ const isDesktop = import.meta.client ? window.innerWidth >= 1024 : false
 onMounted(() => {
   initTheme()
   if (!navRef.value || !isDesktop) return
-  gsap.from(navRef.value, {
-    y: -80,
-    opacity: 0,
-    duration: 1.2,
-    ease: 'power4.out',
-    delay: 0.5,
-  })
+  gsap.fromTo(
+    navRef.value,
+    { y: -80, opacity: 0 },
+    { y: 0, opacity: 1, duration: 1.2, ease: 'power4.out', delay: 0.5 }
+  )
 })
 
 function goHome() {
