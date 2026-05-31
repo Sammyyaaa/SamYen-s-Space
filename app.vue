@@ -5,6 +5,8 @@ import { usePageTransition } from '~/composables/usePageTransition'
 
 const { enter, leave } = usePageTransition()
 
+const SITE_URL = 'https://samyen-s-space.vercel.app'
+
 useHead({
   script: [
     {
@@ -13,13 +15,32 @@ useHead({
         '@context': 'https://schema.org',
         '@graph': [
           {
+            '@type': 'ProfilePage',
+            '@id': `${SITE_URL}/#profilepage`,
+            name: "SamYen's Space — Frontend Engineer Portfolio",
+            url: SITE_URL,
+            description:
+              'SamYen 的前端工程作品集：金融保險系統開發經驗，主要以 Vue / Nuxt / Angular 生態系與 UI/UX 設計對接。',
+            inLanguage: 'zh-TW',
+            datePublished: '2025-01-01',
+            dateModified: '2026-06-01',
+            mainEntity: { '@id': `${SITE_URL}/#person` },
+          },
+          {
             '@type': 'Person',
+            '@id': `${SITE_URL}/#person`,
             name: 'SamYen',
             jobTitle: 'Frontend Engineer',
             description:
               '前端工程師，有金融保險前台與客戶端管理後台的開發與維護的經驗。擅長 Vue / Nuxt / Angular 生態系與 UI/UX 設計對接。',
-            url: 'https://samyen-s-space.vercel.app',
+            url: SITE_URL,
             email: 'x0710078@gmail.com',
+            image: {
+              '@type': 'ImageObject',
+              url: `${SITE_URL}/og-image.png`,
+              width: 1200,
+              height: 630,
+            },
             sameAs: ['https://github.com/Sammyyaaa'],
             knowsAbout: [
               'Vue',
@@ -34,11 +55,13 @@ useHead({
           },
           {
             '@type': 'WebSite',
+            '@id': `${SITE_URL}/#website`,
             name: "SamYen's Space",
-            url: 'https://samyen-s-space.vercel.app',
+            url: SITE_URL,
             description:
               'SamYen 的前端工程作品集：金融保險系統開發經驗，主要以 Vue / Nuxt / Angular 生態系與 UI/UX 設計對接。',
-            author: { '@type': 'Person', name: 'SamYen' },
+            inLanguage: 'zh-TW',
+            author: { '@id': `${SITE_URL}/#person` },
           },
         ],
       }),

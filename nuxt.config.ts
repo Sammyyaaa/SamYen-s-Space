@@ -67,7 +67,8 @@ export default defineNuxtConfig({
         },
         {
           name: 'keywords',
-          content: 'portfolio, frontend engineer, Vue, Angular, TypeScript, Nuxt, SamYen',
+          content:
+            'SamYen, SamYen 前端工程師, 前端工程師, 前端開發, Frontend Engineer, Vue, Nuxt, Angular, TypeScript, 作品集, portfolio, 台灣前端工程師',
         },
         { property: 'og:title', content: "SamYen's Space" },
         {
@@ -78,17 +79,23 @@ export default defineNuxtConfig({
         { property: 'og:type', content: 'website' },
         { property: 'og:url', content: SITE_URL },
         { property: 'og:site_name', content: "SamYen's Space" },
-        { name: 'twitter:card', content: 'summary' },
+        { property: 'og:image', content: `${SITE_URL}/og-image.png` },
+        { property: 'og:image:width', content: '1200' },
+        { property: 'og:image:height', content: '630' },
+        { property: 'og:image:alt', content: 'SamYen — Frontend Engineer Portfolio' },
+        { name: 'twitter:card', content: 'summary_large_image' },
         { name: 'twitter:title', content: "SamYen's Space" },
         {
           name: 'twitter:description',
           content:
             'SamYen 的前端工程作品集：金融保險系統開發經驗，主要以 Vue / Nuxt / Angular 生態系與 UI/UX 設計對接。',
         },
+        { name: 'twitter:image', content: `${SITE_URL}/og-image.png` },
         { name: 'robots', content: 'index, follow' },
       ],
       link: [
         { rel: 'canonical', href: SITE_URL },
+        { rel: 'alternate', hreflang: 'zh-TW', href: SITE_URL },
         { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
         {

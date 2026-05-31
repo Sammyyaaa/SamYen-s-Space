@@ -1,4 +1,4 @@
-# SamYen — Immersive Digital Portfolio
+# SamYen's Space — Immersive Digital Portfolio
 
 從 Vue 3 + Vite 到 Nuxt 4 的完整重構 — 沉浸式動畫、自定義磁吸游標、SSR 主視覺區優化，呈現暗黑科技美學的數位個人作品集。
 支援亮色模式切換，整合 GSAP ScrollTrigger、GPU 合成層原生捲動與頁面過渡，實現全場景流暢互動體驗。
@@ -38,17 +38,17 @@
 
 ## 技術棧
 
-| 類別 | 技術                                               |
-| ---- | -------------------------------------------------- |
-| 框架 | Nuxt 4 + Vue 3 (Composition API, `<script setup>`) |
-| 語言 | TypeScript                                         |
-| 建置 | Nitro（Nuxt 內建）                                 |
-| 樣式 | Tailwind CSS v4 (`@tailwindcss/vite`)              |
-| 動畫 | GSAP 3 + ScrollTrigger                             |
-| 滾動 | 原生瀏覽器捲動（GPU 合成優化）                     |
-| Icon | @iconify/vue 5 (`logos:*` 系列)                    |
-| 工具 | VueUse 14、Pinia 3、Nuxt 內建路由                  |
-| 程式品質 | ESLint (`@nuxt/eslint`)、Prettier               |
+| 類別     | 技術                                               |
+| -------- | -------------------------------------------------- |
+| 框架     | Nuxt 4 + Vue 3 (Composition API, `<script setup>`) |
+| 語言     | TypeScript                                         |
+| 建置     | Nitro（Nuxt 內建）                                 |
+| 樣式     | Tailwind CSS v4 (`@tailwindcss/vite`)              |
+| 動畫     | GSAP 3 + ScrollTrigger                             |
+| 滾動     | 原生瀏覽器捲動（GPU 合成優化）                     |
+| Icon     | @iconify/vue 5 (`logos:*` 系列)                    |
+| 工具     | VueUse 14、Pinia 3、Nuxt 內建路由                  |
+| 程式品質 | ESLint (`@nuxt/eslint`)、Prettier                  |
 
 ## 快速開始
 
@@ -69,15 +69,15 @@ npm run preview
 
 ## 常用指令
 
-| 指令                | 說明                           |
-| ------------------- | ------------------------------ |
-| `npm run dev`       | 啟動 HMR 開發伺服器            |
-| `npm run build`     | TypeScript 型別檢查 + 生產建置 |
-| `npm run preview`   | 本地預覽 .output/              |
-| `npm run prepare`   | 生成 Nuxt TypeScript 型別宣告  |
-| `npm run lint`      | ESLint 檢查                    |
-| `npm run lint:fix`  | ESLint 自動修正                |
-| `npm run format`    | Prettier 格式化全專案          |
+| 指令               | 說明                           |
+| ------------------ | ------------------------------ |
+| `npm run dev`      | 啟動 HMR 開發伺服器            |
+| `npm run build`    | TypeScript 型別檢查 + 生產建置 |
+| `npm run preview`  | 本地預覽 .output/              |
+| `npm run prepare`  | 生成 Nuxt TypeScript 型別宣告  |
+| `npm run lint`     | ESLint 檢查                    |
+| `npm run lint:fix` | ESLint 自動修正                |
+| `npm run format`   | Prettier 格式化全專案          |
 
 ## 頁面結構
 

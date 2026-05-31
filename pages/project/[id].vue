@@ -18,6 +18,35 @@ useSeoMeta({
   ogTitle: () => project.value?.title ?? "SamYen's Space",
   ogDescription: () => project.value?.description ?? '',
   ogUrl: () => `https://samyen-s-space.vercel.app/project/${route.params.id}`,
+  ogImage: 'https://samyen-s-space.vercel.app/og-image.png',
+  twitterCard: 'summary_large_image',
+  twitterImage: 'https://samyen-s-space.vercel.app/og-image.png',
+})
+
+useHead({
+  script: computed(() => [
+    {
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          {
+            '@type': 'ListItem',
+            position: 1,
+            name: "SamYen's Space",
+            item: 'https://samyen-s-space.vercel.app',
+          },
+          {
+            '@type': 'ListItem',
+            position: 2,
+            name: project.value?.title ?? 'Project',
+            item: `https://samyen-s-space.vercel.app/project/${route.params.id}`,
+          },
+        ],
+      }),
+    },
+  ]),
 })
 
 const { elRef: backBtnRef } = useMagnetic(0.3)

@@ -153,7 +153,7 @@ function scrollToProjects() {
 
       <!-- Subtitle -->
       <p ref="subtitleRef" class="hero-subtitle">
-        A collection of thoughts, code, and digital experiments.<br class="hidden md:block" />
+        A collection of thoughts, code, and digital experiments.<br class="hidden md:block" >
         Where design meets engineering.
       </p>
 
