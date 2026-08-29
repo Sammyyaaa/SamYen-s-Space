@@ -5,6 +5,7 @@ import { setCursorVariant, useMagnetic } from '~/composables/useCursor'
 const route = useRoute()
 const store = usePortfolioStore()
 const transitionStore = useTransitionStore()
+const { t } = useI18n()
 
 const project = computed(() => store.getProject(route.params.id as string))
 
@@ -13,9 +14,10 @@ if (!project.value) {
 }
 
 useSeoMeta({
-  title: () => (project.value ? `${project.value.title} — SamYen` : "SamYen's Space"),
+  title: () => (project.value ? `${project.value.title} — SamYen` : t('seo.home.title')),
   description: () => project.value?.description ?? '',
-  ogTitle: () => project.value?.title ?? "SamYen's Space",
+  keywords: () => t('seo.keywords'),
+  ogTitle: () => project.value?.title ?? t('seo.home.title'),
   ogDescription: () => project.value?.description ?? '',
   ogUrl: () => `https://samyen-s-space.vercel.app/project/${route.params.id}`,
   ogImage: 'https://samyen-s-space.vercel.app/og-image.png',
@@ -34,7 +36,7 @@ useHead({
           {
             '@type': 'ListItem',
             position: 1,
-            name: "SamYen's Space",
+            name: t('seo.home.title'),
             item: 'https://samyen-s-space.vercel.app',
           },
           {
@@ -64,12 +66,12 @@ function navigateToProject(id: string) {
       <button
         ref="backBtnRef"
         class="project-detail__back"
-        aria-label="Back to all projects"
+        :aria-label="t('projectDetail.backAria')"
         @click="useRouter().back()"
         @mouseenter="setCursorVariant('hover')"
         @mouseleave="setCursorVariant('default')"
       >
-        ← Back
+        {{ t('projectDetail.back') }}
       </button>
     </div>
 
@@ -86,10 +88,10 @@ function navigateToProject(id: string) {
         >
           {{
             project.category === 'company'
-              ? '公司專案'
+              ? t('badge.company')
               : project.category === 'team'
-                ? '團隊作品'
-                : '個人作品'
+                ? t('badge.team')
+                : t('badge.personal')
           }}
         </span>
         <span class="project-detail__period">{{ project.period ?? project.year }}</span>
@@ -108,7 +110,7 @@ function navigateToProject(id: string) {
         @mouseenter="setCursorVariant('hover')"
         @mouseleave="setCursorVariant('default')"
       >
-        前往查看 ↗
+        {{ t('projectDetail.visitLink') }}
       </a>
       <button
         v-else
@@ -116,7 +118,7 @@ function navigateToProject(id: string) {
         disabled
         aria-disabled="true"
       >
-        前往查看
+        {{ t('projectDetail.visitLinkDisabled') }}
       </button>
 
       <p class="project-detail__desc">{{ project.description }}</p>
@@ -125,8 +127,8 @@ function navigateToProject(id: string) {
       <!-- Feature sections -->
       <div v-if="project.sections?.length" class="project-detail__sections">
         <div
-          v-for="section in project.sections"
-          :key="section.title"
+          v-for="(section, i) in project.sections"
+          :key="i"
           class="project-detail__section"
         >
           <h2 class="project-detail__section-title">{{ section.title }}</h2>
@@ -140,7 +142,7 @@ function navigateToProject(id: string) {
 
       <!-- Tech tags -->
       <div class="project-detail__tags-wrap">
-        <h2 class="project-detail__tags-title">前端技術與套件</h2>
+        <h2 class="project-detail__tags-title">{{ t('projectDetail.frontendTech') }}</h2>
         <div class="project-detail__tags">
           <span v-for="tag in project.tags" :key="tag" class="project-detail__tag">
             {{ tag }}
@@ -150,7 +152,7 @@ function navigateToProject(id: string) {
 
       <!-- Dev tools -->
       <div v-if="project.tools?.length" class="project-detail__tags-wrap">
-        <h2 class="project-detail__tags-title">開發工具</h2>
+        <h2 class="project-detail__tags-title">{{ t('projectDetail.devTools') }}</h2>
         <div class="project-detail__tags">
           <span
             v-for="tool in project.tools"
@@ -165,7 +167,7 @@ function navigateToProject(id: string) {
 
     <!-- Related -->
     <div class="project-detail__related">
-      <h2 class="project-detail__related-title">More Work</h2>
+      <h2 class="project-detail__related-title">{{ t('projectDetail.moreWork') }}</h2>
       <div class="project-detail__related-grid">
         <button
           v-for="p in store.projects.filter((p) => p.id !== project!.id).slice(0, 3)"

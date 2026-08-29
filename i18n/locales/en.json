@@ -1,0 +1,95 @@
+{
+  "nav": {
+    "work": "Work",
+    "about": "About",
+    "skills": "Skills",
+    "contact": "Contact",
+    "home": "Home",
+    "toggleLanguage": "Switch language"
+  },
+  "hero": {
+    "eyebrowDesktop": ["Frontend Engineer · Precision · Craft · Reliable · Systematic · Detail-Driven"],
+    "eyebrowMobile": ["Frontend Engineer · Precision", "Craft · Reliable", "Systematic · Detail-Driven"],
+    "subtitleLine1": "A collection of thoughts, code, and digital experiments.",
+    "subtitleLine2": "Where design meets engineering.",
+    "ctaExplore": "Explore Work",
+    "ctaContact": "Get in Touch",
+    "scroll": "Scroll"
+  },
+  "about": {
+    "eyebrow": "About",
+    "greeting": "Hi, I'm",
+    "body1": "A frontend engineer with experience developing and maintaining customer-facing platforms and back-office management systems for the financial insurance industry.",
+    "body2": "Skilled at translating product specs into pixel-accurate layouts and building reusable front-end modules and components; collaborating with UI/UX designers on design feasibility and implementing from Figma files; integrating APIs with backend engineers, handling documentation and testing, and managing release and deployment workflows.",
+    "techStackTitle": "Tech Stack",
+    "skillCategory": {
+      "basics": "Basics",
+      "styling": "Styling",
+      "frameworks": "Frameworks",
+      "state": "State Management",
+      "build": "Building Tools",
+      "api": "API",
+      "uiux": "UI/UX",
+      "devtools": "Dev Tools",
+      "aitools": "AI Development Tools"
+    }
+  },
+  "stats": {
+    "technologies": "Technologies Mastered",
+    "projectsCompleted": "Projects Completed",
+    "financeSystems": "Finance & Insurance Systems",
+    "detailObsession": "Obsession with Detail"
+  },
+  "projects": {
+    "eyebrow": "Selected Work",
+    "titleLine1": "Things I've",
+    "titleAccent": "Built & Shipped",
+    "desc": "From concept to product — every project is an attempt to push the boundaries a little further.",
+    "filter": {
+      "all": "All",
+      "company": "Company Projects",
+      "personal": "Personal Work",
+      "team": "Team Projects"
+    },
+    "viewFullArchive": "View Full Archive"
+  },
+  "badge": {
+    "company": "Company",
+    "personal": "Personal",
+    "team": "Team"
+  },
+  "contact": {
+    "eyebrow": "Contact",
+    "titleLine1": "Let's build something",
+    "titleAccent": "extraordinary",
+    "desc1": "Need to get in touch, or just want to say hi?",
+    "desc2": "Feel free to reach me via Email or GitHub."
+  },
+  "footer": {
+    "tagline": "Frontend Engineer — Vue · Angular · TypeScript",
+    "copyright": "© {year} SamYen. All rights reserved."
+  },
+  "projectDetail": {
+    "back": "← Back",
+    "backAria": "Back to all projects",
+    "visitLink": "Visit Project ↗",
+    "visitLinkDisabled": "Visit Project",
+    "frontendTech": "Frontend Tech & Packages",
+    "devTools": "Dev Tools",
+    "moreWork": "More Work"
+  },
+  "seo": {
+    "home": {
+      "title": "SamYen's Space",
+      "description": "SamYen's frontend engineering portfolio — experience building financial and insurance systems with the Vue / Nuxt / Angular ecosystem and UI/UX-driven implementation.",
+      "ogTitle": "SamYen's Space — SamYen Frontend Engineer Portfolio",
+      "twitterTitle": "SamYen's Space — Frontend Engineer",
+      "twitterDescription": "SamYen's frontend portfolio: Vue / Nuxt / Angular ecosystem, financial & insurance systems experience."
+    },
+    "keywords": "SamYen, SamYen Frontend Engineer, Frontend Engineer, Frontend Development, Vue, Nuxt, Angular, TypeScript, Portfolio, Taiwan Frontend Engineer",
+    "profile": {
+      "pageName": "SamYen's Space — Frontend Engineer Portfolio",
+      "personDescription": "Frontend engineer with experience developing and maintaining customer-facing platforms and back-office systems for the financial insurance industry. Skilled in the Vue / Nuxt / Angular ecosystem and UI/UX-driven implementation."
+    }
+  }
+}

@@ -6,6 +6,7 @@ import { setCursorVariant } from '@/composables/useCursor'
 import { useRouter } from 'vue-router'
 import ProjectCard from '@/components/project/ProjectCard.vue'
 
+const { t } = useI18n()
 const store = usePortfolioStore()
 const router = useRouter()
 const headingRef = ref<HTMLElement | null>(null)
@@ -31,12 +32,12 @@ const visibleProjects = computed(() => {
   <section id="projects" class="projects-section" aria-labelledby="projects-title">
     <!-- Section header -->
     <div ref="headingRef" class="projects-header">
-      <span class="section-eyebrow">Selected Work</span>
+      <span class="section-eyebrow">{{ t('projects.eyebrow') }}</span>
       <h2 id="projects-title" class="projects-title">
-        Things I've<br >
-        <span class="projects-title__accent">Built &amp; Shipped</span>
+        {{ t('projects.titleLine1') }}<br >
+        <span class="projects-title__accent">{{ t('projects.titleAccent') }}</span>
       </h2>
-      <p class="projects-desc">從概念到產品，每個專案都是一次突破邊界的嘗試。</p>
+      <p class="projects-desc">{{ t('projects.desc') }}</p>
 
       <!-- Filter tabs -->
       <div class="projects-filter" role="tablist" aria-label="Filter projects">
@@ -49,7 +50,7 @@ const visibleProjects = computed(() => {
           @mouseenter="setCursorVariant('hover')"
           @mouseleave="setCursorVariant('default')"
         >
-          全部
+          {{ t('projects.filter.all') }}
         </button>
         <button
           role="tab"
@@ -60,7 +61,7 @@ const visibleProjects = computed(() => {
           @mouseenter="setCursorVariant('hover')"
           @mouseleave="setCursorVariant('default')"
         >
-          公司專案
+          {{ t('projects.filter.company') }}
         </button>
         <button
           role="tab"
@@ -71,7 +72,7 @@ const visibleProjects = computed(() => {
           @mouseenter="setCursorVariant('hover')"
           @mouseleave="setCursorVariant('default')"
         >
-          個人作品
+          {{ t('projects.filter.personal') }}
         </button>
         <button
           role="tab"
@@ -82,7 +83,7 @@ const visibleProjects = computed(() => {
           @mouseenter="setCursorVariant('hover')"
           @mouseleave="setCursorVariant('default')"
         >
-          團隊作品
+          {{ t('projects.filter.team') }}
         </button>
       </div>
     </div>
@@ -107,7 +108,7 @@ const visibleProjects = computed(() => {
         @mouseleave="setCursorVariant('default')"
         @click="router.push('/')"
       >
-        View Full Archive
+        {{ t('projects.viewFullArchive') }}
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M5 12h14M12 5l7 7-7 7" />
         </svg>

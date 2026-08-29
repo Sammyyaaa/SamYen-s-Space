@@ -11,11 +11,26 @@ export default defineNuxtConfig({
 
   css: ['~/assets/styles/main.css'],
 
-  modules: ['@pinia/nuxt', '@nuxtjs/sitemap', '@nuxt/eslint'],
+  modules: ['@pinia/nuxt', '@nuxtjs/sitemap', '@nuxt/eslint', '@nuxtjs/i18n'],
 
   site: {
     url: SITE_URL,
     name: "SamYen's Space",
+  },
+
+  i18n: {
+    locales: [
+      { code: 'zh-tw', language: 'zh-TW', name: '繁體中文', file: 'zh-tw.json' },
+      { code: 'en', language: 'en-US', name: 'English', file: 'en.json' },
+    ],
+    defaultLocale: 'zh-tw',
+    strategy: 'no_prefix',
+    langDir: 'locales/',
+    detectBrowserLanguage: {
+      useCookie: true,
+      cookieKey: 'i18n_redirected',
+      redirectOn: 'root',
+    },
   },
 
   sitemap: {

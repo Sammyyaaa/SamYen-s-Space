@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@iconify/vue": "^5.0.1",
+    "@nuxtjs/i18n": "^10.6.0",
     "@nuxtjs/sitemap": "^8.0.15",
     "@pinia/nuxt": "^0.11.0",
     "@vueuse/core": "^14.3.0",

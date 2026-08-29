@@ -9,6 +9,7 @@ const props = defineProps<{
   index: number
 }>()
 
+const { t } = useI18n()
 const cardRef = ref<HTMLElement | null>(null)
 
 function onEnter() {
@@ -51,10 +52,10 @@ function navigateToProject() {
           >
             {{
               project.category === 'company'
-                ? '公司專案'
+                ? t('badge.company')
                 : project.category === 'team'
-                  ? '團隊作品'
-                  : '個人作品'
+                  ? t('badge.team')
+                  : t('badge.personal')
             }}
           </span>
           <span class="project-card__year">{{ project.period ?? project.year }}</span>

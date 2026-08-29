@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const { t } = useI18n()
 const year = new Date().getFullYear()
 </script>
 
@@ -11,11 +12,11 @@ const year = new Date().getFullYear()
         <span class="footer-logo">
           <span class="footer-logo__first">Sam</span><span class="footer-logo__last">Yen</span>
         </span>
-        <p class="footer-tagline">Frontend Engineer — Vue · Angular · TypeScript</p>
+        <p class="footer-tagline">{{ t('footer.tagline') }}</p>
       </div>
 
       <!-- Copyright -->
-      <p class="footer-copy">&copy; {{ year }} SamYen. All rights reserved.</p>
+      <p class="footer-copy">{{ t('footer.copyright', { year }) }}</p>
     </div>
   </footer>
 </template>
