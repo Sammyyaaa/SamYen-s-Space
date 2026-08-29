@@ -24,8 +24,17 @@ const onEmailLeave = () => setCursorVariant('default')
       <span class="section-eyebrow">{{ t('contact.eyebrow') }}</span>
 
       <h2 id="contact-title" class="contact-title">
-        {{ t('contact.titleLine1') }}<br >
-        <span class="text-gradient">{{ t('contact.titleAccent') }}</span>
+        <span
+          @mouseenter="setCursorVariant('title')"
+          @mouseleave="setCursorVariant('default')"
+          >{{ t('contact.titleLine1') }}</span
+        ><br >
+        <span
+          class="text-gradient"
+          @mouseenter="setCursorVariant('title')"
+          @mouseleave="setCursorVariant('default')"
+          >{{ t('contact.titleAccent') }}</span
+        >
       </h2>
 
       <p class="contact-desc">
