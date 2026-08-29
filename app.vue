@@ -1,14 +1,21 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import AppCursor from '~/components/ui/AppCursor.vue'
 import AppNav from '~/components/ui/AppNav.vue'
 import { usePageTransition } from '~/composables/usePageTransition'
 
 const { enter, leave } = usePageTransition()
+const { t, locale } = useI18n()
+const localeHead = useLocaleHead()
 
 const SITE_URL = 'https://samyen-s-space.vercel.app'
+const inLanguage = computed(() => (locale.value === 'zh-tw' ? 'zh-TW' : 'en-US'))
 
 useHead({
-  script: [
+  htmlAttrs: {
+    lang: () => localeHead.value.htmlAttrs.lang,
+  },
+  script: computed(() => [
     {
       type: 'application/ld+json',
       innerHTML: JSON.stringify({
@@ -17,11 +24,10 @@ useHead({
           {
             '@type': 'ProfilePage',
             '@id': `${SITE_URL}/#profilepage`,
-            name: "SamYen's Space — Frontend Engineer Portfolio",
+            name: t('seo.profile.pageName'),
             url: SITE_URL,
-            description:
-              'SamYen 的前端工程作品集：金融保險系統開發經驗，主要以 Vue / Nuxt / Angular 生態系與 UI/UX 設計對接。',
-            inLanguage: 'zh-TW',
+            description: t('seo.home.description'),
+            inLanguage: inLanguage.value,
             datePublished: '2025-01-01',
             dateModified: '2026-06-01',
             mainEntity: { '@id': `${SITE_URL}/#person` },
@@ -31,8 +37,7 @@ useHead({
             '@id': `${SITE_URL}/#person`,
             name: 'SamYen',
             jobTitle: 'Frontend Engineer',
-            description:
-              '前端工程師，有金融保險前台與客戶端管理後台的開發與維護的經驗。擅長 Vue / Nuxt / Angular 生態系與 UI/UX 設計對接。',
+            description: t('seo.profile.personDescription'),
             url: SITE_URL,
             email: 'x0710078@gmail.com',
             image: {
@@ -56,17 +61,16 @@ useHead({
           {
             '@type': 'WebSite',
             '@id': `${SITE_URL}/#website`,
-            name: "SamYen's Space",
+            name: t('seo.home.title'),
             url: SITE_URL,
-            description:
-              'SamYen 的前端工程作品集：金融保險系統開發經驗，主要以 Vue / Nuxt / Angular 生態系與 UI/UX 設計對接。',
-            inLanguage: 'zh-TW',
+            description: t('seo.home.description'),
+            inLanguage: inLanguage.value,
             author: { '@id': `${SITE_URL}/#person` },
           },
         ],
       }),
     },
-  ],
+  ]),
 })
 </script>
 

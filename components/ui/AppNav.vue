@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, watch } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { gsap } from 'gsap'
 import { useWindowScroll } from '@vueuse/core'
@@ -16,13 +16,18 @@ const navRef = ref<HTMLElement | null>(null)
 const { elRef: menuBtnRef } = useMagnetic(0.3)
 const { isDark, toggleTheme, initTheme } = useTheme()
 const transitionStore = useTransitionStore()
+const { t, locale, setLocale } = useI18n()
 
 // Desktop center links (Contact 移至右側 CTA)
-const navLinks = [
-  { label: 'Work', href: '#projects' },
-  { label: 'About', href: '#about' },
-  { label: 'Skills', href: '#skills' },
-]
+const navLinks = computed(() => [
+  { label: t('nav.work'), href: '#projects' },
+  { label: t('nav.about'), href: '#about' },
+  { label: t('nav.skills'), href: '#skills' },
+])
+
+function toggleLocale() {
+  setLocale(locale.value === 'zh-tw' ? 'en' : 'zh-tw')
+}
 
 watch(scrollY, (y) => {
   isScrolled.value = y > 50
@@ -150,6 +155,17 @@ function scrollTo(href: string) {
           </svg>
         </button>
 
+        <!-- Language switch -->
+        <button
+          class="nav-lang-toggle"
+          :aria-label="t('nav.toggleLanguage')"
+          @click="toggleLocale"
+          @mouseenter="setCursorVariant('hover')"
+          @mouseleave="setCursorVariant('default')"
+        >
+          {{ locale === 'zh-tw' ? 'EN' : '中' }}
+        </button>
+
         <!-- Contact CTA -->
         <a
           href="#contact"
@@ -158,7 +174,7 @@ function scrollTo(href: string) {
           @mouseenter="setCursorVariant('hover')"
           @mouseleave="setCursorVariant('default')"
         >
-          Contact
+          {{ t('nav.contact') }}
         </a>
 
         <!-- Mobile hamburger -->
@@ -196,8 +212,16 @@ function scrollTo(href: string) {
           <!-- Contact 補回行動版選單 -->
           <li class="nav-mobile__item" :style="{ transitionDelay: `${navLinks.length * 0.06}s` }">
             <a href="#contact" class="nav-mobile__link" @click.prevent="scrollTo('#contact')">
-              Contact
+              {{ t('nav.contact') }}
             </a>
+          </li>
+          <li
+            class="nav-mobile__item"
+            :style="{ transitionDelay: `${(navLinks.length + 1) * 0.06}s` }"
+          >
+            <button class="nav-mobile__lang" @click="toggleLocale">
+              {{ locale === 'zh-tw' ? 'English' : '繁體中文' }}
+            </button>
           </li>
         </ul>
       </div>
@@ -304,6 +328,26 @@ function scrollTo(href: string) {
 .nav-theme-toggle svg {
   width: 18px;
   height: 18px;
+}
+
+/* Language toggle */
+.nav-lang-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  @apply text-surface-300 text-xs font-semibold rounded-full;
+  background: none;
+  border: none;
+  cursor: none;
+  transition:
+    color 0.3s,
+    background 0.3s;
+}
+
+.nav-lang-toggle:hover {
+  @apply text-surface-50 bg-surface-800;
 }
 
 .nav-links {
@@ -448,6 +492,24 @@ function scrollTo(href: string) {
 }
 
 .nav-mobile__link:hover {
+  @apply text-surface-50;
+}
+
+.nav-mobile__lang {
+  display: block;
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 5vw, 2rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  @apply text-surface-400;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem 0;
+  transition: color 0.3s;
+}
+
+.nav-mobile__lang:hover {
   @apply text-surface-50;
 }
 

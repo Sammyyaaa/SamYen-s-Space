@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import { useReveal } from '@/composables/useScrollAnimation'
 import { setCursorVariant, useMagnetic } from '@/composables/useCursor'
 
+const { t } = useI18n()
 const contentRef = ref<HTMLElement | null>(null)
 const { elRef: githubBtnRef } = useMagnetic(1.2)
 const { elRef: emailBtnRef } = useMagnetic(1.2)
@@ -20,16 +21,16 @@ const onEmailLeave = () => setCursorVariant('default')
     <div class="contact-bg" aria-hidden="true" />
 
     <div ref="contentRef" class="contact-content">
-      <span class="section-eyebrow">Contact</span>
+      <span class="section-eyebrow">{{ t('contact.eyebrow') }}</span>
 
       <h2 id="contact-title" class="contact-title">
-        Let's build something<br >
-        <span class="text-gradient">extraordinary</span>
+        {{ t('contact.titleLine1') }}<br >
+        <span class="text-gradient">{{ t('contact.titleAccent') }}</span>
       </h2>
 
       <p class="contact-desc">
-        需要聯繫或只是想打個招呼？<br class="hidden md:block" >
-        歡迎透過 Email 或 GitHub 找我。
+        {{ t('contact.desc1') }}<br class="hidden md:block" >
+        {{ t('contact.desc2') }}
       </p>
 
       <!-- Contact icons -->

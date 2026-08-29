@@ -1,31 +1,44 @@
 <script setup lang="ts">
-import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { ref, computed, watch, onMounted, onBeforeUnmount } from 'vue'
 import { gsap } from 'gsap'
 import { setCursorVariant, useMagnetic } from '@/composables/useCursor'
 
+const { t, tm, locale } = useI18n()
 const typedText = ref('')
 
 const isDesktop = import.meta.client ? window.innerWidth >= 1024 : false
-const eyebrowPhrases = isDesktop
-  ? ['Frontend Engineer · Precision · Craft · Reliable · Systematic · Detail-Driven']
-  : ['Frontend Engineer · Precision', 'Craft · Reliable', 'Systematic · Detail-Driven']
+const eyebrowPhrases = computed<string[]>(() =>
+  isDesktop ? tm('hero.eyebrowDesktop') : tm('hero.eyebrowMobile')
+)
 
 let alive = false
 let rafId: number | null = null
 
+let phraseIndex = 0
+let charIndex = 0
+let isDeleting = false
+let pauseUntil = 0
+
+// Reset typing state on locale switch so the closure doesn't slice the new
+// locale's phrase using the previous locale's charIndex mid-type/mid-delete.
+watch(locale, () => {
+  phraseIndex = 0
+  charIndex = 0
+  isDeleting = false
+  typedText.value = ''
+  pauseUntil = performance.now() + 300
+})
+
 function runTypewriter() {
-  let phraseIndex = 0
-  let charIndex = 0
-  let isDeleting = false
   // Desktop: wait for GSAP animations (~1.8s); Mobile: elements appear at 0.4s, start typing immediately
-  let pauseUntil = performance.now() + (isDesktop ? 1800 : 400)
+  pauseUntil = performance.now() + (isDesktop ? 1800 : 400)
 
   function tick(now: number) {
     if (!alive) return
     rafId = requestAnimationFrame(tick)
     if (now < pauseUntil) return
 
-    const current = eyebrowPhrases[phraseIndex] ?? ''
+    const current = eyebrowPhrases.value[phraseIndex] ?? ''
 
     if (!isDeleting) {
       charIndex++
@@ -41,7 +54,7 @@ function runTypewriter() {
       typedText.value = current.slice(0, charIndex)
       if (charIndex <= 0) {
         isDeleting = false
-        phraseIndex = (phraseIndex + 1) % eyebrowPhrases.length
+        phraseIndex = (phraseIndex + 1) % eyebrowPhrases.value.length
         pauseUntil = now + 500
       } else {
         pauseUntil = now + 20
@@ -153,8 +166,8 @@ function scrollToProjects() {
 
       <!-- Subtitle -->
       <p ref="subtitleRef" class="hero-subtitle">
-        A collection of thoughts, code, and digital experiments.<br class="hidden md:block" >
-        Where design meets engineering.
+        {{ t('hero.subtitleLine1') }}<br class="hidden md:block" >
+        {{ t('hero.subtitleLine2') }}
       </p>
 
       <!-- CTA group -->
@@ -166,7 +179,7 @@ function scrollToProjects() {
           @mouseenter="setCursorVariant('hover')"
           @mouseleave="setCursorVariant('default')"
         >
-          <span>Explore Work</span>
+          <span>{{ t('hero.ctaExplore') }}</span>
           <svg
             class="hero-cta__icon"
             viewBox="0 0 24 24"
@@ -184,7 +197,7 @@ function scrollToProjects() {
           @mouseenter="setCursorVariant('hover')"
           @mouseleave="setCursorVariant('default')"
         >
-          Get in Touch
+          {{ t('hero.ctaContact') }}
         </a>
       </div>
     </div>
@@ -194,7 +207,7 @@ function scrollToProjects() {
       <div class="hero-scroll-hint__mouse">
         <div class="hero-scroll-hint__wheel" />
       </div>
-      <span class="hero-scroll-hint__text">Scroll</span>
+      <span class="hero-scroll-hint__text">{{ t('hero.scroll') }}</span>
     </div>
   </section>
 </template>

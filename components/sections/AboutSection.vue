@@ -7,6 +7,7 @@ import { useReveal } from '@/composables/useScrollAnimation'
 import { setCursorVariant } from '@/composables/useCursor'
 import { isTouchDevice } from '@/utils/helpers'
 
+const { t } = useI18n()
 const store = usePortfolioStore()
 const sectionRef = ref<HTMLElement | null>(null)
 const statsRef = ref<HTMLElement | null>(null)
@@ -30,16 +31,8 @@ const skillCategories = [
 ] as const
 type SkillCategory = (typeof skillCategories)[number]
 
-const categoryLabel: Record<SkillCategory, string> = {
-  basics: 'Basics',
-  styling: 'Styling',
-  frameworks: 'Frameworks',
-  state: 'State Management',
-  build: 'Building Tools',
-  api: 'API',
-  uiux: 'UI/UX',
-  devtools: 'Dev Tools',
-  aitools: 'AI Development Tools',
+function categoryLabel(category: SkillCategory): string {
+  return t(`about.skillCategory.${category}`)
 }
 
 const skillIconMap: Record<string, string> = {
@@ -175,28 +168,24 @@ function onStripPointerUp(e?: PointerEvent) {
 <template>
   <section id="about" ref="sectionRef" class="about-section" aria-labelledby="about-title">
     <!-- Section eyebrow -->
-    <span class="section-eyebrow">About</span>
+    <span class="section-eyebrow">{{ t('about.eyebrow') }}</span>
 
     <div class="about-grid">
       <!-- Left: Text -->
       <div ref="textRef" class="about-text">
         <h2 id="about-title" class="about-title">
-          Hi, I'm<br >
+          {{ t('about.greeting') }}<br >
           <span class="text-gradient">SamYen</span>
         </h2>
         <div class="about-body">
-          <p>前端工程師，有金融保險前台與客戶端管理後台的開發與維護的經驗。</p>
-          <p>
-            擅長依照產品規格文件進行切版，開發前端模組與共用元件；與 UI/UX
-            設計師討論設計可行性並根據 Figma 設計稿完成實作；與後端工程師串接
-            API，負責文件對接與測試，以及專案上版與上線部署流程。
-          </p>
+          <p>{{ t('about.body1') }}</p>
+          <p>{{ t('about.body2') }}</p>
         </div>
       </div>
 
       <!-- Right: Stats -->
       <div ref="statsRef" class="about-stats">
-        <div v-for="stat in store.stats" :key="stat.label" class="about-stat">
+        <div v-for="(stat, i) in store.stats" :key="i" class="about-stat">
           <span class="about-stat__value">{{ stat.value }}</span>
           <span class="about-stat__label">{{ stat.label }}</span>
         </div>
@@ -205,7 +194,7 @@ function onStripPointerUp(e?: PointerEvent) {
 
     <!-- Skills -->
     <div id="skills" class="about-skills">
-      <h3 class="about-skills__title">Tech Stack</h3>
+      <h3 class="about-skills__title">{{ t('about.techStackTitle') }}</h3>
 
       <!-- Tech Icons Marquee -->
       <div
@@ -236,7 +225,7 @@ function onStripPointerUp(e?: PointerEvent) {
 
       <div ref="skillsRef" class="about-skills__grid">
         <div v-for="category in skillCategories" :key="category" class="about-skills__category">
-          <span class="about-skills__cat-label">{{ categoryLabel[category] }}</span>
+          <span class="about-skills__cat-label">{{ categoryLabel(category) }}</span>
           <div class="about-skills__list">
             <span
               v-for="skill in store.skills.filter((s) => s.category === category)"
