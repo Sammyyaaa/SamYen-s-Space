@@ -3,12 +3,10 @@ import { ref, computed } from 'vue'
 import { usePortfolioStore } from '@/stores/portfolioStore'
 import { useReveal } from '@/composables/useScrollAnimation'
 import { setCursorVariant } from '@/composables/useCursor'
-import { useRouter } from 'vue-router'
 import ProjectCard from '@/components/project/ProjectCard.vue'
 
 const { t } = useI18n()
 const store = usePortfolioStore()
-const router = useRouter()
 const headingRef = ref<HTMLElement | null>(null)
 const gridRef = ref<HTMLElement | null>(null)
 
@@ -100,19 +98,21 @@ const visibleProjects = computed(() => {
       </TransitionGroup>
     </div>
 
-    <!-- View all CTA -->
+    <!-- Blog CTA -->
     <div class="projects-cta">
-      <button
+      <a
+        href="https://nuxt-article-blog.vercel.app/"
+        target="_blank"
+        rel="noopener noreferrer"
         class="projects-cta__btn"
         @mouseenter="setCursorVariant('hover')"
         @mouseleave="setCursorVariant('default')"
-        @click="router.push('/')"
       >
-        {{ t('projects.viewFullArchive') }}
+        {{ t('projects.visitBlog') }}
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M5 12h14M12 5l7 7-7 7" />
         </svg>
-      </button>
+      </a>
     </div>
   </section>
 </template>
@@ -194,6 +194,7 @@ const visibleProjects = computed(() => {
 }
 
 .projects-grid {
+  position: relative;
   display: grid;
   grid-template-columns: 1fr;
   gap: 1.5rem;
@@ -212,7 +213,8 @@ const visibleProjects = computed(() => {
 }
 
 .project-fade-enter-active,
-.project-fade-leave-active {
+.project-fade-leave-active,
+.project-fade-move {
   transition:
     opacity 0.35s ease,
     transform 0.35s ease;
@@ -221,6 +223,14 @@ const visibleProjects = computed(() => {
 .project-fade-leave-to {
   opacity: 0;
   transform: scale(0.96);
+}
+
+/* Take leaving cards out of grid flow so the remaining/incoming cards can
+   smoothly reflow (via .project-fade-move) instead of snapping instantly. */
+.project-fade-leave-active {
+  position: absolute;
+  width: 100%;
+  pointer-events: none;
 }
 
 .projects-cta {

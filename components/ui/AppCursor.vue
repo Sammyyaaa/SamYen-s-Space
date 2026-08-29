@@ -61,6 +61,7 @@ const variants = {
   link: { ringScale: 0.5, ringOpacity: 0.9, dotScale: 1.2, ringBorder: 3 },
   project: { ringScale: 0.875, ringOpacity: 0.7, dotScale: 0.4, ringBorder: 1.7 },
   drag: { ringScale: 0.55, ringOpacity: 0.7, dotScale: 0.3, ringBorder: 2.7 },
+  title: { ringScale: 0.8, ringOpacity: 0.85, dotScale: 0.3, ringBorder: 1.9 },
 } as const
 
 watch(

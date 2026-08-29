@@ -148,7 +148,7 @@ function scrollToProjects() {
           <span
             ref="titleWord1Ref"
             class="hero-title__word"
-            @mouseenter="setCursorVariant('hover')"
+            @mouseenter="setCursorVariant('title')"
             @mouseleave="setCursorVariant('default')"
             >SAMYEN'S</span
           >
@@ -157,7 +157,7 @@ function scrollToProjects() {
           <span
             ref="titleWord2Ref"
             class="hero-title__word"
-            @mouseenter="setCursorVariant('hover')"
+            @mouseenter="setCursorVariant('title')"
             @mouseleave="setCursorVariant('default')"
             >SPACE.</span
           >
