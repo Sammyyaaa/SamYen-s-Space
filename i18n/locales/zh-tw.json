@@ -1,27 +1,27 @@
 {
   "nav": {
-    "work": "作品",
-    "about": "關於",
-    "skills": "技能",
+    "work": "Work",
+    "about": "About",
+    "skills": "Skills",
     "contact": "聯絡",
     "home": "回首頁",
     "toggleLanguage": "切換語言"
   },
   "hero": {
-    "eyebrowDesktop": ["前端工程師 · 精準 · 工藝 · 可靠 · 系統化 · 注重細節"],
-    "eyebrowMobile": ["前端工程師 · 精準", "工藝 · 可靠", "系統化 · 注重細節"],
-    "subtitleLine1": "思考、程式碼與數位實驗的集合。",
-    "subtitleLine2": "設計與工程交會之處。",
+    "eyebrowDesktop": ["Frontend Engineer · Precision · Craft · Reliable · Systematic · Detail-Driven"],
+    "eyebrowMobile": ["Frontend Engineer · Precision", "Craft · Reliable", "Systematic · Detail-Driven"],
+    "subtitleLine1": "A collection of thoughts, code, and digital experiments.",
+    "subtitleLine2": "Where design meets engineering.",
     "ctaExplore": "探索作品",
     "ctaContact": "聯絡我",
-    "scroll": "捲動"
+    "scroll": "Scroll"
   },
   "about": {
-    "eyebrow": "關於",
+    "eyebrow": "About",
     "greeting": "嗨，我是",
     "body1": "前端工程師，有金融保險前台與客戶端管理後台的開發與維護的經驗。",
     "body2": "擅長依照產品規格文件進行切版，開發前端模組與共用元件；與 UI/UX 設計師討論設計可行性並根據 Figma 設計稿完成實作；與後端工程師串接 API，負責文件對接與測試，以及專案上版與上線部署流程。",
-    "techStackTitle": "技術棧",
+    "techStackTitle": "Tech Stack",
     "skillCategory": {
       "basics": "基礎",
       "styling": "樣式",
@@ -41,8 +41,8 @@
     "detailObsession": "對細節的執著"
   },
   "projects": {
-    "eyebrow": "精選作品",
-    "titleLine1": "我親手打造",
+    "eyebrow": "Selected Work",
+    "titleLine1": "精準迅速",
     "titleAccent": "並交付上線的作品",
     "desc": "從概念到產品，每個專案都是一次突破邊界的嘗試。",
     "filter": {
@@ -51,7 +51,7 @@
       "personal": "個人作品",
       "team": "團隊作品"
     },
-    "viewFullArchive": "查看完整作品"
+    "visitBlog": "前往文章部落格"
   },
   "badge": {
     "company": "公司專案",
@@ -59,7 +59,7 @@
     "team": "團隊作品"
   },
   "contact": {
-    "eyebrow": "聯絡我",
+    "eyebrow": "Contact",
     "titleLine1": "讓我們一起打造",
     "titleAccent": "非凡的作品",
     "desc1": "需要聯繫或只是想打個招呼？",

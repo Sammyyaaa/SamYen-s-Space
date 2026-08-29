@@ -65,7 +65,7 @@ export interface CursorState {
   scale: number
 }
 
-export type CursorVariant = 'default' | 'hover' | 'text' | 'link' | 'project' | 'drag'
+export type CursorVariant = 'default' | 'hover' | 'text' | 'link' | 'project' | 'drag' | 'title'
 
 // ── Page Transition ──
 export interface PageTransitionConfig {
