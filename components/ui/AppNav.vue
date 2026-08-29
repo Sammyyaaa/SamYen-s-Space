@@ -185,6 +185,8 @@ function scrollTo(href: string) {
           :aria-expanded="isMenuOpen"
           aria-label="Toggle menu"
           @click="toggleMenu"
+          @mouseenter="setCursorVariant('hover')"
+          @mouseleave="setCursorVariant('default')"
         >
           <span class="nav-hamburger__bar" />
           <span class="nav-hamburger__bar" />
@@ -205,13 +207,25 @@ function scrollTo(href: string) {
             class="nav-mobile__item"
             :style="{ transitionDelay: `${i * 0.06}s` }"
           >
-            <a :href="link.href" class="nav-mobile__link" @click.prevent="scrollTo(link.href)">
+            <a
+              :href="link.href"
+              class="nav-mobile__link"
+              @click.prevent="scrollTo(link.href)"
+              @mouseenter="setCursorVariant('hover')"
+              @mouseleave="setCursorVariant('default')"
+            >
               {{ link.label }}
             </a>
           </li>
           <!-- Contact 補回行動版選單 -->
           <li class="nav-mobile__item" :style="{ transitionDelay: `${navLinks.length * 0.06}s` }">
-            <a href="#contact" class="nav-mobile__link" @click.prevent="scrollTo('#contact')">
+            <a
+              href="#contact"
+              class="nav-mobile__link"
+              @click.prevent="scrollTo('#contact')"
+              @mouseenter="setCursorVariant('hover')"
+              @mouseleave="setCursorVariant('default')"
+            >
               {{ t('nav.contact') }}
             </a>
           </li>
@@ -219,7 +233,12 @@ function scrollTo(href: string) {
             class="nav-mobile__item"
             :style="{ transitionDelay: `${(navLinks.length + 1) * 0.06}s` }"
           >
-            <button class="nav-mobile__lang" @click="toggleLocale">
+            <button
+              class="nav-mobile__lang"
+              @click="toggleLocale"
+              @mouseenter="setCursorVariant('hover')"
+              @mouseleave="setCursorVariant('default')"
+            >
               {{ locale === 'zh-tw' ? 'English' : '繁體中文' }}
             </button>
           </li>
