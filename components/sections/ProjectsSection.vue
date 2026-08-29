@@ -32,8 +32,17 @@ const visibleProjects = computed(() => {
     <div ref="headingRef" class="projects-header">
       <span class="section-eyebrow">{{ t('projects.eyebrow') }}</span>
       <h2 id="projects-title" class="projects-title">
-        {{ t('projects.titleLine1') }}<br >
-        <span class="projects-title__accent">{{ t('projects.titleAccent') }}</span>
+        <span
+          @mouseenter="setCursorVariant('title')"
+          @mouseleave="setCursorVariant('default')"
+          >{{ t('projects.titleLine1') }}</span
+        ><br >
+        <span
+          class="projects-title__accent"
+          @mouseenter="setCursorVariant('title')"
+          @mouseleave="setCursorVariant('default')"
+          >{{ t('projects.titleAccent') }}</span
+        >
       </h2>
       <p class="projects-desc">{{ t('projects.desc') }}</p>
 
